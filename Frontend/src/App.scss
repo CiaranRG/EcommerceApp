@@ -1,0 +1,30 @@
+html, body, h1, footer, main {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  font-family: 'Roboto', sans-serif;
+}
+
+// Doing this allows me to change just this here and it will change each individual thing instead of going one by one
+$font-stack: 'Roboto', sans-serif;
+$nav-height: 60px;
+$page-height: calc(100vh - #{$nav-height});
+
+// Setting up a color palette
+$color1: #ede0d4;   
+$text-color: $color1;
+
+// We can include this property in other pages to center things fast
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.testDiv{
+  min-height: 100vh;
+  width: 100vw;
+  font-size: 64px;
+  @include flex-center()
+}
