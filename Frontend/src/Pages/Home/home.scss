@@ -1,0 +1,28 @@
+@import '../../App';
+
+.homeMainContent{
+    display: flex;
+    flex-direction: column;
+    @include flex-center;
+}
+
+.homeSectionOne{
+    display: flex;
+    background-color: $bg-color;
+    height: calc(100vh - $nav-height);
+    width: 100%;
+}
+
+.homeSectionTwo{
+    display: flex;
+    background-color: $font-color;
+    height: 100vh;
+    width: 100%;
+}
+
+.homeSectionThree{
+    display: flex;
+    background-color: $bg-color;
+    height: 100vh;
+    width: 100%;
+}

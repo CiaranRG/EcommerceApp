@@ -1,0 +1,11 @@
+@import '../App';
+
+.footer{
+    display: flex;
+    background-color: $font-color;
+    border-top: 2px solid $bg-color;
+    height: $nav-height;
+    @include flex-center;
+    font-size: 1rem;
+    color: $bg-color;
+}
