@@ -9,7 +9,7 @@
 
 .topNav{
     display: flex;
-    background-color: $bg-color;
+    background-color: $color3;
     background-position: bottom;
     background-size: cover;
     height: 65%;
@@ -21,7 +21,7 @@
         width: 50%;
         height: 100%;
         .brandName{
-                color: $font-color;
+                color: $color1;
                 font-weight: 700;
                 text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 font-size: 2rem;
@@ -43,12 +43,12 @@
                 width: 50%;
                 padding: 2px;
                 padding-left: 4px;
-                border: 1px solid $font-color;
+                border: 1px solid $border-color;
                 border-radius: 5px;
             }
             .searchButton{
                 box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
-                border: 1px solid $font-color;
+                border: 1px solid $border-color;
                 padding: 2px;
                 margin: 0px 0px 0px 4px;
                 width: 15%;
@@ -62,8 +62,9 @@
     display: flex;
     height: 35%;
     width: 100%;
-    background-color: $font-color;
+    background-color: rgba(0, 0, 0, 1);
     justify-content: center;
+    box-shadow: 1px 2px 3px rgba(0, 0, 0, 1);
     .bottomNavContent{
         display: flex;
         height: 100%;
@@ -73,7 +74,7 @@
         align-items: center;
         a{
             text-decoration: none;
-            color: $bg-color;
+            color: $color1;
             font-weight: 700;
         }
     }

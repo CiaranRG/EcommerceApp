@@ -2,10 +2,10 @@
 
 .footer{
     display: flex;
-    background-color: $font-color;
-    border-top: 2px solid $bg-color;
+    background-color: $color3;
+    border-top: 2px solid $color1;
     height: $nav-height;
     @include flex-center;
     font-size: 1rem;
-    color: $bg-color;
+    color: $color1;
 }

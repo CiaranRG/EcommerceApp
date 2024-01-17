@@ -32,9 +32,11 @@ $main-font: 'Inter', sans-serif;
 $nav-height: 6rem;
 $page-height: calc(100vh - #{$nav-height});
 // $bg-color: rgb(29, 29, 29);
-$bg-color: white;
-// $font-color: whitesmoke;
-$font-color: rgb(29, 29, 29);;
+$color1: white;
+$color2: rgb(163, 0, 0);
+$color3: rgb(29, 29, 29);
+$font-color: $color2;
+$border-color: $color3;
 
 
 // We can include this property in other pages to center things fast

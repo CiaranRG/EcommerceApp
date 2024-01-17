@@ -6,23 +6,143 @@
     @include flex-center;
 }
 
+.saleNowBanner{
+    display: flex;
+    width: 100%;
+    height: 2rem;
+    @include flex-center;
+    background-color: $color2;
+    .saleNowText{
+        font-size: 1.25rem;
+        color: $color1;
+    }
+}
+
 .homeSectionOne{
     display: flex;
-    background-color: $bg-color;
+    flex-direction: column;
+    background-color: $color1;
     height: calc(100vh - $nav-height);
     width: 100%;
+    .sectionOneContent{
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .shopNowBannerDiv{
+        @include flex-center;
+        height: 100%;
+        width: 100%;
+        background-color: $color1;
+        .shopNowBanner{
+            display: flex;
+            @include flex-center;
+            background-color: $color3;
+            width: 95%;
+            height: 95%;
+            border: none;
+            border-radius: 10px;
+        }
+    }
+    .sectionOneCards{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        height: 50%;
+        width: 100%;
+        .sectionOneItemOne{
+            @include flex-center;
+            height: 80%;
+            width: 45%;
+            border: none;
+            border-radius: 10px;
+            background-color: $color3;
+            font-size: 0.8rem
+        }
+        .sectionOneItemTwo{
+            @include flex-center;
+            height: 80%;
+            width: 45%;
+            border: none;
+            border-radius: 10px;
+            background-color: $color3;
+            font-size: 0.8rem
+        }
+    }
 }
 
 .homeSectionTwo{
     display: flex;
-    background-color: $font-color;
+    background: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), rgba(0, 0, 0, 0.6);
+    // We use background blend mode here to allow for the two elements above to blend together
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     height: 100vh;
     width: 100%;
+    .sectionTwoContent{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        @include flex-center;
+        color: $color1;
+        font-weight: 700;
+        gap: 20px;
+        h1{
+            font-size: 3rem;
+        }
+        .shoesButtons{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 10px;
+        }
+        .getShoesButton{
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: $color1;
+            background: transparent;
+            padding: 10px;
+            border: 2px solid $color1;
+            border-radius: 10px;
+        }
+    }
 }
 
 .homeSectionThree{
     display: flex;
-    background-color: $bg-color;
+    background: url('https://images.unsplash.com/photo-1607082349566-187342175e2f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), rgba(0, 0, 0, 0.6);
+    background-blend-mode: multiply;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     height: 100vh;
     width: 100%;
+    .sectionThreeContent{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        @include flex-center;
+        color: $color1;
+        font-weight: 700;
+        gap: 30px;
+        h1{
+            font-size: 2rem;
+        }
+        .checkoutSalesButton{
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: $color1;
+            background: transparent;
+            padding: 10px;
+            border: 2px solid $color1;
+            border-radius: 10px;
+        }
+    }
 }
