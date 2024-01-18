@@ -1,21 +1,31 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.scss'
 
 export default function Navbar(){
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [searchTerm, setSearchTerm] = useState('')
+
+    const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+        // No Need to destructure name and iterate over previous data as we only have one value
+        const { value } = evt.target
+        setSearchTerm(value)
+    }
 
     return (
         <>
             <nav className="navbar">
                 <div className="topNav">
                     <div className="topLeftNav">
-                        <h1 className="brandName">ZENITH</h1>
+                        <Link to={'/'}>
+                            <a className="brandName">ZENITH</a>
+                        </Link>
                     </div>
                     <div className="topRightNav">
                         <form action="" className="searchForm">
-                            <input type="text" className="navSearch" placeholder="Search" />
+                            <input type="text" className="navSearch" name="searchTerm" placeholder="Search" value={searchTerm} onChange={handleChange}/>
                             <button type="button" className="searchButton">
                                 <FontAwesomeIcon icon={faSearch} />
                             </button>
@@ -24,10 +34,21 @@ export default function Navbar(){
                 </div>
                 <div className="bottomNav">
                     <div className="bottomNavContent">
-                        <a href="">HOME</a>
-                        <a href="">SHOP</a>
-                        <a href="">CONTACT</a>
-                        <a href="">CART</a>
+                    <Link to={'/'}>
+                        <a href="/">HOME</a>
+                    </Link>
+                    <Link to={'shop'}>
+                        <a href="shop">SHOP</a>
+                    </Link>
+                    {/* <Link to={'contactUs'}>
+                        <a href="contactUs">CONTACT</a>
+                    </Link> */}
+                    <Link to={'account'}>
+                        <a href="account">ACCOUNT</a>
+                    </Link>
+                    <Link to={'cart'}>
+                        <a href="cart">CART</a>
+                    </Link>
                     </div>
                 </div>
             </nav>

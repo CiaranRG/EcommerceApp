@@ -1,4 +1,5 @@
 import './home.scss'
+import { Link } from 'react-router-dom'
 
 export default function Home(){
     return(
@@ -11,15 +12,21 @@ export default function Home(){
                 <div className='sectionOneContent'>
                     <div className='shopNowBannerDiv'>
                         <div className='shopNowBanner'>
-                            <h1>Newest Collection!</h1>
+                            <Link to={'/newCollection'}>
+                                <a>Newest Collection!</a>
+                            </Link>
                         </div>
                     </div>
                     <div className='sectionOneCards'>
                         <div className='sectionOneItemOne'>
-                            <h1>Best Sellers!</h1>
+                            <Link to={'/bestSellers'}>
+                                <a>Best Seller</a>
+                            </Link>
                         </div>
-                        <div className='sectionOneItemTwo'>
-                            <h1>Clearance!</h1>
+                        <div className='sectionOneContactUs'>
+                        <Link to={'/contactUs'}>
+                                <a>Contact Us</a>
+                            </Link>
                         </div>
                     </div>
                 </div>

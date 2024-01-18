@@ -41,8 +41,62 @@
             background-color: $color3;
             width: 95%;
             height: 95%;
-            border: none;
+            border: 3px solid black;
             border-radius: 10px;
+            background: url('https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), rgba(0, 0, 0, 0.6);
+            background-blend-mode: multiply;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            font-size: 1.5rem;
+            a{
+                color: $color1;
+                font-weight: 700;
+                border-radius: 10px;
+                transition: 0.2s;
+                text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
+                text-decoration: none;
+            }
+            a:hover{
+                color: $color3;
+                background-color: $color1;
+                cursor: pointer;
+            }
+            @media (min-width: 576px){
+                font-size: 2rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 768px){
+                font-size: 3rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 992px){
+                font-size: 4rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 1200px){
+                font-size: 4rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 1400px){
+                font-size: 4rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+        }
         }
     }
     .sectionOneCards{
@@ -55,19 +109,126 @@
             @include flex-center;
             height: 80%;
             width: 45%;
-            border: none;
+            border: 3px solid black;
             border-radius: 10px;
-            background-color: $color3;
-            font-size: 0.8rem
+            // background-color: $color3;
+            background: url('https://images.unsplash.com/photo-1562157873-818bc0726f68?q=80&w=2127&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), rgba(0, 0, 0, 0.6);
+            background-blend-mode: multiply;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            font-size: 1rem;
+            text-decoration: none;
+            a{
+                color: $color1;
+                font-weight: 700;
+                border-radius: 10px;
+                transition: 0.2s;
+                text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
+                text-decoration: none;
+            }
+            a:hover{
+                color: $color3;
+                background-color: $color1;
+                cursor: pointer;
+            }
+            @media (min-width: 576px){
+                font-size: 1.5rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 768px){
+                font-size: 2rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 992px){
+                font-size: 3rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 1200px){
+                font-size: 3rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 1400px){
+                font-size: 3rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
         }
-        .sectionOneItemTwo{
+    }
+        .sectionOneContactUs{
             @include flex-center;
             height: 80%;
             width: 45%;
-            border: none;
+            border: 3px solid black;
             border-radius: 10px;
-            background-color: $color3;
-            font-size: 0.8rem
+            // background-color: $color3;
+            background: url('https://images.unsplash.com/photo-1571079570759-8b8800f7c412?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), rgba(0, 0, 0, 0.6);
+            background-blend-mode: multiply;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            font-size: 1rem;
+            a{
+                color: $color1;
+                font-weight: 700;
+                border-radius: 10px;
+                transition: 0.2s;
+                text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
+                text-decoration: none;
+            }
+            a:hover{
+                color: $color3;
+                background-color: $color1;
+                cursor: pointer;
+            }
+            @media (min-width: 576px){
+                font-size: 1.5rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 768px){
+                font-size: 2rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 992px){
+                font-size: 3rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 1200px){
+                font-size: 3rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
+            @media (min-width: 1400px){
+                font-size: 3rem;
+                a:hover{
+                    color: $color3;
+                    background-color: $color1;
+                }
+            }
         }
     }
 }
@@ -97,8 +258,12 @@
         .shoesButtons{
             display: flex;
             justify-content: center;
-            width: 100%;
-            gap: 10px;
+            flex-direction: column;
+            width: 30%;
+            gap: 20px;
+            a{
+                text-align: center;
+            }
         }
         .getShoesButton{
             font-size: 1rem;
@@ -107,8 +272,101 @@
             color: $color1;
             background: transparent;
             padding: 10px;
-            border: 2px solid $color1;
+            border: 3px solid $color1;
             border-radius: 10px;
+        }
+        @media (min-width: 576px){
+            h1{
+                font-size: 4rem;
+            }
+        }
+        @media (min-width: 768px){
+            h1{
+                font-size: 5rem;
+            }
+            .shoesButtons{
+                width: 100%;
+                gap: 20px;
+                flex-direction: row;
+                a{
+                    text-align: center;
+                }
+            }
+            .getShoesButton{
+                font-size: 1.5rem;
+                font-weight: 700;
+                text-decoration: none;
+                color: $color1;
+                background: transparent;
+                border: 3px solid $color1;
+                border-radius: 10px;
+            }
+        }
+        @media (min-width: 992px){
+            h1{
+                font-size: 6rem;
+            }
+            .shoesButtons{
+                width: 100%;
+                gap: 20px;
+                flex-direction: row;
+                a{
+                    text-align: center;
+                }
+            }
+            .getShoesButton{
+                font-size: 2rem;
+                font-weight: 700;
+                text-decoration: none;
+                color: $color1;
+                background: transparent;
+                border: 3px solid $color1;
+                border-radius: 10px;
+            }
+        }
+        @media (min-width: 1200px){
+            h1{
+                font-size: 7rem;
+            }
+            .shoesButtons{
+                width: 100%;
+                gap: 20px;
+                flex-direction: row;
+                a{
+                    text-align: center;
+                }
+            }
+            .getShoesButton{
+                font-size: 2.2rem;
+                font-weight: 700;
+                text-decoration: none;
+                color: $color1;
+                background: transparent;
+                border: 3px solid $color1;
+                border-radius: 10px;
+            }
+        }
+        @media (min-width: 1400px){
+            h1{
+                font-size: 8rem;
+            }
+            .shoesButtons{
+                width: 100%;
+                gap: 20px;
+                flex-direction: row;
+                a{
+                    text-align: center;
+                }
+            }
+            .getShoesButton{
+                font-size: 2.5rem;
+                font-weight: 700;
+                text-decoration: none;
+                color: $color1;
+                background: transparent;
+                border: 3px solid $color1;
+                border-radius: 10px;
+            }
         }
     }
 }
@@ -141,8 +399,48 @@
             color: $color1;
             background: transparent;
             padding: 10px;
-            border: 2px solid $color1;
+            border: 3px solid $color1;
             border-radius: 10px;
+        }
+        @media (min-width: 576px){
+            h1{
+                font-size: 3rem;
+            }
+            .checkoutSalesButton{
+                font-size: 1.2rem;
+            }
+        }
+        @media (min-width: 768px){
+            h1{
+                font-size: 4rem;
+            }
+            .checkoutSalesButton{
+                font-size: 1.5rem;
+            }
+        }
+        @media (min-width: 992px){
+            h1{
+                font-size: 5rem;
+            }
+            .checkoutSalesButton{
+                font-size: 1.7rem;
+            }
+        }
+        @media (min-width: 1200px){
+            h1{
+                font-size: 6rem;
+            }
+            .checkoutSalesButton{
+                font-size: 2rem;
+            }
+        }
+        @media (min-width: 1400px){
+            h1{
+                font-size: 7rem;
+            }
+            .checkoutSalesButton{
+                font-size: 2.2rem;
+            }
         }
     }
 }
