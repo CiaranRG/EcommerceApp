@@ -1,10 +1,22 @@
 @import '../App';
 
 .navbar{
-    height: $nav-height;
+    height: $nav-height-xs;
     font-family: $main-font;
-    max-height: $nav-height;
+    max-height: $nav-height-xs;
     overflow: hidden;
+    @media (min-width: 768px){
+        height: $nav-height-md;
+        max-height: $nav-height-md;
+    }
+    @media (min-width: 1200px){
+        height: $nav-height-xl;
+        max-height: $nav-height-xl;
+    }
+    @media (min-width: 1400px){
+        height: $nav-height-xxl;
+        max-height: $nav-height-xxl;
+    }
 }
 
 .topNav{
@@ -79,6 +91,14 @@
             text-decoration: none;
             color: $color1;
             font-weight: 700;
+        }
+        @media (min-width: 768px){
+            font-size: 1.3rem;
+            width: 45%;
+        }
+        @media (min-width: 1200px){
+            font-size: 1.3rem;
+            width: 28%;
         }
     }
 }

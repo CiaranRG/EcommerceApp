@@ -29,9 +29,28 @@ p {
 
 // Doing this allows me to change just this here and it will change each individual thing instead of going one by one
 $main-font: 'Inter', sans-serif;
-$nav-height: 6rem;
-$page-height: calc(100vh - #{$nav-height});
-// $bg-color: rgb(29, 29, 29);
+
+// Defining nav and page heights
+// Extra Small
+$nav-height-xs: 6rem;
+$page-height-xs: calc(100vh - #{$nav-height-xs});
+// Small
+$nav-height-sm: 6rem;
+$page-height-sm: calc(100vh - #{$nav-height-sm});
+// Medium
+$nav-height-md: 8rem;
+$page-height-md: calc(100vh - #{$nav-height-md});
+// Large
+$nav-height-lg: 8rem;
+$page-height-lg: calc(100vh - #{$nav-height-lg});
+// Extra Large
+$nav-height-xl: 9rem;
+$page-height-xl: calc(100vh - #{$nav-height-xl});
+// Extra Extra Large
+$nav-height-xxl: 10rem;
+$page-height-xxl: calc(100vh - #{$nav-height-xxl});
+
+// Setting Up Global Colors
 $color1: white;
 $color2: rgb(163, 0, 0);
 $color3: rgb(29, 29, 29);

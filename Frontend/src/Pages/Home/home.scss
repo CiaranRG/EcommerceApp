@@ -22,8 +22,21 @@
     display: flex;
     flex-direction: column;
     background-color: $color1;
-    height: calc(100vh - $nav-height);
+    height: $page-height-xs;
+    max-height: $page-height-xs;
     width: 100%;
+    @media (min-width: 768px){
+        height: $page-height-md;
+        max-height: $page-height-md;
+    }
+    @media (min-width: 1200px){
+        height: $page-height-xl;
+        max-height: $page-height-xl;
+    }
+    @media (min-width: 1400px){
+        height: $page-height-xxl;
+        max-height: $page-height-xxl;
+    }
     .sectionOneContent{
         height: 100%;
         width: 100%;
@@ -96,7 +109,7 @@
                     color: $color3;
                     background-color: $color1;
                 }
-        }
+            }
         }
     }
     .sectionOneCards{

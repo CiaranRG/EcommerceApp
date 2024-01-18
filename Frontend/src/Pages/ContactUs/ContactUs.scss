@@ -1,0 +1,7 @@
+@import '../../App';
+
+.contactUsMainContent{
+    height: calc(100vh - $nav-height-xs);
+    width: 100%;
+    @include flex-center;
+}

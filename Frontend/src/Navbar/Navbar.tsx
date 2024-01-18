@@ -4,8 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.scss'
 
-export default function Navbar(){
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
+type NavbarProps = {
+    isLoggedIn?: boolean,
+}
+
+export default function Navbar({isLoggedIn}: NavbarProps){
     const [searchTerm, setSearchTerm] = useState('')
 
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,15 +43,8 @@ export default function Navbar(){
                     <Link to={'shop'}>
                         <a href="shop">SHOP</a>
                     </Link>
-                    {/* <Link to={'contactUs'}>
-                        <a href="contactUs">CONTACT</a>
-                    </Link> */}
-                    <Link to={'account'}>
-                        <a href="account">ACCOUNT</a>
-                    </Link>
-                    <Link to={'cart'}>
-                        <a href="cart">CART</a>
-                    </Link>
+                    {isLoggedIn ? <Link to={'account'}><a href="account">ACCOUNT</a></Link> : <Link to={'account'}><a href="account">LOGIN</a></Link>}
+                    {isLoggedIn ? <Link to={'cart'}><a href="cart">CART</a></Link> : <Link to={'account'}><a href="account">REGISTER</a></Link>}
                     </div>
                 </div>
             </nav>

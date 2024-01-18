@@ -4,7 +4,7 @@
     display: flex;
     background-color: $color3;
     border-top: 2px solid $color1;
-    height: $nav-height;
+    height: $nav-height-xs;
     @include flex-center;
     font-size: 1rem;
     color: $color1;
