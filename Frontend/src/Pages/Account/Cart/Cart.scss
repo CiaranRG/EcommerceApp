@@ -1,0 +1,6 @@
+@import '../../../App';
+
+.cartMainContent{
+    @include responsive-page;
+    @include flex-center;
+}

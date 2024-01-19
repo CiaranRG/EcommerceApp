@@ -20,25 +20,25 @@ export default function ContactUs(){
                 <div className='contactUsItem'>
                     <p><FontAwesomeIcon icon={faEnvelope}/> Email</p>
                     <Link to={'/'}>
-                        <a href="">ZenithClothes@Email.com</a>
+                        <a href="/">ZenithClothes@Email.com</a>
                     </Link>
                 </div>
                 <div className='contactUsItem'>
                     <p ><FontAwesomeIcon icon={faTwitter}/> Twitter</p>
                     <Link to={'/'}>
-                        <a href="">@ZenithClothing</a>
+                        <a href="/">@ZenithClothing</a>
                     </Link>
                 </div>
                 <div className='contactUsItem'>
                     <p><FontAwesomeIcon icon={faSquareFacebook}/> Facebook</p>
                     <Link to={'/'}>
-                        <a href="">OurFacebook</a>
+                        <a href="/">ZenithClothing</a>
                     </Link>
                 </div>
                 <div className='contactUsItem'>
                     <p ><FontAwesomeIcon icon={faMobileScreen}/> Call Us</p>
                     <Link to={'/'}>
-                        <a href="">+44 0800 364852</a>
+                        <a href="/">+44 0800 364852</a>
                     </Link>
                 </div>
             </section>

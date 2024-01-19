@@ -1,0 +1,85 @@
+@import '../../../App';
+
+.loginMainContent{
+    @include responsive-page;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3%;
+    padding: 10px;
+    .loginHeader{
+        font-size: 2rem;
+        font-weight: 700;
+    }
+    .loginForm{
+        border-radius: 10px;
+        padding: 0px 15px 0px 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        background-color: $color3;
+        width: 80%;
+        height: 37%;
+        @media (min-width: 576px){
+            width: 70%;
+        }
+        @media (min-width: 768px){
+            width: 60%;
+        }
+        @media (min-width: 992px){
+            width: 50%;
+        }
+        @media (min-width: 1200px){
+            width: 40%;
+        }
+        .loginFormDiv{
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            label{
+                font-size: 0.8rem;
+                color: $color1;
+                @media (min-width: 576px){
+                    font-size: 0.9rem;
+                }
+                @media (min-width: 768px){
+                    font-size: 1rem;
+                }
+                @media (min-width: 992px){
+                    font-size: 1.2rem;
+                }
+            }
+            input{
+                padding: 5px 5px 5px 5px;
+                font-size: 1rem;
+                border-radius: 5px;
+                border: 1px solid black;
+                @media (min-width: 992px){
+                    font-size: 1.2rem;
+                }
+            }
+        }
+        .loginFormButton{
+            height: 15%;
+            border-radius: 5px;
+            padding: 10px 0px 10px 0px;
+            background-color: $color3;
+            font-size: 1rem;
+            font-weight: 700;
+            color: $color1;
+            border: 1px solid $color1;
+            transition: 0.2s;
+        }
+        .loginFormButton:hover{
+            height: 15%;
+            border-radius: 5px;
+            padding: 10px 0px 10px 0px;
+            background-color: $color1;
+            font-size: 1rem;
+            font-weight: 700;
+            color: $color3;
+            border: 1px solid black;
+            transition: 0.2s;
+        }
+    }
+}

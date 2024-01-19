@@ -25,18 +25,7 @@
     height: $page-height-xs;
     max-height: $page-height-xs;
     width: 100%;
-    @media (min-width: 768px){
-        height: $page-height-md;
-        max-height: $page-height-md;
-    }
-    @media (min-width: 1200px){
-        height: $page-height-xl;
-        max-height: $page-height-xl;
-    }
-    @media (min-width: 1400px){
-        height: $page-height-xxl;
-        max-height: $page-height-xxl;
-    }
+    @include responsive-page;
     .sectionOneContent{
         height: 100%;
         width: 100%;

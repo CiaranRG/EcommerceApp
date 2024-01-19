@@ -43,8 +43,8 @@ export default function Navbar({isLoggedIn}: NavbarProps){
                     <Link to={'shop'}>
                         <a href="shop">SHOP</a>
                     </Link>
-                    {isLoggedIn ? <Link to={'account'}><a href="account">ACCOUNT</a></Link> : <Link to={'account'}><a href="account">LOGIN</a></Link>}
-                    {isLoggedIn ? <Link to={'cart'}><a href="cart">CART</a></Link> : <Link to={'account'}><a href="account">REGISTER</a></Link>}
+                    {isLoggedIn ? <Link to={'account'}><a href="account">ACCOUNT</a></Link> : <Link to={'login'}><a href="login">LOGIN</a></Link>}
+                    {isLoggedIn ? <Link to={'cart'}><a href="cart">CART</a></Link> : <Link to={'register'}><a href="register">REGISTER</a></Link>}
                     </div>
                 </div>
             </nav>
