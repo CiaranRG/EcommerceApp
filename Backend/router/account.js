@@ -26,9 +26,9 @@ router.post('/', async (req, res) => {
         )
         console.log('Account Created!')
         res.status(201).json({message: 'Data Submitted!'})
-    } catch (err){
+    } catch (error){
         console.log('Hit error on account creation')
-        console.log(err)
+        console.log(error)
     }
 })
 
