@@ -28,9 +28,9 @@ router.post('/login', (req, res) => {
     try {
         console.log('Try account Login')
         res.status(201).json({message: 'Everything worked!'})
-    } catch (err){
+    } catch (error){
         console.log('Hit error on account Login')
-        console.log(err)
+        console.log(error)
     }
 })
 
