@@ -1,9 +1,15 @@
 import express  from "express";
 import cors from 'cors'
 import { accountRoutes } from "./router/account.js";
+// Importing needed modules for sessions
+import session from "express-session";
+import redis from 'redis'
+import connectRedis from "connect-redis";
 
-// Importing our database connection
-import db from './utils/databaseConnection.js'
+const RedisStore = connectRedis(session);
+const redisClient = redis.createClient({
+
+})
 
 const app = express()
 const PORT = 5000
@@ -16,6 +22,18 @@ app.use(
 );
 
 app.use(express.json());
+
+// Setting the session middleware
+app.use(session({
+    store: new RedisStore({ client: redisClient }),
+    secret: 'your_secret',
+    saveUninitialized: false,
+    resave: false,
+    cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+    }
+}));
 
 // Telling the app to use the cors middleware for all the preflight requests
 app.options('/api/accounts/login', cors());
