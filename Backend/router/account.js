@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
         const hash = await bcrypt.hash(newAccount.password, saltRounds,)
         // Query to the database to insert these values into these columns
         const result = await db.query(
-            'INSERT INTO users (email, username, password) VALUES ($1, $2, $3) RETURNING userId',
+            'INSERT INTO account (email, username, password) VALUES ($1, $2, $3) RETURNING accountId',
             [newAccount.email, newAccount.username, hash]
         )
         console.log('Account Created!')
