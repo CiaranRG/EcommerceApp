@@ -1,18 +1,13 @@
 import express  from "express";
-import cors from 'cors'
+import session from "express-session";
+import cors from 'cors';
 import { accountRoutes } from "./router/account.js";
-// Importing needed modules for sessions
-// import session from "express-session";
-// import redis from 'redis'
-// import connectRedis from "connect-redis";
-
-// const RedisStore = connectRedis(session);
-// const redisClient = redis.createClient({
-
-// })
+import connectPgSimple from 'connect-pg-simple';
 
 const app = express()
 const PORT = 5000
+
+const pgSessions = connectPgSimple(session)
 
 // Adding in origin to allow requests from the frontend and also setting credentials to true for user authentication through cookies
 app.use(
@@ -22,10 +17,36 @@ app.use(
 );
 
 app.use(express.json());
+app.use(session({
+        name: 'session',
+        // Setting up a new pgSession to handle session storage
+        store: new pgSessions({
+            // Create a new pool
+            pool: new Pool({
+                // We pass in our data from the .env file
+                user: process.env.PG_USER,
+                host: 'localhost',
+                database: process.env.PG_DATBASE,
+                password: process.env.PG_PASS,
+                port: 5432,
+            }),
+            // We can use a custom table within our postgres database to store the sessions
+            // tableName: 'session'
+        }),
+        secret: 'your_secret',
+        saveUninitialized: true,
+        resave: false,
+        cookie: {
+            httpOnly: true,
+            // This will be true in production meaning we only send cookies over https and not http
+            secure: process.env.NODE_ENV === 'production',
+        }
+    }))
+
 
 // Setting the session middleware
 // app.use(session({
-//     store: new RedisStore({ client: redisClient }),
+//     // store: new RedisStore({ client: redisClient }),
 //     secret: 'your_secret',
 //     saveUninitialized: false,
 //     resave: false,
