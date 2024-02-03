@@ -1,4 +1,5 @@
 import express from 'express';
+import session from "express-session";
 import { config } from 'dotenv';
 import db from '../utils/databaseConnection.js';
 
@@ -24,9 +25,12 @@ router.post('/', async (req, res) => {
             'INSERT INTO account (email, username, password) VALUES ($1, $2, $3) RETURNING accountId',
             [newAccount.email, newAccount.username, hash]
         )
+        // Using the returned accountId from the database to add it to the session
+        console.log('returned data', result.rows[0].accountId)
+        req.session.accountId = result.rows[0].accountId
         console.log('Account Created!')
-        res.status(201).json({message: 'Data Submitted!'})
-    } catch (error){
+        res.status(201).json({ message: 'Data Submitted!' })
+    } catch (error) {
         console.log('Hit error on account creation')
         console.log(error)
     }
@@ -38,18 +42,18 @@ router.post('/login', async (req, res) => {
     try {
         console.log('Try account Login')
         const user = await db.query('SELECT * FROM users WHERE username = $1', [username])
-        if (user.rows.length === 0 ){
+        if (user.rows.length === 0) {
             throw new Error('User Not Found')
         }
         const comparedPassword = bcrypt.compare(loginAccount.password, user.hash)
-        if (comparedPassword){
+        if (comparedPassword) {
 
-        }   
+        }
         // Send message to front end and create a session for them
-        res.status(201).json({message: 'Everything worked!'})
-    } catch (err){
-        if (err.message === 'User Not Found'){
-            res.status(404).json({message: err.message})
+        res.status(201).json({ message: 'Everything worked!' })
+    } catch (err) {
+        if (err.message === 'User Not Found') {
+            res.status(404).json({ message: err.message })
         }
         console.log('Hit error on account Login')
         console.log(error)

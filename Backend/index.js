@@ -1,60 +1,47 @@
-import express  from "express";
+import express from "express";
 import session from "express-session";
 import cors from 'cors';
+import { config } from 'dotenv'
 import { accountRoutes } from "./router/account.js";
 import connectPgSimple from 'connect-pg-simple';
+import db from "./utils/databaseConnection.js";
+
+// Loading the .env file
+config()
 
 const app = express()
 const PORT = 5000
 
+// We use this to allow connect-pg access to session so it can extend its use with our database
 const pgSessions = connectPgSimple(session)
 
 // Adding in origin to allow requests from the frontend and also setting credentials to true for user authentication through cookies
 app.use(
     cors(
-        {origin: 'http://127.0.0.1:5173', credentials: true}
+        { origin: 'http://localhost:5173', credentials: true }
     )
 );
 
 app.use(express.json());
 app.use(session({
-        name: 'session',
-        // Setting up a new pgSession to handle session storage
-        store: new pgSessions({
-            // Create a new pool
-            pool: new Pool({
-                // We pass in our data from the .env file
-                user: process.env.PG_USER,
-                host: 'localhost',
-                database: process.env.PG_DATBASE,
-                password: process.env.PG_PASS,
-                port: 5432,
-            }),
-            // We can use a custom table within our postgres database to store the sessions
-            // tableName: 'session'
-        }),
-        secret: 'your_secret',
-        saveUninitialized: true,
-        resave: false,
-        cookie: {
-            httpOnly: true,
-            // This will be true in production meaning we only send cookies over https and not http
-            secure: process.env.NODE_ENV === 'production',
-        }
-    }))
-
-
-// Setting the session middleware
-// app.use(session({
-//     // store: new RedisStore({ client: redisClient }),
-//     secret: 'your_secret',
-//     saveUninitialized: false,
-//     resave: false,
-//     cookie: {
-//         httpOnly: true,
-//         secure: process.env.NODE_ENV === 'production',
-//     }
-// }));
+    name: 'session',
+    // Setting up a new pgSession to handle session storage
+    store: new pgSessions({
+        // Create a new pool
+        pool: db,
+        // We can use a custom table within our postgres database to store the sessions
+        tableName: 'session'
+    }),
+    secret: process.env.PG_SECRET,
+    saveUninitialized: true,
+    resave: false,
+    cookie: {
+        httpOnly: true,
+        // This will be true in production meaning we only send cookies over https and not http
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+    }
+}))
 
 // Telling the app to use the cors middleware for all the preflight requests
 app.options('/api/accounts/login', cors());
@@ -64,9 +51,9 @@ app.use('/accounts', accountRoutes);
 
 app.get('/', (req, res) => {
     try {
-        res.status(200).json({message: "We found what you were looking for!"})
+        res.status(200).json({ message: "We found what you were looking for!" })
     } catch (err) {
-        res.status(404).json({message: "Couldn't find what you were looking for!"})
+        res.status(404).json({ message: "Couldn't find what you were looking for!" })
     }
 })
 
