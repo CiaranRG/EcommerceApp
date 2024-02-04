@@ -22,12 +22,12 @@ router.post('/', async (req, res) => {
         const hash = await bcrypt.hash(newAccount.password, saltRounds,)
         // Query to the database to insert these values into these columns
         const result = await db.query(
-            'INSERT INTO account (email, username, password) VALUES ($1, $2, $3) RETURNING accountId',
+            'INSERT INTO account (email, username, password) VALUES ($1, $2, $3) RETURNING accountid',
             [newAccount.email, newAccount.username, hash]
         )
         // Using the returned accountId from the database to add it to the session
-        console.log('returned data', result.rows[0].accountId)
-        req.session.accountId = result.rows[0].accountId
+        console.log('returned data', result.rows[0].accountid)
+        req.session.accountId = result.rows[0].accountid
         console.log('Account Created!')
         res.status(201).json({ message: 'Data Submitted!' })
     } catch (error) {

@@ -40,6 +40,7 @@ app.use(session({
         // This will be true in production meaning we only send cookies over https and not http
         secure: process.env.NODE_ENV === 'production',
         sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
+        maxAge: 14 * 24 * 60 * 60 * 1000,
     }
 }))
 
