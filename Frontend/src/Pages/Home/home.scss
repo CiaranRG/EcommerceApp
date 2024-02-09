@@ -1,24 +1,12 @@
 @import '../../App';
 
-.homeMainContent{
+.homeMainContent {
     display: flex;
     flex-direction: column;
     @include flex-center;
 }
 
-.saleNowBanner{
-    display: flex;
-    width: 100%;
-    height: 2rem;
-    @include flex-center;
-    background-color: $color2;
-    .saleNowText{
-        font-size: 1.25rem;
-        color: $color1;
-    }
-}
-
-.homeSectionOne{
+.homeSectionOne {
     display: flex;
     flex-direction: column;
     background-color: $color1;
@@ -26,18 +14,21 @@
     max-height: $page-height-xs;
     width: 100%;
     @include responsive-page;
-    .sectionOneContent{
+
+    .sectionOneContent {
         height: 100%;
         width: 100%;
         display: flex;
         flex-direction: column;
     }
-    .shopNowBannerDiv{
+
+    .shopNowBannerDiv {
         @include flex-center;
         height: 100%;
         width: 100%;
         background-color: $color1;
-        .shopNowBanner{
+
+        .shopNowBanner {
             display: flex;
             @include flex-center;
             background-color: $color3;
@@ -51,7 +42,8 @@
             background-position: center;
             background-size: cover;
             font-size: 1.5rem;
-            a{
+
+            a {
                 color: $color1;
                 font-weight: 700;
                 border-radius: 10px;
@@ -59,55 +51,68 @@
                 text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 text-decoration: none;
             }
-            a:hover{
+
+            a:hover {
                 color: $color3;
                 background-color: $color1;
                 cursor: pointer;
             }
-            @media (min-width: 576px){
+
+            @media (min-width: 576px) {
                 font-size: 2rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 768px){
+
+            @media (min-width: 768px) {
                 font-size: 3rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 992px){
+
+            @media (min-width: 992px) {
                 font-size: 4rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 1200px){
+
+            @media (min-width: 1200px) {
                 font-size: 4rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 1400px){
+
+            @media (min-width: 1400px) {
                 font-size: 4rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
         }
     }
-    .sectionOneCards{
+
+    .sectionOneCards {
         display: flex;
         justify-content: space-around;
         align-items: center;
         height: 50%;
         width: 100%;
-        .sectionOneItemOne{
+
+        .sectionOneItemOne {
             @include flex-center;
             height: 80%;
             width: 45%;
@@ -121,7 +126,8 @@
             background-size: cover;
             font-size: 1rem;
             text-decoration: none;
-            a{
+
+            a {
                 color: $color1;
                 font-weight: 700;
                 border-radius: 10px;
@@ -129,48 +135,60 @@
                 text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 text-decoration: none;
             }
-            a:hover{
+
+            a:hover {
                 color: $color3;
                 background-color: $color1;
                 cursor: pointer;
             }
-            @media (min-width: 576px){
+
+            @media (min-width: 576px) {
                 font-size: 1.5rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 768px){
+
+            @media (min-width: 768px) {
                 font-size: 2rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 992px){
+
+            @media (min-width: 992px) {
                 font-size: 3rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 1200px){
+
+            @media (min-width: 1200px) {
                 font-size: 3rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 1400px){
+
+            @media (min-width: 1400px) {
                 font-size: 3rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
+            }
         }
-    }
-        .sectionOneContactUs{
+
+        .sectionOneContactUs {
             @include flex-center;
             height: 80%;
             width: 45%;
@@ -183,7 +201,8 @@
             background-position: center;
             background-size: cover;
             font-size: 1rem;
-            a{
+
+            a {
                 color: $color1;
                 font-weight: 700;
                 border-radius: 10px;
@@ -191,42 +210,53 @@
                 text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 text-decoration: none;
             }
-            a:hover{
+
+            a:hover {
                 color: $color3;
                 background-color: $color1;
                 cursor: pointer;
             }
-            @media (min-width: 576px){
+
+            @media (min-width: 576px) {
                 font-size: 1.5rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 768px){
+
+            @media (min-width: 768px) {
                 font-size: 2rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 992px){
+
+            @media (min-width: 992px) {
                 font-size: 3rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 1200px){
+
+            @media (min-width: 1200px) {
                 font-size: 3rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
             }
-            @media (min-width: 1400px){
+
+            @media (min-width: 1400px) {
                 font-size: 3rem;
-                a:hover{
+
+                a:hover {
                     color: $color3;
                     background-color: $color1;
                 }
@@ -235,7 +265,7 @@
     }
 }
 
-.homeSectionTwo{
+.homeSectionTwo {
     display: flex;
     background: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), rgba(0, 0, 0, 0.6);
     // We use background blend mode here to allow for the two elements above to blend together
@@ -245,7 +275,8 @@
     background-size: cover;
     height: 100vh;
     width: 100%;
-    .sectionTwoContent{
+
+    .sectionTwoContent {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -254,20 +285,24 @@
         color: $color1;
         font-weight: 700;
         gap: 20px;
-        h1{
+
+        h1 {
             font-size: 3rem;
         }
-        .shoesButtons{
+
+        .shoesButtons {
             display: flex;
             justify-content: center;
             flex-direction: column;
             width: 30%;
             gap: 20px;
-            a{
+
+            a {
                 text-align: center;
             }
         }
-        .getShoesButton{
+
+        .getShoesButton {
             font-size: 1rem;
             font-weight: 700;
             text-decoration: none;
@@ -278,83 +313,101 @@
             border-radius: 10px;
             transition: 0.2s;
         }
-        .getShoesButton:hover{
+
+        .getShoesButton:hover {
             color: $color1;
             background-color: transparent
         }
-        @media (min-width: 576px){
-            h1{
+
+        @media (min-width: 576px) {
+            h1 {
                 font-size: 4rem;
             }
         }
-        @media (min-width: 768px){
-            h1{
+
+        @media (min-width: 768px) {
+            h1 {
                 font-size: 5rem;
             }
-            .shoesButtons{
+
+            .shoesButtons {
                 width: 100%;
                 gap: 20px;
                 flex-direction: row;
-                a{
+
+                a {
                     text-align: center;
                 }
             }
-            .getShoesButton{
+
+            .getShoesButton {
                 font-size: 1.5rem;
             }
         }
-        @media (min-width: 992px){
-            h1{
+
+        @media (min-width: 992px) {
+            h1 {
                 font-size: 6rem;
             }
-            .shoesButtons{
+
+            .shoesButtons {
                 width: 100%;
                 gap: 20px;
                 flex-direction: row;
-                a{
+
+                a {
                     text-align: center;
                 }
             }
-            .getShoesButton{
+
+            .getShoesButton {
                 font-size: 2rem;
             }
         }
-        @media (min-width: 1200px){
-            h1{
+
+        @media (min-width: 1200px) {
+            h1 {
                 font-size: 7rem;
             }
-            .shoesButtons{
+
+            .shoesButtons {
                 width: 100%;
                 gap: 20px;
                 flex-direction: row;
-                a{
+
+                a {
                     text-align: center;
                 }
             }
-            .getShoesButton{
+
+            .getShoesButton {
                 font-size: 2.2rem;
             }
         }
-        @media (min-width: 1400px){
-            h1{
+
+        @media (min-width: 1400px) {
+            h1 {
                 font-size: 8rem;
             }
-            .shoesButtons{
+
+            .shoesButtons {
                 width: 100%;
                 gap: 20px;
                 flex-direction: row;
-                a{
+
+                a {
                     text-align: center;
                 }
             }
-            .getShoesButton{
+
+            .getShoesButton {
                 font-size: 2.5rem;
             }
         }
     }
 }
 
-.homeSectionThree{
+.homeSectionThree {
     display: flex;
     background: url('https://images.unsplash.com/photo-1607082349566-187342175e2f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), rgba(0, 0, 0, 0.6);
     background-blend-mode: multiply;
@@ -363,7 +416,8 @@
     background-size: cover;
     height: 100vh;
     width: 100%;
-    .sectionThreeContent{
+
+    .sectionThreeContent {
         display: flex;
         flex-direction: column;
         width: 100%;
@@ -372,10 +426,12 @@
         color: $color1;
         font-weight: 700;
         gap: 30px;
-        h1{
+
+        h1 {
             font-size: 2rem;
         }
-        .checkoutSalesButton{
+
+        .checkoutSalesButton {
             font-size: 1rem;
             font-weight: 700;
             text-decoration: none;
@@ -386,47 +442,58 @@
             border-radius: 10px;
             transition: 0.2s;
         }
-        .checkoutSalesButton:hover{
+
+        .checkoutSalesButton:hover {
             color: $color1;
             background: transparent;
         }
-        @media (min-width: 576px){
-            h1{
+
+        @media (min-width: 576px) {
+            h1 {
                 font-size: 3rem;
             }
-            .checkoutSalesButton{
+
+            .checkoutSalesButton {
                 font-size: 1.2rem;
             }
         }
-        @media (min-width: 768px){
-            h1{
+
+        @media (min-width: 768px) {
+            h1 {
                 font-size: 4rem;
             }
-            .checkoutSalesButton{
+
+            .checkoutSalesButton {
                 font-size: 1.5rem;
             }
         }
-        @media (min-width: 992px){
-            h1{
+
+        @media (min-width: 992px) {
+            h1 {
                 font-size: 5rem;
             }
-            .checkoutSalesButton{
+
+            .checkoutSalesButton {
                 font-size: 1.7rem;
             }
         }
-        @media (min-width: 1200px){
-            h1{
+
+        @media (min-width: 1200px) {
+            h1 {
                 font-size: 6rem;
             }
-            .checkoutSalesButton{
+
+            .checkoutSalesButton {
                 font-size: 2rem;
             }
         }
-        @media (min-width: 1400px){
-            h1{
+
+        @media (min-width: 1400px) {
+            h1 {
                 font-size: 7rem;
             }
-            .checkoutSalesButton{
+
+            .checkoutSalesButton {
                 font-size: 2.2rem;
             }
         }

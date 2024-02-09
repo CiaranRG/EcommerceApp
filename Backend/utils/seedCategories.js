@@ -3,11 +3,14 @@ import { config } from 'dotenv';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
+// Use this to get the url of the current module
 const __filename = fileURLToPath(import.meta.url);
+// Use this to convert that url to a file path
 const __dirname = dirname(__filename);
 
-// Path to the .env file
+// Using this to create a path to the .env based on the directory this is currently in
 const envPath = join(__dirname, '..', '.env');
+// telling config to load the .env from the path we created
 config({ path: envPath });
 
 // Importing full pg package then destructing pool from it

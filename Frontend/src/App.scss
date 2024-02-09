@@ -11,7 +11,7 @@
   margin: 0;
 }
 
-body{
+body {
   // Ensures the body fills the entire viewport
   min-height: 100dvh;
   // background: rgb(29, 29, 29);
@@ -19,7 +19,10 @@ body{
   font-family: 'Inter', sans-serif;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   text-wrap: balance;
 }
 
@@ -32,7 +35,7 @@ $main-font: 'Inter', sans-serif;
 
 // Defining nav and page heights
 // Extra Small
-$nav-height-xs: 6rem;
+$nav-height-xs: 8rem;
 $page-height-xs: calc(100vh - #{$nav-height-xs});
 // Small
 $nav-height-sm: 6rem;
@@ -66,36 +69,33 @@ $border-color: $color3;
   flex-wrap: nowrap;
 }
 
-@mixin responsive-page{
+@mixin responsive-page {
   display: flex;
   height: $page-height-xs;
-  @media (min-width: 768px){
-      height: $page-height-md;
-      max-height: $page-height-md;
+
+  @media (min-width: 768px) {
+    height: $page-height-md;
+    max-height: $page-height-md;
   }
-  @media (min-width: 1200px){
-      height: $page-height-xl;
-      max-height: $page-height-xl;
+
+  @media (min-width: 1200px) {
+    height: $page-height-xl;
+    max-height: $page-height-xl;
   }
-  @media (min-width: 1400px){
-      height: $page-height-xxl;
-      max-height: $page-height-xxl;
+
+  @media (min-width: 1400px) {
+    height: $page-height-xxl;
+    max-height: $page-height-xxl;
   }
 }
 
 // Using these as templates to copy paste 
-@media (min-width: 576px){
+@media (min-width: 576px) {}
 
-}
-@media (min-width: 768px){
+@media (min-width: 768px) {}
 
-}
-@media (min-width: 992px){
+@media (min-width: 992px) {}
 
-}
-@media (min-width: 1200px){
+@media (min-width: 1200px) {}
 
-}
-@media (min-width: 1400px){
-
-}
+@media (min-width: 1400px) {}

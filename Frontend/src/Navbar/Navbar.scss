@@ -1,59 +1,81 @@
 @import '../App';
 
-.navbar{
+.navbar {
     height: $nav-height-xs;
     font-family: $main-font;
     max-height: $nav-height-xs;
     overflow: hidden;
-    @media (min-width: 768px){
+
+    @media (min-width: 768px) {
         height: $nav-height-md;
         max-height: $nav-height-md;
     }
-    @media (min-width: 1200px){
+
+    @media (min-width: 1200px) {
         height: $nav-height-xl;
         max-height: $nav-height-xl;
     }
-    @media (min-width: 1400px){
+
+    @media (min-width: 1400px) {
         height: $nav-height-xxl;
         max-height: $nav-height-xxl;
     }
 }
 
-.topNav{
+.saleNowBanner {
+    display: flex;
+    width: 100%;
+    height: 20%;
+    @include flex-center;
+    background-color: $color2;
+
+    .saleNowText {
+        font-size: 1rem;
+        color: $color1;
+    }
+}
+
+.topNav {
     display: flex;
     background-color: $color3;
     background-position: bottom;
     background-size: cover;
-    height: 65%;
+    height: 50%;
     max-height: 65%;
     box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
-    .topLeftNav{
+
+    .topLeftNav {
         display: flex;
         align-items: center;
         width: 50%;
         height: 100%;
-        .brandName{
-                color: $color1;
-                font-weight: 700;
-                text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
-                font-size: 2rem;
-                margin: 0px 0px 2px 10px;
-            }
-        a{
+
+        .brandName {
+            color: $color1;
+            font-weight: 700;
+            text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
+            font-size: 2rem;
+            margin: 0px 0px 2px 10px;
+        }
+
+        a {
             text-decoration: none;
         }
     }
-    .topRightNav{
+
+    .topRightNav {
         display: flex;
         width: 50%;
-        .searchForm{
+
+        .searchForm {
             display: flex;
             align-items: center;
             justify-content: flex-end;
             padding: 0px 10px 0px 0px;
             width: 100%;
             height: 100%;
-            .navSearch{
+
+            .navSearch {
                 box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 width: 50%;
                 padding: 2px;
@@ -61,7 +83,8 @@
                 border: 1px solid $border-color;
                 border-radius: 5px;
             }
-            .searchButton{
+
+            .searchButton {
                 box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 border: 1px solid $border-color;
                 padding: 2px;
@@ -73,33 +96,36 @@
     }
 }
 
-.bottomNav{
+.bottomNav {
     display: flex;
-    height: 35%;
+    height: 30%;
     width: 100%;
     background-color: rgba(0, 0, 0, 1);
     justify-content: center;
     box-shadow: 1px 2px 3px rgba(0, 0, 0, 1);
-    .bottomNavContent{
+
+    .bottomNavContent {
         display: flex;
         height: 100%;
         width: 80%;
         font-size: 1rem;
         justify-content: space-evenly;
         align-items: center;
-        a{
+
+        a {
             text-decoration: none;
             color: $color1;
             font-weight: 700;
         }
-        @media (min-width: 768px){
+
+        @media (min-width: 768px) {
             font-size: 1.3rem;
             width: 45%;
         }
-        @media (min-width: 1200px){
+
+        @media (min-width: 1200px) {
             font-size: 1.3rem;
             width: 28%;
         }
     }
 }
-

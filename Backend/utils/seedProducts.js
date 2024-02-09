@@ -3,11 +3,14 @@ import { config } from 'dotenv';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
+// Use this to get the url of the current module
 const __filename = fileURLToPath(import.meta.url);
+// Use this to convert that url to a file path
 const __dirname = dirname(__filename);
 
-// Path to the .env file
+// Using this to create a path to the .env based on the directory this is currently in
 const envPath = join(__dirname, '..', '.env');
+// telling config to load the .env from the path we created
 config({ path: envPath });
 
 // Importing full pg package then destructing pool from it
@@ -32,6 +35,7 @@ const productsDB = [
         categoryid: 1,
         stock: 3,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        gender: 'mens'
     },
     {
         name: 'Grey Shoes',
@@ -40,6 +44,7 @@ const productsDB = [
         categoryid: 2,
         stock: 1,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        gender: 'mens'
     },
     {
         name: 'Grey Joggers',
@@ -48,6 +53,7 @@ const productsDB = [
         categoryid: 3,
         stock: 10,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        gender: 'mens'
     },
     {
         name: 'Grey Top',
@@ -56,6 +62,7 @@ const productsDB = [
         categoryid: 4,
         stock: 7,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        gender: 'mens'
     },
     {
         name: 'Grey Shorts',
@@ -64,6 +71,7 @@ const productsDB = [
         categoryid: 5,
         stock: 4,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        gender: 'mens'
     },
     {
         name: 'Grey Hat',
@@ -72,13 +80,14 @@ const productsDB = [
         categoryid: 6,
         stock: 13,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        gender: 'mens'
     },
 ]
 
 const seedProducts = async () => {
     console.log('Starting to seed categories...');
     // Wiping and restarting the database , we add cascade since our category table will be foreign keys for other tables
-    await db.query('TRUNCATE category RESTART IDENTITY CASCADE')
+    await db.query('TRUNCATE product RESTART IDENTITY CASCADE')
     console.log('Categories table truncated.');
     try {
         // Looping the array to seed the database 
