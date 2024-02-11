@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import './Demographic.scss'
 
 export default function Demographics() {
@@ -6,13 +7,13 @@ export default function Demographics() {
         <>
             <main className="demographicsMainContent">
                 <div className='demographicCard men'>
-                    <a>Men</a>
+                    <Link to={'/mens/categories'}>Men</Link>
                 </div>
                 <div className='demographicCard women'>
-                    <a>Woman</a>
+                    <Link to={'/womens/categories'}>Women</Link>
                 </div>
                 <div className='demographicCard child'>
-                    <a>Kids</a>
+                    <Link to={'/kids/categories'}>Kids</Link>
                 </div>
             </main>
         </>
