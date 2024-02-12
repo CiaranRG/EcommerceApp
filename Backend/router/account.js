@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
     const newAccount = req.body
     try {
         console.log('Try account creation')
-        // If there was an error validation the scheme we throw this
+        // If there was an error validating the schema we throw this
         // if (error){
         //     throw new Error('Validation Error')
         // }
@@ -41,23 +41,36 @@ router.post('/login', async (req, res) => {
     const loginAccount = req.body
     try {
         console.log('Try account Login')
-        const user = await db.query('SELECT * FROM users WHERE username = $1', [username])
+        const user = await db.query('SELECT * FROM account WHERE username = $1', [loginAccount.username])
+        const currentUser = user.rows[0]
         if (user.rows.length === 0) {
-            throw new Error('User Not Found')
+            console.log('User not found')
+            res.status(404).json({ message: 'User Not Found' })
         }
-        const comparedPassword = bcrypt.compare(loginAccount.password, user.hash)
-        if (comparedPassword) {
-
+        const comparedPassword = await bcrypt.compare(loginAccount.password, currentUser.password)
+        if (!comparedPassword) {
+            console.log('Wrong Password')
+            res.status(401).json({ message: 'Incorrect Details' })
         }
+        console.log('Creating user session and assigning id')
+        req.session.accountId = user.rows[0].accountid
         // Send message to front end and create a session for them
-        res.status(201).json({ message: 'Everything worked!' })
+        res.status(201).json({ message: 'User logged in and a session has been created' })
     } catch (err) {
-        if (err.message === 'User Not Found') {
-            res.status(404).json({ message: err.message })
-        }
         console.log('Hit error on account Login')
-        console.log(error)
+        console.log(err)
     }
+})
+
+router.get('/logout', (req, res) => {
+    res.session.destroy(err => {
+        if (err) {
+            console.log(err)
+            return res.status(500).json({ message: 'Session Failed To Destroy' })
+        }
+        res.clearCookie('session');
+        res.json({ message: "Successfully logged out" });
+    })
 })
 
 export { router as accountRoutes }

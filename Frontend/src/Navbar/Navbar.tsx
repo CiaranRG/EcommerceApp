@@ -6,9 +6,11 @@ import './Navbar.scss'
 
 type NavbarProps = {
     isLoggedIn?: boolean,
+    onLogin: () => void,
+    onLogout?: () => void,
 }
 
-export default function Navbar({ isLoggedIn }: NavbarProps) {
+export default function Navbar({ isLoggedIn, onLogin, onLogout}: NavbarProps) {
     const [searchTerm, setSearchTerm] = useState('')
 
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {

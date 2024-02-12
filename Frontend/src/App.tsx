@@ -19,9 +19,21 @@ import Footer from './Footer/Footer'
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+  const handleLogin = () => {
+    setIsLoggedIn(true)
+  }
+
+  const handleLogout = () => {
+    try {
+      setIsLoggedIn(false);
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} />
+      <Navbar isLoggedIn={isLoggedIn} onLogin={handleLogin} onLogout={handleLogout} />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/contactUs' element={<ContactUs />} />
