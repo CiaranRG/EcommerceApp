@@ -44,6 +44,7 @@ app.use(session({
         maxAge: 14 * 24 * 60 * 60 * 1000,
     }
 }))
+// Add this in so we can use the cookies on the backend
 app.use(cookieParser())
 
 // Telling the app to use the cors middleware for all the preflight requests

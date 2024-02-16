@@ -111,21 +111,38 @@
         font-size: 1rem;
         justify-content: space-evenly;
         align-items: center;
+        font-weight: 700;
 
-        a {
+        a,
+        button {
             text-decoration: none;
             color: $color1;
+            background: transparent;
+            border: none;
+        }
+
+        .logoutBtn {
             font-weight: 700;
+            font-size: 1rem;
+            margin-top: 2px;
         }
 
         @media (min-width: 768px) {
             font-size: 1.3rem;
             width: 45%;
+
+            .logoutBtn {
+                font-size: 1.3rem;
+            }
         }
 
         @media (min-width: 1200px) {
             font-size: 1.3rem;
             width: 28%;
+
+            .logoutBtn {
+                font-size: 1.3rem;
+            }
         }
     }
 }

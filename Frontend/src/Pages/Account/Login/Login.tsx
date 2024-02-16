@@ -24,7 +24,7 @@ export default function Login({ onLogin }: Props) {
     const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
         try {
-            const response = await axios.post('http://localhost:5137/accounts/login', formData, { withCredentials: true })
+            const response = await axios.post('http://localhost:5000/accounts/login', formData, { withCredentials: true })
             setFormData({ username: '', password: '' })
             onLogin()
         } catch (err) {

@@ -38,9 +38,7 @@ export default function Navbar({ isLoggedIn, onLogout}: NavbarProps) {
                 </div>
                 <div className="bottomNav">
                     <div className="bottomNavContent">
-                        <Link to={'/'}>
-                            <a href="/">HOME</a>
-                        </Link>
+                        {isLoggedIn ? <button onClick={onLogout} className="logoutBtn">LOGOUT</button> : <Link to={'/'}><a href="/">HOME</a></Link>}
                         <Link to={'shop'}>
                             <a href="shop">SHOP</a>
                         </Link>

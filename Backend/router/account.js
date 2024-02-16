@@ -7,7 +7,7 @@ const saltRounds = 14;
 
 const router = express.Router();
 
-router.post('isLoggedIn', (req, res) => {
+router.post('/isLoggedIn', (req, res) => {
     // Checking for a cookie called session
     if (!req.cookies.session) {
         // return this if there is no cookie
@@ -24,7 +24,6 @@ router.post('/', async (req, res) => {
     console.log('Received Account Creation Request!')
     const newAccount = req.body
     try {
-        console.log('Try account creation')
         // If there was an error validating the schema we throw this
         // if (error){
         //     throw new Error('Validation Error')
@@ -37,9 +36,7 @@ router.post('/', async (req, res) => {
             [newAccount.email, newAccount.username, hash]
         )
         // Using the returned accountId from the database to add it to the session
-        console.log('returned data', result.rows[0].accountid)
         req.session.accountId = result.rows[0].accountid
-        console.log('Account Created!')
         res.status(201).json({ message: 'Data Submitted!' })
     } catch (error) {
         console.log('Hit error on account creation')
@@ -74,11 +71,14 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-    res.session.destroy(err => {
+    // Using the destroy function to delete the session from the database
+    req.session.destroy((err) => {
+        console.log('Entering Destroy')
         if (err) {
             console.log(err)
             return res.status(500).json({ message: 'Session Failed To Destroy' })
         }
+        // Clearing the cookie called session from the browser
         res.clearCookie('session');
         res.json({ message: "Successfully logged out" });
     })
