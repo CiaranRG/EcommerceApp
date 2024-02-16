@@ -1,6 +1,7 @@
 import './App.scss'
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 // Importing Pages
 import Home from './Pages/Home/home'
@@ -23,17 +24,31 @@ function App() {
     setIsLoggedIn(true)
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     try {
+      await axios.get('http://localhost:5137/accounts/logout', { withCredentials: true })
       setIsLoggedIn(false);
     } catch (err) {
       console.log(err)
     }
   }
 
+  useEffect(() => {
+    const loginCheck = async () => {
+      try {
+        const response = await axios('http://localhost:5000/api/accounts/isLoggedIn', {method: 'POST', withCredentials: true})
+        if (response.isLoggedIn){
+          
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  }, [])
+
   return (
     <Router>
-      <Navbar isLoggedIn={isLoggedIn} onLogin={handleLogin} onLogout={handleLogout} />
+      <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/contactUs' element={<ContactUs />} />
@@ -42,7 +57,7 @@ function App() {
         {/* Using isLoggedIn to check the logged in status and then using the navigate component to redirect if needed */}
         <Route path='/account' element={isLoggedIn ? <MyAccount /> : <Navigate to="/login" />} />
         <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to="/login" />} />
-        <Route path='/login' element={isLoggedIn ? <Navigate to="/account" /> : <Login />} />
+        <Route path='/login' element={isLoggedIn ? <Navigate to="/account" /> : <Login onLogin={handleLogin} />} />
         <Route path='/register' element={isLoggedIn ? <Navigate to="/account" /> : <Register />} />
       </Routes>
       <Footer />

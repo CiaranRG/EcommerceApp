@@ -1,6 +1,4 @@
 import express from 'express';
-import session from "express-session";
-import { config } from 'dotenv';
 import db from '../utils/databaseConnection.js';
 
 // Importing bcrypt to hash password and setting up our salt rounds
@@ -8,6 +6,19 @@ import bcrypt from 'bcryptjs'
 const saltRounds = 14;
 
 const router = express.Router();
+
+router.post('isLoggedIn', (req, res) => {
+    // Checking for a cookie called session
+    if (!req.cookies.session) {
+        // return this if there is no cookie
+        return res.status(401).json({ isLoggedIn: false })
+    }
+    if (!req.session.accountId) {
+        // If there's no userID in the session, the user is not authenticated
+        return res.status(401).json({ isLoggedIn: false });
+    }
+    return res.status(200).json({isLoggedIn: true})
+})
 
 router.post('/', async (req, res) => {
     console.log('Received Account Creation Request!')

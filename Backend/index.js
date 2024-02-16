@@ -5,6 +5,7 @@ import { config } from 'dotenv'
 import { accountRoutes } from "./router/account.js";
 import connectPgSimple from 'connect-pg-simple';
 import db from "./utils/databaseConnection.js";
+import cookieParser from "cookie-parser";
 
 // Loading the .env file
 config()
@@ -43,6 +44,7 @@ app.use(session({
         maxAge: 14 * 24 * 60 * 60 * 1000,
     }
 }))
+app.use(cookieParser())
 
 // Telling the app to use the cors middleware for all the preflight requests
 app.options('/api/accounts/login', cors());
