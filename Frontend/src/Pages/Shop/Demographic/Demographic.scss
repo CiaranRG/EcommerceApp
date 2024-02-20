@@ -1,13 +1,7 @@
 @import '../../../App.scss';
 
 .demographicsMainContent {
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-direction: column;
-    height: $page-height-xs;
-    width: 100%;
-    @include responsive-page;
+    @include mainContent;
 }
 
 .demographicCard {

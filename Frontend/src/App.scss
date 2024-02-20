@@ -89,6 +89,16 @@ $border-color: $color3;
   }
 }
 
+// Creating this as a mixing instead of a class so we can have some flexibility with page shaping
+@mixin mainContent {
+  @include responsive-page;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3%;
+  padding: 10px;
+}
+
 // Using these as templates to copy paste 
 @media (min-width: 576px) {}
 

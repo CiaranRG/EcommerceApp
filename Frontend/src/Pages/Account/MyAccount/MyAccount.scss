@@ -1,6 +1,5 @@
 @import '../../../App';
 
 .myAccountMainContent{
-    @include responsive-page;
-    @include flex-center;
+    @include mainContent;
 }

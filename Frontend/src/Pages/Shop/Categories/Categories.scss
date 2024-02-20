@@ -1,13 +1,7 @@
 @import '../../../App.scss';
 
 .categoriesMainContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: $page-height-xs;
-    width: 100%;
-    @include responsive-page;
+    @include mainContent;
     .categoriesList {
         display: flex;
         flex-direction: column;

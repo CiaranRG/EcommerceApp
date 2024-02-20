@@ -1,1 +1,8 @@
 @import '../../../App.scss';
+
+.categoryPageMainContent{
+    @include mainContent;
+    .categoryPageHeader{
+        text-transform: capitalize;
+    }
+}
