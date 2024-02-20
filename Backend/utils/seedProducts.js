@@ -2,6 +2,9 @@
 import { config } from 'dotenv';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { v4 as uuidv4 } from 'uuid';
+
+const uuid = uuidv4()
 
 // Use this to get the url of the current module
 const __filename = fileURLToPath(import.meta.url);
@@ -31,6 +34,15 @@ const productsDB = [
     {
         name: 'Grey Sweatshirt',
         description: 'Its a grey sweatshirt',
+        price: 49.99,
+        categoryid: 1,
+        stock: 3,
+        imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        gender: 'mens'
+    },
+    {
+        name: 'Pink Sweatshirt',
+        description: 'Its a pink sweatshirt',
         price: 49.99,
         categoryid: 1,
         stock: 3,

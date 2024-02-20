@@ -7,13 +7,13 @@ export default function Demographics() {
         <>
             <main className="demographicsMainContent">
                 <div className='demographicCard men'>
-                    <Link to={'/mens/categories'}>Men</Link>
+                    <Link to={'/shop/mens/categories'}>Men</Link>
                 </div>
                 <div className='demographicCard women'>
-                    <Link to={'/womens/categories'}>Women</Link>
+                    <Link to={'/shop/womens/categories'}>Women</Link>
                 </div>
                 <div className='demographicCard child'>
-                    <Link to={'/kids/categories'}>Kids</Link>
+                    <Link to={'/shop/kids/categories'}>Kids</Link>
                 </div>
             </main>
         </>

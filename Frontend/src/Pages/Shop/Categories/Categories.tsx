@@ -11,22 +11,22 @@ export default function Categories() {
                 </div> */}
                 <div className='categoriesList'>
                     <h1>{demographic}</h1>
-                    <Link to={`/${demographic}/sweatshirts`}>
+                    <Link to={`/shop/${demographic}/sweatshirts`}>
                         <a>Sweatshirts</a>
                     </Link>
-                    <Link to={`/${demographic}/shoes`}>
+                    <Link to={`/shop/${demographic}/shoes`}>
                         <a>Shoes</a>
                     </Link>
-                    <Link to={`/${demographic}/joggers`}>
+                    <Link to={`/shop/${demographic}/joggers`}>
                         <a>Joggers</a>
                     </Link>
-                    <Link to={`/${demographic}/tops`}>
+                    <Link to={`/shop/${demographic}/tops`}>
                         <a>Tops</a>
                     </Link>
-                    <Link to={`/${demographic}/shorts`}>
+                    <Link to={`/shop/${demographic}/shorts`}>
                         <a>Shorts</a>
                     </Link>
-                    <Link to={`/${demographic}/hats`}>
+                    <Link to={`/shop/${demographic}/hats`}>
                         <a>Hats</a>
                     </Link>
                 </div>
