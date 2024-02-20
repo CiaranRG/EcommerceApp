@@ -1,6 +1,7 @@
 import './CategoryPage.scss'
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import Product from '../Product/Product';
 
 const validDemographics = ['mens', 'womens', 'kids']
 const validCategories = ['sweatshirts', 'shoes', 'joggers', 'tops', 'shorts', 'hats']
@@ -25,6 +26,14 @@ export default function CategoryPage() {
         <>
             <main className='categoryPageMainContent'>
                 <h1 className='categoryPageHeader'>{demographic} {category}</h1>
+                <div className='productsList'>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                </div>
             </main>
         </>
     )

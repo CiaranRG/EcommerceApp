@@ -1,8 +1,22 @@
 @import '../../../App.scss';
 
-.categoryPageMainContent{
-    @include mainContent;
-    .categoryPageHeader{
+.categoryPageMainContent {
+    @include responsive-page;
+    flex-direction: column;
+    align-items: center;
+    gap: 3%;
+    padding: 20px 10px 10px 10px;
+    .categoryPageHeader {
         text-transform: capitalize;
+        font-size: 2rem;
+    }
+    .productsList {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 8%;
+        row-gap: 5%;
+        width: 100%;
+        max-width: 100%;
     }
 }
