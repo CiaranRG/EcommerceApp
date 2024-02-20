@@ -59,13 +59,13 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/contactUs' element={<ContactUs />} />
         <Route path='/shop' element={<Demographics />} />
-        <Route path='/shop/:demographic/categories' element={<Categories />} />
-        <Route path='/shop/:demographic/:category' element={<CategoryPage />} />
         {/* Using isLoggedIn to check the logged in status and then using the navigate component to redirect if needed */}
         <Route path='/account' element={isLoggedIn ? <MyAccount /> : <Navigate to="/login" />} />
         <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to="/login" />} />
         <Route path='/login' element={isLoggedIn ? <Navigate to="/account" /> : <Login onLogin={handleLogin} />} />
         <Route path='/register' element={isLoggedIn ? <Navigate to="/account" /> : <Register />} />
+        <Route path='/shop/:demographic/categories' element={<Categories />} />
+        <Route path='/shop/:demographic/:category' element={<CategoryPage />} />
       </Routes>
       <Footer />
     </Router>

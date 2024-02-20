@@ -38,7 +38,7 @@ const productsDB = [
         categoryid: 1,
         stock: 3,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        gender: 'mens'
+        demographic: 'mens'
     },
     {
         name: 'Pink Sweatshirt',
@@ -47,7 +47,16 @@ const productsDB = [
         categoryid: 1,
         stock: 3,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        gender: 'mens'
+        demographic: 'womens'
+    },
+    {
+        name: 'Blue Sweatshirt',
+        description: 'Its a blue sweatshirt',
+        price: 49.99,
+        categoryid: 1,
+        stock: 3,
+        imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'kids'
     },
     {
         name: 'Grey Shoes',
@@ -56,7 +65,25 @@ const productsDB = [
         categoryid: 2,
         stock: 1,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        gender: 'mens'
+        demographic: 'mens'
+    },
+    {
+        name: 'Pink Shoes',
+        description: 'Its pink shoes',
+        price: 89.99,
+        categoryid: 2,
+        stock: 1,
+        imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'womens'
+    },
+    {
+        name: 'Blue Shoes',
+        description: 'Its blue shoes',
+        price: 89.99,
+        categoryid: 2,
+        stock: 1,
+        imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'kids'
     },
     {
         name: 'Grey Joggers',
@@ -65,7 +92,7 @@ const productsDB = [
         categoryid: 3,
         stock: 10,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        gender: 'mens'
+        demographic: 'mens'
     },
     {
         name: 'Grey Top',
@@ -74,7 +101,7 @@ const productsDB = [
         categoryid: 4,
         stock: 7,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        gender: 'mens'
+        demographic: 'mens'
     },
     {
         name: 'Grey Shorts',
@@ -83,7 +110,7 @@ const productsDB = [
         categoryid: 5,
         stock: 4,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        gender: 'mens'
+        demographic: 'mens'
     },
     {
         name: 'Grey Hat',
@@ -92,7 +119,7 @@ const productsDB = [
         categoryid: 6,
         stock: 13,
         imgurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        gender: 'mens'
+        demographic: 'mens'
     },
 ]
 
@@ -103,9 +130,11 @@ const seedProducts = async () => {
     console.log('Categories table truncated.');
     try {
         // Looping the array to seed the database 
-        for (let product of productsDB) {
-            console.log(`Inserting product: ${product.name}`);
-            await db.query('INSERT INTO product(name, description, price, categoryid, stock, imgurl) VALUES ($1, $2, $3, $4, $5, $6)', [product.name, product.description, product.price, product.categoryid, product.stock, product.imgurl])
+        for (let i = 0; i < 3; i++){
+            for (let product of productsDB) {
+                console.log(`Inserting product: ${product.name}`);
+                await db.query('INSERT INTO product(name, description, price, categoryid, stock, imgurl, demographic) VALUES ($1, $2, $3, $4, $5, $6, $7)', [product.name, product.description, product.price, product.categoryid, product.stock, product.imgurl, product.demographic])
+            }
         }
         console.log('Finished inserting products.');
     } catch (error) {

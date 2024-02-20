@@ -12,13 +12,14 @@ type categoryParam = {
 
 export default function CategoryPage() {
 
-    const { demographic, category } = useParams<categoryParam>()
+    // Setting some defaults to solve typescript error, if there is nothing inside these then the defaults take over and since we redirect if they aren't in our allotted words then we just redirect to our 404
+    const { demographic = 'redirect', category = 'redirect' } = useParams<categoryParam>()
 
-    // useEffect(() => {
-    //     if (!validDemographics.includes(demographic) || !validCategories.includes(category)){
-    //         // Route to a 404 page
-    //     }
-    // })
+    useEffect(() => {
+        if (!validDemographics.includes(demographic) || !validCategories.includes(category)) {
+            // Route to a 404 page
+        }
+    })
 
     return (
         <>
