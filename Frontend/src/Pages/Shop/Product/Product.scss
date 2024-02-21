@@ -3,18 +3,22 @@
 .productMainContent {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     background-color: $color3;
     color: $color1;
-    width: 45%;
+    width: 15rem;
     height: 12rem;
     text-align: center;
     border: 2px solid black;
     border-radius: 5px;
+    margin-bottom: 2rem;
     .productTop {
         width: 100%;
         height: 50%;
-        background-image: url('https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+        background-image: url('https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
         background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
         border-bottom: 2px solid white;
