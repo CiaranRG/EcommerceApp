@@ -2,10 +2,13 @@ import express from "express";
 import session from "express-session";
 import cors from 'cors';
 import { config } from 'dotenv'
-import { accountRoutes } from "./router/account.js";
 import connectPgSimple from 'connect-pg-simple';
 import db from "./utils/databaseConnection.js";
 import cookieParser from "cookie-parser";
+
+// Importing our routes
+import { accountRoutes } from "./router/account.js";
+import { productRoutes } from "./router/products.js";
 
 // Loading the .env file
 config()
@@ -50,8 +53,10 @@ app.use(cookieParser())
 // Telling the app to use the cors middleware for all the preflight requests
 app.options('/api/accounts/login', cors());
 
-// Telling my app to use this file for requests to /api/accounts
+// Telling my app to use these files for requests
 app.use('/accounts', accountRoutes);
+app.use('/products', productRoutes);
+
 
 app.get('/', (req, res) => {
     try {

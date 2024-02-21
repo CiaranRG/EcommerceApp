@@ -6,10 +6,42 @@
     flex-direction: column;
     align-items: center;
     padding: 20px 20px 20px 10px;
-    .categoryPageHeader {
-        text-transform: capitalize;
-        font-size: 1.8rem;
+    .categoryPageHeaderDiv{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
         margin-bottom: 2rem;
+        gap: 20px;
+        .categoryPageHeader {
+            text-transform: capitalize;
+            font-size: 1.8rem;
+        }
+        a{
+            text-decoration: none;
+            border-radius: 10px;
+            border: 2px solid $color3;
+            background-color: $color3;
+            padding: 5px;
+            color: $color1;
+        }
+        @media (min-width: 768px){
+            .categoryPageHeader {
+                text-transform: capitalize;
+                font-size: 2rem;
+            }
+        }
+        @media (min-width: 992px){
+            .categoryPageHeader {
+                text-transform: capitalize;
+                font-size: 2.5rem;
+            }
+        }
+        @media (min-width: 1200px){
+            .categoryPageHeader {
+                text-transform: capitalize;
+                font-size: 3rem;
+            }
+        }
     }
     .productsList {
         display: flex;

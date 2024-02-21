@@ -1,6 +1,6 @@
 import './CategoryPage.scss'
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link} from 'react-router-dom';
 import Product from '../Product/Product';
 
 const validDemographics = ['mens', 'womens', 'kids']
@@ -25,7 +25,12 @@ export default function CategoryPage() {
     return (
         <>
             <main className='categoryPageMainContent'>
-                <h1 className='categoryPageHeader'>{demographic} {category}</h1>
+                <div className='categoryPageHeaderDiv'>
+                    <h1 className='categoryPageHeader'>{demographic} {category}</h1>
+                    <Link to={`/shop/${demographic}/categories`}>
+                        <a className='categoryPageGoBackBtn'>Click here to go back!</a>
+                    </Link>
+                </div>
                 <div className='productsList'>
                     <Product demographic={demographic} category={category}/>
                     <Product demographic={demographic} category={category}/>

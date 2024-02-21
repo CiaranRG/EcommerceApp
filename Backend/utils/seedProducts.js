@@ -130,7 +130,7 @@ const seedProducts = async () => {
     console.log('Categories table truncated.');
     try {
         // Looping the array to seed the database 
-        for (let i = 0; i < 3; i++){
+        for (let i = 0; i < 40; i++){
             for (let product of productsDB) {
                 console.log(`Inserting product: ${product.name}`);
                 await db.query('INSERT INTO product(name, description, price, categoryid, stock, imgurl, demographic) VALUES ($1, $2, $3, $4, $5, $6, $7)', [product.name, product.description, product.price, product.categoryid, product.stock, product.imgurl, product.demographic])
