@@ -6,8 +6,8 @@
     justify-content: flex-start;
     background-color: $color3;
     color: $color1;
-    width: 15rem;
-    height: 12rem;
+    width: 18rem;
+    height: 20rem;
     text-align: center;
     border: 2px solid black;
     border-radius: 5px;
@@ -21,12 +21,33 @@
         background-size: cover;
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
-        border-bottom: 2px solid white;
+        border-bottom: 2px solid black;
     }
-
     .productBottom {
+        @include flex-center;
+        flex-direction: column;
+        gap: 10%;
         width: 100%;
         height: 50%;
-        padding: 5%;
+        padding: 1% 5% 1% 5%;
+        button{
+            width: 40%;
+            background-color: $color1;
+            border-radius: 10px;
+            color: $color3;
+            font-weight: 700;
+            border: 2px solid $color1;
+            padding: 1% 0% 1% 0%;
+            font-size: 0.8rem;
+            transition: 0.2s;
+        }
+        button:hover{
+            background-color: $color3;
+            color: $color1;
+            cursor: pointer;
+        }
+        p{
+            font-size: 0.8rem;
+        }
     }
 }

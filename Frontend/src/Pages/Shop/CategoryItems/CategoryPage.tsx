@@ -33,6 +33,48 @@ export default function CategoryPage() {
                     <Product demographic={demographic} category={category}/>
                     <Product demographic={demographic} category={category}/>
                     <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
+                    <Product demographic={demographic} category={category}/>
                 </div>
             </main>
         </>

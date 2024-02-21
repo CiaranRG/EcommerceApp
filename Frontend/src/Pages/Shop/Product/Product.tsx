@@ -7,8 +7,6 @@ type productProps = {
 
 export default function Product({demographic, category}: productProps) {
 
-    console.log(demographic, category)
-
 
     return (
         <main className='productMainContent'>
@@ -16,7 +14,10 @@ export default function Product({demographic, category}: productProps) {
                 
             </div>
             <div className='productBottom'>
-                <h3>Product</h3>
+                <h3>Product Name</h3>
+                <p>Price - $50</p>
+                <p>Stock - 3</p>
+                <button>View More</button>
             </div>
         </main>
     )
