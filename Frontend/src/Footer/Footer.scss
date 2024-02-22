@@ -2,10 +2,15 @@
 
 .footer{
     display: flex;
+    flex-direction: row;
+    gap: 10%;
     background-color: $color3;
     border-top: 2px solid $color1;
     height: $nav-height-xs;
     @include flex-center;
-    font-size: 1rem;
-    color: $color1;
+    a{
+        text-decoration: none;
+        font-size: 1.2rem;
+        color: $color1;
+    }
 }

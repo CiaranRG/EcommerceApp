@@ -11,6 +11,9 @@ export default function Categories() {
                 </div> */}
                 <div className='categoriesList'>
                     <h1>{demographic}</h1>
+                    <Link to={`/shop`}>
+                        <a className='categoriesGoBackBtn'>Click here to go back!</a>
+                    </Link>
                     <Link to={`/shop/${demographic}/sweatshirts`}>
                         <a>Sweatshirts</a>
                     </Link>

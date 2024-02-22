@@ -3,10 +3,6 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-// Importing Components
-import Navbar from './Navbar/Navbar'
-import Footer from './Footer/Footer'
-
 // Importing Pages
 import Home from './Pages/Home/home'
 import ContactUs from './Pages/ContactUs/ContactUs'
@@ -16,6 +12,10 @@ import Register from './Pages/Account/Register/Register'
 import Cart from './Pages/Account/Cart/Cart'
 import Demographics from './Pages/Shop/Demographic/Demographic'
 import Categories from './Pages/Shop/Categories/Categories'
+
+// Importing Components
+import Navbar from './Navbar/Navbar'
+import Footer from './Footer/Footer'
 import CategoryPage from './Pages/Shop/CategoryPage/CategoryPage'
 
 function App() {
@@ -59,13 +59,13 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/contactUs' element={<ContactUs />} />
         <Route path='/shop' element={<Demographics />} />
+        <Route path='/shop/:demographic/categories' element={<Categories />} />
+        <Route path='/shop/:demographic/:category' element={<CategoryPage />} />
         {/* Using isLoggedIn to check the logged in status and then using the navigate component to redirect if needed */}
         <Route path='/account' element={isLoggedIn ? <MyAccount /> : <Navigate to="/login" />} />
         <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to="/login" />} />
         <Route path='/login' element={isLoggedIn ? <Navigate to="/account" /> : <Login onLogin={handleLogin} />} />
         <Route path='/register' element={isLoggedIn ? <Navigate to="/account" /> : <Register />} />
-        <Route path='/shop/:demographic/categories' element={<Categories />} />
-        <Route path='/shop/:demographic/:category' element={<CategoryPage />} />
       </Routes>
       <Footer />
     </Router>
