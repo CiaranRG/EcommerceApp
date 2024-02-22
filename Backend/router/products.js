@@ -7,7 +7,7 @@ router.get('/products', async (req, res) => {
     // Grabbing the variables we sent from the frontend
     const { demographic, category } = req.query
     try {
-        const result
+        // const result
     } catch (err){
 
     }

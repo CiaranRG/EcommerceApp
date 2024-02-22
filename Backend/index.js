@@ -37,7 +37,8 @@ app.use(session({
         tableName: 'session'
     }),
     secret: process.env.PG_SECRET,
-    saveUninitialized: true,
+    // Setting this to false so a session is only created when the session object changes otherwise a session is created anytime someone visits
+    saveUninitialized: false,
     resave: false,
     cookie: {
         httpOnly: true,

@@ -53,12 +53,12 @@ router.post('/login', async (req, res) => {
         const currentUser = user.rows[0]
         if (user.rows.length === 0) {
             console.log('User not found')
-            res.status(404).json({ message: 'User Not Found' })
+            return res.status(404).json({ message: 'User Not Found' })
         }
         const comparedPassword = await bcrypt.compare(loginAccount.password, currentUser.password)
         if (!comparedPassword) {
             console.log('Wrong Password')
-            res.status(401).json({ message: 'Incorrect Details' })
+            return res.status(401).json({ message: 'Incorrect Details' })
         }
         console.log('Creating user session and assigning id')
         req.session.accountId = user.rows[0].accountid

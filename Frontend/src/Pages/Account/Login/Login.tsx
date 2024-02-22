@@ -1,6 +1,7 @@
 import './Login.scss'
 import { useState } from 'react'
 import axios from 'axios'
+import { isRouteErrorResponse } from 'react-router-dom'
 
 type FormData = {
     username: string,
@@ -26,6 +27,7 @@ export default function Login({ onLogin }: Props) {
         try {
             const response = await axios.post('http://localhost:5000/accounts/login', formData, { withCredentials: true })
             setFormData({ username: '', password: '' })
+            console.log(response.data)
             onLogin()
         } catch (err) {
             console.log('Handle Submit Error')
