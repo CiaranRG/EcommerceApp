@@ -16,7 +16,7 @@ import Register from './Pages/Account/Register/Register'
 import Cart from './Pages/Account/Cart/Cart'
 import Demographics from './Pages/Shop/Demographic/Demographic'
 import Categories from './Pages/Shop/Categories/Categories'
-import CategoryPage from './Pages/Shop/CategoryItems/CategoryPage'
+import CategoryPage from './Pages/Shop/CategoryPage/CategoryPage'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)

@@ -17,7 +17,7 @@ router.post('/isLoggedIn', (req, res) => {
         // If there's no userID in the session, the user is not authenticated
         return res.status(401).json({ isLoggedIn: false });
     }
-    return res.status(200).json({isLoggedIn: true})
+    return res.status(200).json({ isLoggedIn: true })
 })
 
 router.post('/', async (req, res) => {
@@ -41,6 +41,7 @@ router.post('/', async (req, res) => {
     } catch (error) {
         console.log('Hit error on account creation')
         console.log(error)
+        res.status(400).json({message: 'Registration error'})
     }
 })
 
@@ -53,12 +54,12 @@ router.post('/login', async (req, res) => {
         const currentUser = user.rows[0]
         if (user.rows.length === 0) {
             console.log('User not found')
-            return res.status(404).json({ message: 'User Not Found' })
+            return res.status(404).json({ message: 'User not found' })
         }
         const comparedPassword = await bcrypt.compare(loginAccount.password, currentUser.password)
         if (!comparedPassword) {
             console.log('Wrong Password')
-            return res.status(401).json({ message: 'Incorrect Details' })
+            return res.status(401).json({ message: 'Incorrect details' })
         }
         console.log('Creating user session and assigning id')
         req.session.accountId = user.rows[0].accountid
