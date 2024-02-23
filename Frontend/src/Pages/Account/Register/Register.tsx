@@ -21,7 +21,7 @@ export default function Register() {
     const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
         try {
-            const response = await axios.post('http://localhost:5000/accounts', formData, { withCredentials: true })
+            const response = await axios.post('http://localhost:5001/accounts', formData, { withCredentials: true })
             setFormData({ email: '', username: '', password: '' })
             console.log(response.data)
         } catch (err) {

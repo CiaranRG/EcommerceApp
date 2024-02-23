@@ -27,7 +27,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:5000/accounts/logout', { withCredentials: true })
+      await axios.get('http://localhost:5001/accounts/logout', { withCredentials: true })
       setIsLoggedIn(false);
     } catch (err) {
       console.log(err)
@@ -37,7 +37,7 @@ function App() {
   useEffect(() => {
     const loginCheck = async () => {
       try {
-        const response = await axios('http://localhost:5000/accounts/isLoggedIn', { method: 'POST', withCredentials: true })
+        const response = await axios('http://localhost:5001/accounts/isLoggedIn', { method: 'POST', withCredentials: true })
         if (response.data.isLoggedIn) {
           setIsLoggedIn(true)
         } else {
