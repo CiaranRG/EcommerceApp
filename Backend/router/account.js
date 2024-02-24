@@ -40,15 +40,15 @@ router.post('/', async (req, res) => {
         )
         // Using the returned accountId from the database to add it to the session
         req.session.accountId = result.rows[0].accountid
-        res.status(201).json({ message: 'Data Submitted!' })
-    } catch (error) {
+        return res.status(201).json({ message: 'Data Submitted!' })
+    } catch (err) {
         if (err.message === 'Validation error') {
             console.error(err);
-            res.status(400).json({ message: 'Validation error' });
+            return res.status(400).json({ message: 'Validation error' });
         }
         console.log('Hit error on account creation')
-        console.log(error)
-        res.status(400).json({ message: 'Registration error' })
+        console.log(err)
+        return res.status(400).json({ message: 'Registration error' })
     }
 })
 
@@ -76,11 +76,11 @@ router.post('/login', async (req, res) => {
         console.log('Creating user session and assigning id')
         req.session.accountId = user.rows[0].accountid
         // Send message to front end and create a session for them
-        res.status(201).json({ message: 'User logged in and a session has been created' })
+        return res.status(201).json({ message: 'User logged in and a session has been created' })
     } catch (err) {
         if (err.message === 'Login error') {
             console.error(err);
-            res.status(400).json({ message: 'Validation error' });
+            return res.status(400).json({ message: 'Validation error' });
         }
         console.log('Hit error on account Login')
         console.log(err)
@@ -97,7 +97,7 @@ router.get('/logout', (req, res) => {
         }
         // Clearing the cookie called session from the browser
         res.clearCookie('session');
-        res.json({ message: "Successfully logged out" });
+        return res.json({ message: "Successfully logged out" });
     })
 })
 

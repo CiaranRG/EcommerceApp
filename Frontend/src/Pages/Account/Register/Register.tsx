@@ -31,6 +31,8 @@ export default function Register() {
                 // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains the specific error
                 if (serverResponse && serverResponse.data.message === 'Registration error') {
                     return alert("Registration Error")
+                } else if (serverResponse && serverResponse.data.message === 'Validation error'){
+                    return alert("Password and Username must be between 3-30 characters long!")
                 }
             } else {
                 console.log('Handle Submit Error')
