@@ -14,7 +14,7 @@ import { productRoutes } from "./router/products.js";
 config()
 
 const app = express()
-const PORT = 5001
+const PORT = 5000
 
 // We use this to allow connect-pg access to session so it can extend its use with our database
 const pgSessions = connectPgSimple(session)

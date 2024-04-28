@@ -1,6 +1,7 @@
 import './CategoryPage.scss'
 import { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate} from 'react-router-dom';
+import axios from 'axios';
 import Product from '../Product/Product';
 
 const validDemographics = ['mens', 'womens', 'kids']
@@ -24,16 +25,20 @@ export default function CategoryPage() {
         }
     })
 
-    // useEffect(() => {
-    //     const gatherProducts = async () => {
-    //         try {
-    //             // Adding in a params object so I can grab them on the backend with req.query
-    //             const result = await axios.get('http://localhost:5001/products', { params: { demographic, category } })
-    //         } catch (err) {
-
-    //         }
-    //     }
-    // }, [])
+    useEffect(() => {
+        const gatherProducts = async () => {
+            try {
+                console.log('Entering gather products')
+                // Adding in a params object so I can grab them on the backend with req.query
+                const result = await axios.get('http://localhost:5000/products', { params: { demographic, category } })
+                console.log(result)
+            } catch (err) {
+                console.log('Error on gatherProducts()')
+                console.log(err)
+            }
+        }
+        gatherProducts()
+    }, [])
 
     return (
         <>

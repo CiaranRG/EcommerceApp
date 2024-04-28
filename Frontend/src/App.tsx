@@ -12,6 +12,7 @@ import Register from './Pages/Account/Register/Register'
 import Cart from './Pages/Account/Cart/Cart'
 import Demographics from './Pages/Shop/Demographic/Demographic'
 import Categories from './Pages/Shop/Categories/Categories'
+import ErrorPage from './Pages/Error/ErrorPage'
 
 // Importing Components
 import Navbar from './Navbar/Navbar'
@@ -27,7 +28,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:5001/accounts/logout', { withCredentials: true })
+      await axios.get('http://localhost:5000/accounts/logout', { withCredentials: true })
       setIsLoggedIn(false);
     } catch (err) {
       console.log(err)
@@ -37,7 +38,7 @@ function App() {
   useEffect(() => {
     const loginCheck = async () => {
       try {
-        const response = await axios('http://localhost:5001/accounts/isLoggedIn', { method: 'POST', withCredentials: true })
+        const response = await axios('http://localhost:5000/accounts/isLoggedIn', { method: 'POST', withCredentials: true })
         if (response.data.isLoggedIn) {
           setIsLoggedIn(true)
         } else {
@@ -66,6 +67,7 @@ function App() {
         <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to="/login" />} />
         <Route path='/login' element={isLoggedIn ? <Navigate to="/account" /> : <Login onLogin={handleLogin} />} />
         <Route path='/register' element={isLoggedIn ? <Navigate to="/account" /> : <Register />} />
+        <Route path='*' element={<ErrorPage errorCode='404' errorMessage='Page not found!'/>} />
       </Routes>
       <Footer />
     </Router>
