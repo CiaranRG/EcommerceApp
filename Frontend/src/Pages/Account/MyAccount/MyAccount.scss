@@ -1,5 +1,89 @@
 @import '../../../App';
 
-.myAccountMainContent{
-    @include mainContent;
+.myAccountMainContent {
+    display: flex;
+    flex-direction: column;
+    min-height: $page-height-xs;
+    align-items: center;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    padding: 10px;
+    gap: 10px;
+    font-weight: 700;
+    text-align: center;
+    .myAccountHeader {
+        margin-bottom: 2rem;
+        font-size: 1.5rem;
+        text-transform: capitalize;
+    }
+
+    .myAccountUserAndPassDiv {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid black;
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+            button {
+                padding: 5px 10px 5px 10px;
+                font-weight: 700;
+                border-radius: 5px;
+                border: 1px solid black;
+            }
+            input{
+                width: 50%;
+                padding: 2px 2px 2px 4px;
+                font-weight: 700;
+                border-radius: 5px;
+                border: 1px solid black;
+            }
+            div{
+                width: 60%;
+                .passInput{
+                    margin-left: 3px;
+                    margin-top: 10px;
+                    margin-bottom: 5px;
+                }
+            }
+        }
+        .deleteAccountBtn{
+            padding: 5px 10px 5px 10px;
+            font-weight: 700;
+            border-radius: 5px;
+            border: 1px solid black;
+        }
+    }
+
+    .shippingAddressDiv {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        align-items: center;
+        padding-bottom: 20px;
+        border-bottom: 2px solid black;
+        form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            button {
+                padding: 5px 10px 5px 10px;
+                font-weight: 700;
+                border-radius: 5px;
+                border: 1px solid black;
+            }
+            input{
+                width: 50%;
+                padding: 2px 2px 2px 4px;
+                font-weight: 700;
+                border-radius: 5px;
+                border: 1px solid black;
+            }
+        }
+    }
 }

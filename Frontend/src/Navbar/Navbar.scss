@@ -81,15 +81,20 @@
 
     .topRightNav {
         display: flex;
+        justify-content: flex-end;
         width: 50%;
+        .cartIcon{
+            color: $color1;
+            font-size: 1rem;
+            margin: 25px 5px 0px 0px;
+        }
         .searchForm {
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            padding-right: 5%;
-            width: 100%;
+            justify-content: flex-start;
+            // padding-right: 5%;
+            // width: 100%;
             height: 100%;
-
             .navSearch {
                 box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 width: 50%;

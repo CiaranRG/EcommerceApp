@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.scss'
 
 type NavbarProps = {
@@ -28,6 +28,7 @@ export default function Navbar({ isLoggedIn, onLogout}: NavbarProps) {
                         </Link>
                     </div>
                     <div className="topRightNav">
+                    <FontAwesomeIcon icon={faCartShopping} className="cartIcon"/>
                         <form action="" className="searchForm">
                             <input type="text" className="navSearch" name="searchTerm" placeholder="Search" value={searchTerm} onChange={handleChange} />
                             <button type="button" className="searchButton">
@@ -38,12 +39,12 @@ export default function Navbar({ isLoggedIn, onLogout}: NavbarProps) {
                 </div>
                 <div className="bottomNav">
                     <div className="bottomNavContent">
-                        {isLoggedIn ? <button onClick={onLogout} className="logoutBtn">LOGOUT</button> : <Link to={'/'}><a href="/">HOME</a></Link>}
+                        <Link to={'/'}><a href="/">HOME</a></Link>
                         <Link to={'shop'}>
                             <a href="shop">SHOP</a>
                         </Link>
                         {isLoggedIn ? <Link to={'account'}><a href="account">ACCOUNT</a></Link> : <Link to={'login'}><a href="login">LOGIN</a></Link>}
-                        {isLoggedIn ? <Link to={'cart'}><a href="cart">CART</a></Link> : <Link to={'register'}><a href="register">REGISTER</a></Link>}
+                        {isLoggedIn ? <button onClick={onLogout} className="logoutBtn">LOGOUT</button> : <Link to={'register'}><a href="register">REGISTER</a></Link>}
                     </div>
                 </div>
                 <div className='saleNowBanner'>
