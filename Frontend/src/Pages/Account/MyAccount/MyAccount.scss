@@ -11,6 +11,7 @@
     gap: 10px;
     font-weight: 700;
     text-align: center;
+
     .myAccountHeader {
         margin-bottom: 2rem;
         font-size: 1.5rem;
@@ -24,34 +25,48 @@
         gap: 10px;
         padding-bottom: 20px;
         border-bottom: 2px solid black;
+
         form {
             display: flex;
             flex-direction: column;
             gap: 6px;
             align-items: center;
+
             button {
                 padding: 5px 10px 5px 10px;
                 font-weight: 700;
                 border-radius: 5px;
                 border: 1px solid black;
             }
-            input{
+
+            input {
                 width: 50%;
                 padding: 2px 2px 2px 4px;
                 font-weight: 700;
                 border-radius: 5px;
                 border: 1px solid black;
             }
-            div{
+
+            div {
                 width: 60%;
-                .passInput{
-                    margin-left: 3px;
+
+                .passInput {
                     margin-top: 10px;
                     margin-bottom: 5px;
                 }
+
+                .passLabel {
+                    margin-left: 3px;
+                    margin-right: 10px;
+                }
+
+                .userLabel {
+                    margin-right: 10px;
+                }
             }
         }
-        .deleteAccountBtn{
+
+        .deleteAccountBtn {
             padding: 5px 10px 5px 10px;
             font-weight: 700;
             border-radius: 5px;
@@ -66,19 +81,32 @@
         align-items: center;
         padding-bottom: 20px;
         border-bottom: 2px solid black;
-        form{
-            display: flex;
-            flex-direction: column;
+        max-width: 100vw;
+
+        p {
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: grid;
+            // Tell the grid how we would like it setup, minmax in this case is telling the first column to be at least 150px but to stretch the max content length and then the 1fr is telling grid to assign the remaining space to the second column
+            // In this instance its fine but if the first column starts to take up too much space we can assign a max value instead of max content.
+            grid-template-columns: minmax(150px, max-content) 1fr;
+            gap: 10px;
             align-items: center;
-            gap: 6px;
+            width: 100%;
+            margin-bottom: 10px;
+
             button {
+                // Telling this button to start at the first column line and extend all the way to the last, we do this to avoid it being locked into one of the columns like it would without this.
+                grid-column: 1 / -1;
                 padding: 5px 10px 5px 10px;
                 font-weight: 700;
                 border-radius: 5px;
                 border: 1px solid black;
             }
-            input{
-                width: 50%;
+
+            input {
                 padding: 2px 2px 2px 4px;
                 font-weight: 700;
                 border-radius: 5px;

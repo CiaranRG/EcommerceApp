@@ -31,41 +31,29 @@ export default function MyAccount() {
                 </div>
                 <div className='shippingAddressDiv'>
                     <p>Edit Shipping Details:</p>
-                    <form action="">
-                        <div className='shippingAddressName'>
-                            <label htmlFor="">Name: </label>
-                            <input type="text" placeholder='Name' />
-                        </div>
-                        <div className='shippingAddressLine'>
-                            <label htmlFor="">Address Line 1: </label>
-                            <input type="text" placeholder='Address Line 1' />
-                            <label htmlFor="">Address Line 2: </label>
-                            <input type="text" placeholder='Address Line 2' />
-                        </div>
-                        <div className='shippingAddressCity'>
-                            <label htmlFor="">City: </label>
-                            <input type="text" placeholder='City' />
-                        </div>
-                        <div className='shippingAddressState'>
-                            <label htmlFor="">State: </label>
-                            <input type="text" placeholder='State ' />
-                        </div>
-                        <div className='shippingAddressPostCode'>
-                            <label htmlFor="">Post Code: </label>
-                            <input type="text" placeholder='Post Code' />
-                        </div>
-                        <div className='shippingAddressCountry'>
-                            <label htmlFor="">Country: </label>
-                            <select name="country" id="country">
-                                <option value="">United Kingdom</option>
-                                <option value="">United States</option>
-                                <option value="">Etc</option>
-                            </select>
-                        </div>
-                        <div className='shippingAddressPhoneNumber'>
-                            <label htmlFor="">Phone Number: </label>
-                            <input type="tel" placeholder='Phone Number' />
-                        </div>
+                    <form action="" >
+                        {/* Using a grid setup for the form instead of flex */}
+                        <label htmlFor="" className='shippingNameLabel'>Name: </label>
+                        <input type="text" placeholder='Name' />
+                        <label htmlFor="" className='shippingLineOneLabel'>Address Line 1: </label>
+                        <input type="text" placeholder='Address Line 1' />
+                        <label htmlFor="" className='shippingLineTwoLabel'>Address Line 2: </label>
+                        <input type="text" placeholder='Address Line 2' />
+                        <label htmlFor="" className='shippingCityLabel'>City: </label>
+                        <input type="text" placeholder='City' />
+                        <label htmlFor="">State: </label>
+                        <input type="text" placeholder='State ' className='shippingStateLabel' />
+                        <label htmlFor="">Post Code: </label>
+                        <input type="text" placeholder='Post Code' className='shippingPostCodeLabel' />
+                        <label htmlFor="" className='shippingCountryLabel'>Country: </label>
+                        <select name="country" id="country">
+                            <option value="">United Kingdom</option>
+                            <option value="">United States</option>
+                            <option value="">Etc</option>
+                        </select>
+                        <label htmlFor="" className='shippingPhoneNumberLabel'>Phone Number: </label>
+                        <input type="tel" placeholder='Phone Number' />
+                        <button>Submit</button>
                     </form>
                 </div>
                 <h3>Order Tracking</h3>
