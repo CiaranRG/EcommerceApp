@@ -38,7 +38,7 @@ function App() {
   useEffect(() => {
     const loginCheck = async () => {
       try {
-        const response = await axios('http://localhost:5000/accounts/isLoggedIn', { method: 'POST', withCredentials: true })
+        const response = await axios('http://localhost:5000/accounts/isLoggedIn', { method: 'GET', withCredentials: true })
         if (response.data.isLoggedIn) {
           setIsLoggedIn(true)
         } else {
@@ -67,6 +67,7 @@ function App() {
         <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to="/login" />} />
         <Route path='/login' element={isLoggedIn ? <Navigate to="/account" /> : <Login onLogin={handleLogin} />} />
         <Route path='/register' element={isLoggedIn ? <Navigate to="/account" /> : <Register />} />
+        <Route path='/error' element={<ErrorPage errorCde='' errorMessae=''/>} />
         <Route path='*' element={<ErrorPage errorCode='404' errorMessage='Page not found!'/>} />
       </Routes>
       <Footer />

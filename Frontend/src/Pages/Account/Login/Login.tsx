@@ -54,11 +54,11 @@ export default function Login({ onLogin }: Props) {
                 <form action="" onSubmit={handleSubmit} className='loginForm'>
                     <div className='loginFormDiv'>
                         <label htmlFor="username">Please enter your username:</label>
-                        <input type="text" required name='username' placeholder='Username' onChange={handleChange} value={formData.username} />
+                        <input type="text" required name='username' placeholder='Username' onChange={handleChange} value={formData.username} autoComplete='username' />
                     </div>
                     <div className='loginFormDiv'>
                         <label htmlFor="password">Please enter your password:</label>
-                        <input type="password" required name='password' placeholder='Password' onChange={handleChange} value={formData.password} />
+                        <input type="password" required name='password' placeholder='Password' onChange={handleChange} value={formData.password} autoComplete='off' />
                     </div>
                     <button className='loginFormButton'>Login!</button>
                 </form>

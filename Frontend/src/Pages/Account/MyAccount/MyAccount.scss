@@ -13,9 +13,8 @@
     text-align: center;
 
     .myAccountHeader {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         font-size: 1.5rem;
-        text-transform: capitalize;
     }
 
     .myAccountUserAndPassDiv {
@@ -25,45 +24,52 @@
         gap: 10px;
         padding-bottom: 20px;
         border-bottom: 2px solid black;
+        max-width: 100%;
+        width: 100%;
 
-        form {
+        div {
             display: flex;
             flex-direction: column;
-            gap: 6px;
             align-items: center;
+            width: 100%;
+            gap: 5px;
 
-            button {
-                padding: 5px 10px 5px 10px;
-                font-weight: 700;
-                border-radius: 5px;
-                border: 1px solid black;
+            .usernameChangeForm {
+                margin: 10px 0px 10px 0px;
             }
 
-            input {
-                width: 50%;
-                padding: 2px 2px 2px 4px;
-                font-weight: 700;
-                border-radius: 5px;
-                border: 1px solid black;
+            form {
+                display: grid;
+                grid-template-columns: minmax(100px, max-content) 1fr 80px;
+                align-items: center;
+                width: 100%;
+                gap: 20px;
+
+                button,
+                input {
+                    border-radius: 5px;
+                    padding: 3px 2px 3px 2px;
+                    border: 1px solid black;
+                    font-weight: 700;
+                    background: transparent;
+                }
+
+                button {
+                    width: 80%;
+                }
+
+                button:hover {
+                    cursor: pointer;
+                }
+
+                input {
+                    padding-left: 5px;
+                }
             }
+        }
 
-            div {
-                width: 60%;
-
-                .passInput {
-                    margin-top: 10px;
-                    margin-bottom: 5px;
-                }
-
-                .passLabel {
-                    margin-left: 3px;
-                    margin-right: 10px;
-                }
-
-                .userLabel {
-                    margin-right: 10px;
-                }
-            }
+        .deleteAccountText {
+            margin-top: 20px;
         }
 
         .deleteAccountBtn {
@@ -71,6 +77,12 @@
             font-weight: 700;
             border-radius: 5px;
             border: 1px solid black;
+            margin-bottom: 5px;
+            background: none;
+        }
+
+        .deleteAccountBtn:hover {
+            cursor: pointer;
         }
     }
 
@@ -81,7 +93,8 @@
         align-items: center;
         padding-bottom: 20px;
         border-bottom: 2px solid black;
-        max-width: 100vw;
+        max-width: 100%;
+        width: 100%;
 
         p {
             margin-bottom: 15px;
@@ -104,13 +117,254 @@
                 font-weight: 700;
                 border-radius: 5px;
                 border: 1px solid black;
+                background: none;
+            }
+
+            button:hover {
+                cursor: pointer;
             }
 
             input {
-                padding: 2px 2px 2px 4px;
+                padding: 4px;
                 font-weight: 700;
                 border-radius: 5px;
                 border: 1px solid black;
+            }
+
+            select {
+                padding: 4px 4px 4px 0px;
+                font-weight: 700;
+                border-radius: 5px;
+                border: 1px solid black;
+            }
+        }
+    }
+
+    // Start of our media queries
+
+    @media (min-width: 576px) {
+        min-height: $page-height-sm;
+        margin-top: 1rem;
+        padding: 10px 20px 10px 20px;
+
+        .myAccountUserAndPassDiv {
+            gap: 10px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid black;
+            max-width: 100%;
+            width: 100%;
+
+            p {
+                font-size: 1.1rem;
+            }
+
+            div {
+                form {
+                    grid-template-columns: minmax(100px, max-content) 1fr 100px;
+                    width: 80%;
+                    gap: 20px;
+                    font-size: 1rem;
+
+                    input {
+                        font-size: 0.9rem;
+                    }
+
+                    button {
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+
+            .deleteAccountText {
+                margin-top: 20px;
+            }
+
+            .deleteAccountBtn {
+                font-size: 0.9rem;
+            }
+        }
+
+        .shippingAddressDiv {
+            max-width: 100%;
+            width: 100%;
+
+            p {
+                margin-bottom: 15px;
+            }
+
+            form {
+                width: 80%;
+
+                button {
+                    font-size: 0.9rem;
+                }
+
+                input {
+                    font-size: 0.9rem;
+                }
+
+                select {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+    }
+
+    @media (min-width: 768px) {
+        min-height: $page-height-md;
+
+        .myAccountUserAndPassDiv {
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            div {
+                form {
+                    width: 60%;
+                    font-size: 1.1rem;
+
+                    input {
+                        font-size: 1rem;
+                    }
+
+                    button {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            .deleteAccountBtn {
+                font-size: 1rem;
+            }
+        }
+
+        .shippingAddressDiv {
+
+            form {
+                width: 70%;
+
+                button {
+                    font-size: 1rem;
+                }
+
+                input {
+                    font-size: 1rem;
+                }
+
+                select {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    @media (min-width: 992px) {
+        min-height: $page-height-lg;
+
+        .myAccountUserAndPassDiv {
+            div {
+                form {
+                    width: 60%;
+                }
+            }
+        }
+
+        .shippingAddressDiv {
+
+            form {
+                width: 60%;
+
+            }
+        }
+    }
+
+    @media (min-width: 1200px) {
+        min-height: $page-height-xl;
+
+        .myAccountUserAndPassDiv {
+            div {
+                form {
+                    width: 40%;
+                    font-size: 1.1rem;
+
+                    input {
+                        font-size: 1rem;
+                    }
+
+                    button {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            .deleteAccountBtn {
+                font-size: 1rem;
+            }
+        }
+
+        .shippingAddressDiv {
+
+            form {
+                width: 50%;
+                gap: 15px;
+
+                button {
+                    font-size: 1rem;
+                }
+
+                input {
+                    font-size: 1rem;
+                }
+
+                select {
+                    font-size: 1rem;
+                }
+            }
+        }
+    }
+
+    @media (min-width: 1400px) {
+        min-height: $page-height-xxl;
+
+        .myAccountUserAndPassDiv {
+            div {
+                form {
+                    width: 30%;
+                    font-size: 1.1rem;
+
+                    input {
+                        font-size: 1rem;
+                    }
+
+                    button {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            .deleteAccountBtn {
+                font-size: 1rem;
+            }
+        }
+
+        .shippingAddressDiv {
+
+            form {
+                width: 40%;
+                gap: 15px;
+
+                button {
+                    font-size: 1rem;
+                }
+
+                input {
+                    font-size: 1rem;
+                }
+
+                select {
+                    font-size: 1rem;
+                }
             }
         }
     }
