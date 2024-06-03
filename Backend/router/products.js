@@ -3,19 +3,27 @@ import db from '../utils/databaseConnection.js';
 
 const router = express.Router();
 
-router.get('/products', async (req, res) => {
-    // Grabbing the variables we sent from the frontend
-    const { demographic, category } = req.query
-    console.log(demographic, category)
-    try {
-        const categoryId = await db.query(`SELECT * FROM category WHERE name = $1`, [category])
-        console.log(categoryId)
-        // const products = await db.query(`SELECT * FROM product WHERE demographic = $1, category = `)
-        res.status(201).json({message: 'heres what we got', catergoryId: categoryId})
-    } catch (err){
-        console.log(err)
-        res.status(400).json({message: 'There was an error getting products', error: err})
-    }
-})
+router.get('/', async (req, res) => {
+    const { demographic, category } = req.query;
+    console.log('Requested:', { demographic, category });
 
-export { router as productRoutes }
+    try {
+        // Grabbing the category ID from the category name
+        const categoryRes = await db.query(`SELECT id FROM category WHERE name = $1`, [category]);
+        if (categoryRes.rows.length === 0) {
+            return res.status(404).json({ message: 'Category not found' });
+        }
+        const categoryId = categoryRes.rows[0].id;
+
+        // Then, use the category ID to find products
+        const products = await db.query(`SELECT * FROM product WHERE categoryid = $1 AND demographic = $2`, [categoryId, demographic]);
+        console.log('Products found:', products.rows);
+
+        res.status(200).json(products.rows);
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).json({ message: 'There was an error getting products', error: err.message });
+    }
+});
+
+export { router as productRoutes };

@@ -29,22 +29,22 @@ const db = new Pool({
 
 const categoriesDB = [
     {
-        name: 'Sweatshirts'
+        name: 'sweatshirts'
     },
     {
-        name: 'Shoes'
+        name: 'shoes'
     },
     {
-        name: 'Joggers'
+        name: 'joggers'
     },
     {
-        name: 'Tops'
+        name: 'tops'
     },
     {
-        name: 'Shorts'
+        name: 'shorts'
     },
     {
-        name: 'Hats'
+        name: 'hats'
     },
 ]
 

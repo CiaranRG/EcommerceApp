@@ -32,96 +32,142 @@ const db = new Pool({
 
 const productsDB = [
     {
-        name: 'Grey Sweatshirt',
-        description: 'Its a grey sweatshirt',
-        price: 49.99,
+        name: 'Charcoal Sweatshirt',
+        description: 'A cozy charcoal grey sweatshirt, perfect for cool weather.',
+        price: 45.99,
         categoryid: 1,
-        stock: 3,
+        stock: 5,
         imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         demographic: 'mens'
     },
     {
-        name: 'Pink Sweatshirt',
-        description: 'Its a pink sweatshirt',
-        price: 49.99,
+        name: 'Coral Sweatshirt',
+        description: 'A vibrant coral pink sweatshirt, adding color to any outfit.',
+        price: 52.99,
         categoryid: 1,
-        stock: 3,
-        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        demographic: 'womens'
-    },
-    {
-        name: 'Blue Sweatshirt',
-        description: 'Its a blue sweatshirt',
-        price: 49.99,
-        categoryid: 1,
-        stock: 3,
-        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        demographic: 'kids'
-    },
-    {
-        name: 'Grey Shoes',
-        description: 'Its grey shoes',
-        price: 89.99,
-        categoryid: 2,
-        stock: 1,
-        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        demographic: 'mens'
-    },
-    {
-        name: 'Pink Shoes',
-        description: 'Its pink shoes',
-        price: 89.99,
-        categoryid: 2,
-        stock: 1,
-        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        demographic: 'womens'
-    },
-    {
-        name: 'Blue Shoes',
-        description: 'Its blue shoes',
-        price: 89.99,
-        categoryid: 2,
-        stock: 1,
-        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        demographic: 'kids'
-    },
-    {
-        name: 'Grey Joggers',
-        description: 'Its grey joggers',
-        price: 39.99,
-        categoryid: 3,
-        stock: 10,
-        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        demographic: 'mens'
-    },
-    {
-        name: 'Grey Top',
-        description: 'Its a grey top',
-        price: 29.99,
-        categoryid: 4,
         stock: 7,
         imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'womens'
+    },
+    {
+        name: 'Sky Blue Sweatshirt',
+        description: 'A light blue sweatshirt, perfect for kids.',
+        price: 39.99,
+        categoryid: 1,
+        stock: 8,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'kids'
+    },
+    {
+        name: 'Slate Grey Shoes',
+        description: 'Stylish slate grey shoes for everyday wear.',
+        price: 95.99,
+        categoryid: 2,
+        stock: 2,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         demographic: 'mens'
     },
     {
-        name: 'Grey Shorts',
-        description: 'Its grey shorts',
-        price: 19.99,
+        name: 'Rose Pink Shoes',
+        description: 'Chic rose pink shoes that add a pop of color.',
+        price: 89.99,
+        categoryid: 2,
+        stock: 5,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'womens'
+    },
+    {
+        name: 'Ocean Blue Shoes',
+        description: 'Comfortable and durable ocean blue shoes for kids.',
+        price: 74.99,
+        categoryid: 2,
+        stock: 3,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'kids'
+    },
+    {
+        name: 'Ash Grey Joggers',
+        description: 'Comfortable ash grey joggers for daily wear.',
+        price: 44.99,
+        categoryid: 3,
+        stock: 15,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'mens'
+    },
+    {
+        name: 'Peach Joggers',
+        description: 'Soft and stylish peach joggers for a casual look.',
+        price: 42.99,
+        categoryid: 3,
+        stock: 12,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'womens'
+    },
+    {
+        name: 'Aqua Blue Joggers',
+        description: 'Comfortable aqua blue joggers perfect for kids.',
+        price: 35.99,
+        categoryid: 3,
+        stock: 9,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'kids'
+    },
+    {
+        name: 'Stone Grey Top',
+        description: 'A versatile stone grey top for any occasion.',
+        price: 32.99,
+        categoryid: 4,
+        stock: 11,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'mens'
+    },
+    {
+        name: 'Lavender Top',
+        description: 'A soft lavender top, ideal for a relaxed style.',
+        price: 34.99,
+        categoryid: 4,
+        stock: 14,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'womens'
+    },
+    {
+        name: 'Sky Blue Top',
+        description: 'A bright sky blue top for active kids.',
+        price: 29.99,
+        categoryid: 4,
+        stock: 10,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'kids'
+    },
+    {
+        name: 'Graphite Shorts',
+        description: 'Durable graphite grey shorts for casual wear.',
+        price: 24.99,
         categoryid: 5,
-        stock: 4,
+        stock: 6,
         imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
         demographic: 'mens'
     },
     {
-        name: 'Grey Hat',
-        description: 'Its a grey hat',
-        price: 9.99,
-        categoryid: 6,
-        stock: 13,
+        name: 'Blush Shorts',
+        description: 'Trendy blush pink shorts for a stylish look.',
+        price: 26.99,
+        categoryid: 5,
+        stock: 9,
         imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        demographic: 'mens'
+        demographic: 'womens'
+    },
+    {
+        name: 'Blue Shorts',
+        description: 'Trendy blue shorts for a stylish look.',
+        price: 16.99,
+        categoryid: 5,
+        stock: 12,
+        imageurl: 'https://images.unsplash.com/photo-1609743522653-52354461eb27?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        demographic: 'kids'
     },
 ]
+
 
 const seedProducts = async () => {
     console.log('Starting to seed categories...');
@@ -130,7 +176,7 @@ const seedProducts = async () => {
     console.log('Categories table truncated.');
     try {
         // Looping the array to seed the database 
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 20; i++) {
             for (let product of productsDB) {
                 console.log(`Inserting product: ${product.name}`);
                 await db.query('INSERT INTO product(name, description, price, categoryid, stock, imageurl, demographic) VALUES ($1, $2, $3, $4, $5, $6, $7)', [product.name, product.description, product.price, product.categoryid, product.stock, product.imageurl, product.demographic])

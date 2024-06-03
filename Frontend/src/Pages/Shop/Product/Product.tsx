@@ -1,21 +1,27 @@
-import { useEffect, useState } from 'react'
 import './Product.scss'
-import axios from 'axios'
+
 
 type productProps = {
-    demographic: string,
-    category: string,
+    product: {
+        categoryid: number,
+        demographic: string,
+        description: string,
+        id: number,
+        imageurl?: string,
+        name: string,
+        price: number,
+        stock: number
+    }
 }
 
-export default function Product({ demographic, category }: productProps) {
-
+export default function Product({ product }: productProps) {
     return (
         <main className='productMainContent'>
             <div className='productTop'></div>
             <div className='productBottom'>
-                <h3>Product Name</h3>
-                <p>Price - $50</p>
-                <p>Stock - 3</p>
+                <h3>{product.name}</h3>
+                <p>Price - ${product.price}</p>
+                <p>Stock - {product.stock}</p>
                 <button>View More</button>
             </div>
         </main>
