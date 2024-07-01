@@ -24,6 +24,10 @@ export default function Register() {
             const response = await axios.post('http://localhost:5000/accounts', formData, { withCredentials: true })
             setFormData({ email: '', username: '', password: '' })
             console.log(response.data)
+            if (response.status === 201) {
+                // Registration successful, reload the page
+                window.location.reload();
+              }
         } catch (err) {
             if (axios.isAxiosError(err)) {
                 // Assigning this to a variable as it can either be a httpResponse or undefined

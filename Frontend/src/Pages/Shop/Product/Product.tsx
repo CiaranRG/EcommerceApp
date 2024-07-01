@@ -1,4 +1,5 @@
 import './Product.scss'
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 type productProps = {
@@ -15,6 +16,12 @@ type productProps = {
 }
 
 export default function Product({ product }: productProps) {
+    const navigate = useNavigate();
+    const { category } = useParams()
+
+    const handleViewMore = () => {
+        navigate(`/shop/${product.demographic}/${category}/product/${product.id}`);
+    };
     return (
         <main className='productMainContent'>
             <div className='productTop'></div>
@@ -22,7 +29,7 @@ export default function Product({ product }: productProps) {
                 <h3>{product.name}</h3>
                 <p>Price - ${product.price}</p>
                 <p>Stock - {product.stock}</p>
-                <button>View More</button>
+                <button onClick={handleViewMore}>View More</button>
             </div>
         </main>
     )
