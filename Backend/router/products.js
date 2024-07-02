@@ -3,6 +3,25 @@ import db from '../utils/databaseConnection.js';
 
 const router = express.Router();
 
+router.get('/getProduct', async (req, res) => {
+    console.log('Entering gather product backend')
+    const { id } = req.query
+    console.log('Product ID from query:', id);
+    try {
+        console.log('Entering try catch')
+        const product = await db.query('SELECT * FROM product WHERE id = $1', [id])
+        if (product.rows.length === 0) {
+            console.log('No product was found');
+            return res.status(404).json({ message: 'No product was found' });
+        }
+        console.log('Product was found:', product.rows[0]);
+        res.status(200).json(product.rows[0]);
+    } catch (err) {
+        console.error('Database error:', err);
+        res.status(500).json({ message: 'There was an error getting the product', error: err.message });
+    }
+})
+
 router.get('/', async (req, res) => {
     const { demographic, category } = req.query;
     console.log('Requested:', { demographic, category });
@@ -17,7 +36,7 @@ router.get('/', async (req, res) => {
 
         // Then, use the category ID to find products
         const products = await db.query(`SELECT * FROM product WHERE categoryid = $1 AND demographic = $2`, [categoryId, demographic]);
-        console.log('Products found:', products.rows);
+        console.log('Products found');
 
         res.status(200).json(products.rows);
     } catch (err) {

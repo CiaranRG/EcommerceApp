@@ -18,6 +18,7 @@ import ErrorPage from './Pages/Error/ErrorPage'
 import Navbar from './Navbar/Navbar'
 import Footer from './Footer/Footer'
 import CategoryPage from './Pages/Shop/CategoryPage/CategoryPage'
+import ProductDisplay from './Pages/Shop/ProductDisplay/ProductDisplay'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -62,12 +63,13 @@ function App() {
         <Route path='/shop' element={<Demographics />} />
         <Route path='/shop/:demographic/categories' element={<Categories />} />
         <Route path='/shop/:demographic/:category' element={<CategoryPage />} />
+        <Route path='/shop/:demographic/:category/product/:id' element={<ProductDisplay />} />
         {/* Using isLoggedIn to check the logged in status and then using the navigate component to redirect if needed */}
         <Route path='/account' element={isLoggedIn ? <MyAccount /> : <Navigate to="/login" />} />
         <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to="/login" />} />
         <Route path='/login' element={isLoggedIn ? <Navigate to="/account" /> : <Login onLogin={handleLogin} />} />
         <Route path='/register' element={isLoggedIn ? <Navigate to="/account" /> : <Register />} />
-        <Route path='/error' element={<ErrorPage errorCde='' errorMessae=''/>} />
+        <Route path='/error' element={<ErrorPage errorCode='' errorMessage=''/>} />
         <Route path='*' element={<ErrorPage errorCode='404' errorMessage='Page not found!'/>} />
       </Routes>
       <Footer />

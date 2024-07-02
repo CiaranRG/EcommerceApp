@@ -73,7 +73,6 @@ router.get('/', async (req, res) => {
         return res.status(401).json({ message: "Couldn't find any user's in the session" })
     }
     const accountId = req.session.accountId
-    console.log('Querying Database')
     try {
         // Using database alias (a and s in this case) so we can query both databases for the specific information we need.
         const result = await db.query(
@@ -87,7 +86,6 @@ router.get('/', async (req, res) => {
             [accountId]
         );
         if (result.rows.length > 0) {
-            console.log("Sending User Data")
             res.status(200).json({ data: result.rows[0] })
         } else {
             res.status(401).json({ message: 'No Users' })

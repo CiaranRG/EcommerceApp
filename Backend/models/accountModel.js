@@ -4,7 +4,7 @@ import Joi from 'joi'
 const registerSchema = Joi.object({
     username: Joi.string().alphanum().min(3).max(30).required(),
     password: Joi.string().min(3).max(30).required(),
-    emaik: Joi.string().email().required(),
+    email: Joi.string().email().required(),
 })
 
 // Creating a Joi schema for logging in

@@ -1,21 +1,30 @@
-// Importing database connection using pg
-import pg from 'pg'
+// Creating a separate file to be able to import to anywhere we need database interaction
+
+// Importing full pg package then destructing pool from it
+import pg  from 'pg'
+import { config } from 'dotenv';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+
 const { Pool } = pg
 
-// Importing dotenv file
-import { config } from 'dotenv'
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-// Loading the dotenv file
+// Path to the .env file
+const envPath = join(__dirname, '..', '.env');
+config({ path: envPath });
+
+// Calling this to have its side effects happen (reading the .env and parsing the data)
 config()
 
-// Creating a new database connection
 const db = new Pool({
-    user: process.env.PG_USER,
-    host: 'localhost',
-    database: process.env.PG_DATABASE,
-    password: process.env.PG_PASS,
-    // This is the default port for a postgres database
-    port: 5432,
-})
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    require: true,
+    rejectUnauthorized: false,
+  },
+});
 
 export default db
