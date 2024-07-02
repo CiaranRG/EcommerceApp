@@ -25,14 +25,14 @@ export default function ContactUs(){
                 </div>
                 <div className='contactUsItem'>
                     <p ><FontAwesomeIcon icon={faTwitter}/> Twitter</p>
-                    <Link to={'/'}>
-                        <a href="/">@ZenithClothing</a>
+                    <Link to={'https://x.com'}>
+                        <a>@ZenithClothing</a>
                     </Link>
                 </div>
                 <div className='contactUsItem'>
                     <p><FontAwesomeIcon icon={faSquareFacebook}/> Facebook</p>
-                    <Link to={'/'}>
-                        <a href="/">ZenithClothing</a>
+                    <Link to={'https://facebook.com'}>
+                        <a>ZenithClothing</a>
                     </Link>
                 </div>
                 <div className='contactUsItem'>

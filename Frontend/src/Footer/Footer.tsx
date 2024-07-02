@@ -6,11 +6,8 @@ export default function Footer() {
     return (
         <>
             <div className="footer">
-                <Link to={'/'}>
-                    <a>Home</a>
-                </Link>
                 <Link to={'/contactUs'}>
-                    <a>Contact Us</a>
+                    <a>Feel free to contact us by clicking here!</a>
                 </Link>
             </div>
         </>

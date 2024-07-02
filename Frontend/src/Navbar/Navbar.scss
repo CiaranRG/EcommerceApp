@@ -169,6 +169,10 @@
             margin-top: 2px;
         }
 
+        .logoutBtn:hover{
+            cursor: pointer;
+        }
+
         @media (min-width: 768px) {
             font-size: 1.3rem;
             width: 45%;
