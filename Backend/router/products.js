@@ -3,16 +3,18 @@ import db from '../utils/databaseConnection.js';
 
 const router = express.Router();
 
-router.get('/products/getProduct', async (req, res) => {
+router.get('/getProduct', async (req, res) => {
     console.log('Entering gather product backend')
     const { id } = req.query
+    console.log('Product ID from query:', id);
     try {
         console.log('Entering try catch')
         const product = await db.query('SELECT * FROM product WHERE id = $1', [id])
         if (product.rows.length === 0) {
+            console.log('No product was found');
             return res.status(404).json({ message: 'No product was found' });
         }
-        console.log('Product was found')
+        console.log('Product was found:', product.rows[0]);
         res.status(200).json(product.rows[0]);
     } catch (err) {
         console.error('Database error:', err);

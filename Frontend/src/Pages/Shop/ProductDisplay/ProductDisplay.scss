@@ -1,0 +1,84 @@
+@import '../../../App.scss';
+
+
+
+.productDisplayMainContent{
+    display: flex;
+    height: $page-height-xs;
+    flex-direction: column;
+    justify-content: flex-end;
+    .productDisplayTop{
+        display: flex;
+        padding: 2%;
+        padding-top: 30px;
+        align-items: center;
+        justify-content: center;
+        max-height: 40%;
+        max-width: 100%;
+        img {
+            // display: block;
+            max-height: 100%;
+            border-radius: 10px;
+        }
+    }
+    .productDisplayBottom{
+        display: flex;
+        width: 100%;
+        height: 50%;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 0px 10px 0px 10px;
+        color: $color1;
+        .productDetails{
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 60%;
+            background-color: $color3;
+            border: 1px solid black;
+            border-radius: 10px;
+            justify-content: space-between;
+            padding-top: 10%;
+            padding-bottom: 10%;
+            text-align: center;
+            align-items: center;
+            .productDescription{
+                padding: 0px 15px 0px 15px;
+            }
+        }
+        .productDisplayButtonsDiv{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 20%;
+            gap: 5%;
+            background-color: $color1;
+            button, a{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                font-weight: 700;
+                width: 100%;
+                height: 60%;
+                font-size: 0.9rem;
+                background: $color3;
+                color: $color1;
+                border: 1px solid;
+                border-radius: 10px;
+            }
+            button:hover, a:hover{
+                cursor: pointer;
+            }
+        }
+
+    }
+    .isLoadingDiv{
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+}

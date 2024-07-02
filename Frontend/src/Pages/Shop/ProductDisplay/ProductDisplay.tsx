@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
+import './ProductDisplay.scss'
 
 type ProductParams = {
     id: string,
@@ -10,33 +11,54 @@ type ProductParams = {
 
 
 export default function ProductDisplay() {
-    const { id } = useParams<ProductParams>();
-    const [product, setProduct] = useState({})
+    const { id, category, demographic } = useParams<ProductParams>();
+    const [product, setProduct] = useState({ name: '', price: null, stock: '', description: '', imageurl: '' })
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const gatherProduct = async () => {
             try {
-                console.log('Entering gather product')
+                setIsLoading(true)
                 // Adding in a params object so I can grab them on the backend with req.query
-                const result = await axios.get('http://localhost:5000/products/getProduct', { params: id })
-                console.log('We passed the axios request')
-                setProduct(result.data)
+                const result = await axios.get('http://localhost:5000/products/getProduct', { params: { id } });
+                console.log(result.data)
+                setProduct(result.data);
+                setIsLoading(false)
             } catch (err) {
-                console.log('Error on gatherProduct()')
+                console.error('Error on gatherProduct()', err);
             }
         }
-        gatherProduct()
-    }, [])
+
+        if (id) {
+            gatherProduct();
+        } else {
+            console.error('No product ID provided in URL');
+        }
+    }, [id]); // Include 'id' as a dependency
 
     return (
         <main className='productDisplayMainContent'>
-            <div className='productDisplayTop'></div>
-            <div className='productDisplayBottom'>
-                <h3>{product.name}</h3>
-                <p>Price - ${product.price}</p>
-                <p>Stock - {product.stock}</p>
-                <button>View More</button>
-            </div>
+            {isLoading ? <>
+                <div className="isLoadingDiv">
+                    <h1>Loading...</h1>
+                </div>
+            </> : <>
+            <div className='productDisplayTop'>
+                    <img src={product.imageurl} alt="" />
+                </div>
+                <div className='productDisplayBottom'>
+                    <div className="productDetails">
+                        <h3 className="productTitle">{product.name}</h3>
+                        <p className="productDescription">{product.description}</p>
+                        <p className="productPrice">Price - ${product.price}</p>
+                        <p className="productStock">Stock - {product.stock}</p>
+                    </div>
+                    <div className="productDisplayButtonsDiv">
+                        <Link to={`/shop/${demographic}/${category}`} className="productBackBtn">Go Back</Link>
+                        <button className="productAddToCart">Add to Cart</button>
+                    </div>
+                </div>
+            </>}
         </main>
     )
 }
