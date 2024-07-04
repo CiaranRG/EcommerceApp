@@ -67,5 +67,7 @@ app.get('/', (req, res) => {
 })
 
 app.listen(PORT, (req, res) => {
-    console.log(`Listening On PORT ${PORT}`)
+    if (process.env.NODE_ENV !== 'production') {
+        console.log(`Listening On PORT ${PORT}`)
+    }
 })

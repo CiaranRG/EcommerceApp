@@ -30,13 +30,18 @@ export default function CategoryPage() {
         const gatherProducts = async () => {
             try {
                 setIsLoading(true)
-                console.log('Entering gather products')
+                if (process.env.NODE_ENV === 'development') {
+                    console.log('Entering gather products')
+                }
                 // Adding in a params object so I can grab them on the backend with req.query
                 const result = await axios.get('http://localhost:5000/products', { params: { demographic, category } })
                 setProducts(result.data)
                 setIsLoading(false)
             } catch (err) {
-                console.log('Error on gatherProducts()')
+                if (process.env.NODE_ENV === 'development') {
+                    console.log('Error on gatherProducts()')
+                    console.log(err)
+                }
             }
         }
         gatherProducts()

@@ -21,7 +21,10 @@ export default function ProductDisplay() {
                 setIsLoading(true)
                 // Adding in a params object so I can grab them on the backend with req.query
                 const result = await axios.get('http://localhost:5000/products/getProduct', { params: { id } });
-                console.log(result.data)
+                if (process.env.NODE_ENV === 'development') {
+                    console.log('Entering gather product')
+                    console.log(result.data)
+                }
                 setProduct(result.data);
                 setIsLoading(false)
             } catch (err) {
@@ -43,7 +46,7 @@ export default function ProductDisplay() {
                     <h1>Loading...</h1>
                 </div>
             </> : <>
-            <div className='productDisplayTop'>
+                <div className='productDisplayTop'>
                     <img src={product.imageurl} alt="" />
                 </div>
                 <div className='productDisplayBottom'>

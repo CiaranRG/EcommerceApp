@@ -32,7 +32,9 @@ function App() {
       await axios.get('http://localhost:5000/accounts/logout', { withCredentials: true })
       setIsLoggedIn(false);
     } catch (err) {
-      console.log(err)
+      if (process.env.NODE_ENV === 'development') {
+        console.log(err)
+      }
     }
   }
 
@@ -46,7 +48,9 @@ function App() {
           setIsLoggedIn(false)
         }
       } catch (err) {
-        console.log(err)
+        if (process.env.NODE_ENV === 'development') {
+          console.log(err)
+        }
         setIsLoggedIn(false)
       }
     };
@@ -69,8 +73,8 @@ function App() {
         <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to="/login" />} />
         <Route path='/login' element={isLoggedIn ? <Navigate to="/account" /> : <Login onLogin={handleLogin} />} />
         <Route path='/register' element={isLoggedIn ? <Navigate to="/account" /> : <Register />} />
-        <Route path='/error' element={<ErrorPage errorCode='' errorMessage=''/>} />
-        <Route path='*' element={<ErrorPage errorCode='404' errorMessage='Page not found!'/>} />
+        <Route path='/error' element={<ErrorPage errorCode='' errorMessage='' />} />
+        <Route path='*' element={<ErrorPage errorCode='404' errorMessage='Page not found!' />} />
       </Routes>
       <Footer />
     </Router>
