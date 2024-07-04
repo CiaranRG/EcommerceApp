@@ -23,7 +23,7 @@ export default function Register() {
         try {
             const response = await axios.post('http://localhost:5000/accounts', formData, { withCredentials: true })
             setFormData({ email: '', username: '', password: '' })
-            if (process.env.NODE_ENV !== 'development') {
+            if (process.env.NODE_ENV !== 'production') {
                 console.log(response.data)
             }
             if (response.status === 201) {
@@ -41,7 +41,7 @@ export default function Register() {
                     return alert("Password and Username must be between 3-30 characters long!")
                 }
             } else {
-                if (process.env.NODE_ENV !== 'development') {
+                if (process.env.NODE_ENV !== 'production') {
                     console.log('Handle Submit Error')
                     console.log(err)
                 }

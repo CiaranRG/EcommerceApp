@@ -41,7 +41,7 @@ export default function Login({ onLogin }: Props) {
                 }
                 // If its not an axios error we do something else
             } else {
-                if (process.env.NODE_ENV !== 'development') {
+                if (process.env.NODE_ENV !== 'production') {
                     console.log('Handle Submit Error')
                     console.log(err)
                   }
