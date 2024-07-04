@@ -37,7 +37,9 @@ export default function MyAccount() {
                     phoneNumber: result.data.data.phoneNumber || null,
                 });
             } catch (err) {
-                console.log(err)
+                if (process.env.NODE_ENV !== 'development') {
+                    console.log(err)
+                }
             }
 
         }
@@ -52,23 +54,105 @@ export default function MyAccount() {
             username: userData.username
         }
         try {
-            await axios.post('http://localhost:5000/accounts/changeUsername', dataToSend, { withCredentials: true })
+            const response = await axios.post('http://localhost:5000/accounts/changeUsername', dataToSend, { withCredentials: true })
+            if (response.status === 200) {
+                alert('Username updated successfully!')
+                window.location.reload();
+            }
         } catch (err) {
             // Checking if the error is an axios error, which would mean an error occured at any point during the axios request
             if (axios.isAxiosError(err)) {
-                console.log('Handle Submit Error')
+                if (process.env.NODE_ENV !== 'development') {
+                    console.log('Handle username change error')
+                }
                 // Assigning this to a variable as it can either be a httpResponse or undefined
                 const serverResponse = err.response
                 // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains User not found this code runs
-                if (serverResponse && serverResponse.data.message === 'User not found') {
-                    return alert("This user doesn't exist or the credentials are wrong, try again!")
-                } else if (serverResponse && serverResponse.data.message === 'Incorrect details') {
-                    return alert("This user doesn't exist or the credentials are wrong, try again!")
+                if (serverResponse?.status === 500) {
+                    return alert("Internal server error, try again later!");
+                } else if (serverResponse?.status === 400) {
+                    return alert("Please enter a valid username between 3-30 characters!");
                 }
                 // If its not an axios error we do something else
             } else {
-                console.log('Handle Submit Error')
-                console.log(err)
+                if (process.env.NODE_ENV !== 'development') {
+                    console.log('Handle username change error')
+                    console.log(err)
+                }
+            }
+        }
+    }
+
+    const handleEmailSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault()
+        // Creating an object to send specific data instead of the whole thing
+        const dataToSend = {
+            accountId: userData.accountId,
+            email: userData.email
+        }
+        try {
+            const response = await axios.post('http://localhost:5000/accounts/changeEmail', dataToSend, { withCredentials: true })
+            if (response.status === 200) {
+                alert('Email updated successfully!')
+                window.location.reload();
+            }
+        } catch (err) {
+            // Checking if the error is an axios error, which would mean an error occured at any point during the axios request
+            if (axios.isAxiosError(err)) {
+                if (process.env.NODE_ENV !== 'development') {
+                    console.log('Handle email change error')
+                }
+                // Assigning this to a variable as it can either be a httpResponse or undefined
+                const serverResponse = err.response
+                // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains User not found this code runs
+                if (serverResponse?.status === 500) {
+                    return alert("Internal server error, try again later!");
+                } else if (serverResponse?.status === 400) {
+                    return alert("Please enter a valid email!");
+                }
+            } else {
+                if (process.env.NODE_ENV !== 'development') {
+                    console.log('Handle email change error')
+                    console.log(err)
+                }
+            }
+        }
+    }
+
+    const handlePasswordSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault()
+        // Creating an object to send specific data instead of the whole thing
+        const dataToSend = {
+            accountId: userData.accountId,
+            password: userData.password
+        }
+        try {
+            const response = await axios.post('http://localhost:5000/accounts/changePassword', dataToSend, { withCredentials: true })
+            if (response.status === 200) {
+                alert('Password updated successfully!')
+                window.location.reload();
+            }
+        } catch (err) {
+            // Checking if the error is an axios error, which would mean an error occurred at any point during the axios request
+            if (axios.isAxiosError(err)) {
+                if (process.env.NODE_ENV !== 'production') {
+                    if (process.env.NODE_ENV !== 'development') {
+                        console.log('Handle password change error')
+                    }
+                }
+                const serverResponse = err.response;
+                if (serverResponse?.status === 500) {
+                    return alert("Internal server error, try again later!");
+                } else if (serverResponse?.status === 400) {
+                    return alert("Please enter a valid password between 3-30 characters!");
+                }
+            } else {
+                if (process.env.NODE_ENV !== 'production') {
+                    if (process.env.NODE_ENV !== 'development') {
+                        console.log('Handle password change error')
+                        console.log(err)
+                    }
+                }
             }
         }
     }
@@ -80,7 +164,7 @@ export default function MyAccount() {
                 <div className='myAccountUserAndPassDiv'>
                     <p className='editAccountText'>Edit account details:</p>
                     <div>
-                        <form action="" className='emailChangeForm'>
+                        <form action="" className='emailChangeForm' onSubmit={handleEmailSubmit}>
                             <label htmlFor="email" className='userLabel'>Email</label>
                             <input type="email" placeholder='Email' id='email' name='email' className='userInput' min={3} max={30} value={userData.email} onChange={handleChange} autoComplete='email' required />
                             <button>Confirm</button>
@@ -90,7 +174,7 @@ export default function MyAccount() {
                             <input type="text" placeholder='Username' id='username' name='username' className='userInput' min={3} max={20} value={userData.username} onChange={handleChange} autoComplete='username' required />
                             <button>Confirm</button>
                         </form>
-                        <form action="" className='passwordChangeForm'>
+                        <form action="" className='passwordChangeForm' onSubmit={handlePasswordSubmit}>
                             <label htmlFor="password" className='passLabel'>Password</label>
                             <input type="password" placeholder='Password' id='password' name='password' className='passInput' value={userData.password} onChange={handleChange} autoComplete='off' required />
                             <button>Confirm</button>

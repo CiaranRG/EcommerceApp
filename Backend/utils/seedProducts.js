@@ -140,21 +140,32 @@ const productsDB = [
 
 
 const seedProducts = async () => {
-    console.log('Starting to seed categories...');
+    if (process.env.NODE_ENV !== 'development') {
+        console.log('Connecting to database...');
+        console.log('Starting to seed categories...');
+    }
     // Wiping and restarting the database , we add cascade since our category table will be foreign keys for other tables
     await db.query('TRUNCATE product RESTART IDENTITY CASCADE')
-    console.log('Categories table truncated.');
+    if (process.env.NODE_ENV !== 'development') {
+        console.log('Categories table truncated.');
+    }
     try {
         // Looping the array to seed the database 
         for (let i = 0; i < 20; i++) {
             for (let product of productsDB) {
-                console.log(`Inserting product: ${product.name}`);
+                if (process.env.NODE_ENV !== 'development') {
+                    console.log(`Inserting product: ${product.name}`);
+                }
                 await db.query('INSERT INTO product(name, description, price, categoryid, stock, imageurl, demographic) VALUES ($1, $2, $3, $4, $5, $6, $7)', [product.name, product.description, product.price, product.categoryid, product.stock, product.imageurl, product.demographic])
             }
         }
-        console.log('Finished inserting products.');
+        if (process.env.NODE_ENV !== 'development') {
+            console.log('Finished inserting products.');
+        }
     } catch (error) {
-        console.log('Error Occurred', error)
+        if (process.env.NODE_ENV !== 'development') {
+            console.log('Error Occurred', error)
+        }
     }
 
 }
@@ -162,7 +173,7 @@ const seedProducts = async () => {
 seedProducts().then(() => {
     db.end()
 }).catch((err) => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV !== 'development') {
         console.log(err)
     }
 })
