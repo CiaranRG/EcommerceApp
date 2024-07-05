@@ -149,6 +149,48 @@ router.post('/changeAddress', async (req, res) => {
     }
 });
 
+router.post('/deleteAccount', async (req, res) => {
+    const accountId = req.body.accountId;
+    if (process.env.NODE_ENV !== 'production') {
+        console.log('Starting the process of deleting an account');
+    }
+    try {
+        // Deleting the user's shipping address
+        await db.query('DELETE FROM shipping_address WHERE account_id = $1', [accountId]);
+        // Destroying the session
+        req.session.destroy(async (err) => {
+            if (process.env.NODE_ENV !== 'production') {
+                console.log('Entering destroy session');
+            }
+            if (err) {
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log('Session Failed To Destroy');
+                    console.log(err);
+                }
+                return res.status(500).json({ message: 'Session Failed To Destroy' });
+            }
+            // Clearing the session cookie
+            res.clearCookie('session');
+            // Deleting the user account
+            try {
+                await db.query('DELETE FROM account WHERE accountId = $1', [accountId]);
+                return res.status(200).json({ message: 'Account has been deleted' });
+            } catch (err) {
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log('Error deleting account:', err);
+                }
+                return res.status(500).json({ message: 'Internal server error' });
+            }
+        });
+    } catch (err) {
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('Error deleting shipping address:', err);
+        }
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 
 router.post('/', async (req, res) => {
     if (process.env.NODE_ENV !== 'production') {

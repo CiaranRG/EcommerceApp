@@ -201,6 +201,35 @@ export default function MyAccount() {
         }
     }
 
+    const handleAccountDeletion = async (evt: React.FormEvent<HTMLFormElement>) => {
+        evt.preventDefault()
+        const dataToSend = {
+            accountId: userData.accountId,
+        }
+        try {
+            const response = await axios.post('http://localhost:5000/accounts/deleteAccount', dataToSend, { withCredentials: true })
+            if (response.status === 200) {
+                alert('Account deleted successfully!')
+                window.location.reload();
+            }
+        } catch (err) {
+            if (axios.isAxiosError(err)) {
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log('Handle account deletion error')
+                }
+                const serverResponse = err.response;
+                if (serverResponse?.status === 500) {
+                    return alert("Internal server error, try again later!");
+                }
+            } else {
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log('Handle account deletion error')
+                    console.log(err)
+                }
+            }
+        }
+    }
+
     return (
         <>
             <main className='myAccountMainContent'>
@@ -227,7 +256,9 @@ export default function MyAccount() {
                         <input type="password" placeholder='Password' id='oldPassword' name='oldPassword' className='oldPassInput' value={userData.oldPassword} onChange={handleChange} required/> */}
                     </div>
                     <p className='deleteAccountText'>Click below to delete your account</p>
-                    <button className='deleteAccountBtn'>Delete Account</button>
+                    <form action="" onSubmit={handleAccountDeletion}>
+                        <button type='submit' className='deleteAccountBtn'>Delete Account</button>
+                    </form>
                 </div>
                 <div className='shippingAddressDiv'>
                     <p>Edit shipping details:</p>
