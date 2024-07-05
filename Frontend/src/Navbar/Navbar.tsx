@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import './Navbar.scss'
 
 type NavbarProps = {
@@ -9,14 +8,8 @@ type NavbarProps = {
     onLogout?: () => void,
 }
 
-export default function Navbar({ isLoggedIn, onLogout}: NavbarProps) {
-    const [searchTerm, setSearchTerm] = useState('')
+export default function Navbar({ isLoggedIn, onLogout }: NavbarProps) {
 
-    const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-        // No Need to destructure name and iterate over previous data as we only have one value
-        const { value } = evt.target
-        setSearchTerm(value)
-    }
 
     return (
         <>
@@ -28,7 +21,11 @@ export default function Navbar({ isLoggedIn, onLogout}: NavbarProps) {
                         </Link>
                     </div>
                     <div className="topRightNav">
-                        <form action="" className="searchForm">
+                        <Link to={'/'} className="cartBtn">
+                            <FontAwesomeIcon icon={faCartShopping} className="cartIcon" />
+                        </Link>
+
+                        {/* <form action="" className="searchForm">
                             <Link to={'/'} className="cartBtn">
                                 <FontAwesomeIcon icon={faCartShopping} className="cartIcon"/>
                             </Link>
@@ -36,7 +33,7 @@ export default function Navbar({ isLoggedIn, onLogout}: NavbarProps) {
                             <button type="button" className="searchButton">
                                 <FontAwesomeIcon icon={faSearch} />
                             </button>
-                        </form>
+                        </form> */}
                     </div>
                 </div>
                 <div className="bottomNav">
