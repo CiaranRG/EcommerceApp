@@ -1,0 +1,85 @@
+@import '../../../App.scss';
+
+.checkoutMainContent {
+    height: $page-height-xs;
+    display: flex;
+    flex-direction: column;
+    // justify-content: space-evenly;
+    text-align: center;
+    padding: 8% 2% 8% 2%;
+
+    .cartShowcase {
+        display: flex;
+        height: 50%;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        border: 2px solid black;
+        border-radius: 10px;
+        margin-bottom: 5%;
+    }
+
+    .cartShippingAddress {
+        display: grid;
+        height: 50%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        align-items: center;
+        padding-bottom: 20px;
+        form{
+            display: grid;
+            grid-template-columns: minmax(150px, max-content) 1fr;
+            gap: 10px;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 10px;
+            font-weight: 700;
+            .cartBtns{
+                display: flex;
+                justify-content: center;
+                flex-direction: row;
+                gap: 5%;
+                grid-column: 1 / -1;
+                padding: 5px 10px 5px 10px;
+                color: $color1;
+                button, a{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    color: $color1;
+                    background: $color3;
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                    font-weight: 700;
+                    width: 40%;
+                    padding: 2% 0% 2% 0%;
+                    font-weight: 700;
+                    border: 1px solid black;
+                    border-radius: 10px;
+                    margin-top: 20px;
+                }
+            }
+            button:hover {
+                cursor: pointer;
+            }
+
+            input {
+                padding: 4px;
+                font-weight: 700;
+                border-radius: 5px;
+                border: 1px solid black;
+                font-weight: 700;
+            }
+
+            select {
+                padding: 4px 4px 4px 0px;
+                font-weight: 700;
+                border-radius: 5px;
+                border: 1px solid black;
+            }
+        }
+    }
+
+}
