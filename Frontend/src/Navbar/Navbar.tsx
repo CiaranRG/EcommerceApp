@@ -21,7 +21,7 @@ export default function Navbar({ isLoggedIn, onLogout }: NavbarProps) {
                         </Link>
                     </div>
                     <div className="topRightNav">
-                        <Link to={'/checkout'} className="cartBtn">
+                        <Link to={'/cart'} className="cartBtn">
                             <FontAwesomeIcon icon={faCartShopping} className="cartIcon" />
                         </Link>
                     </div>

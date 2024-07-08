@@ -19,7 +19,7 @@ import Navbar from './Navbar/Navbar'
 import Footer from './Footer/Footer'
 import CategoryPage from './Pages/Shop/CategoryPage/CategoryPage'
 import ProductDisplay from './Pages/Shop/ProductDisplay/ProductDisplay'
-import CheckoutPage from './Pages/Shop/CheckoutPage/CheckoutPage'
+import CartPage from './Pages/Shop/CartPage/CartPage'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -69,7 +69,7 @@ function App() {
         <Route path='/shop/:demographic/categories' element={<Categories />} />
         <Route path='/shop/:demographic/:category' element={<CategoryPage />} />
         <Route path='/shop/:demographic/:category/product/:id' element={<ProductDisplay />} />
-        <Route path='/checkout' element={<CheckoutPage />} />
+        <Route path='/cart' element={isLoggedIn ? <CartPage /> : <Navigate to="/login" />} />
         {/* Using isLoggedIn to check the logged in status and then using the navigate component to redirect if needed */}
         <Route path='/account' element={isLoggedIn ? <MyAccount /> : <Navigate to="/login" />} />
         <Route path='/cart' element={isLoggedIn ? <Cart /> : <Navigate to="/login" />} />
