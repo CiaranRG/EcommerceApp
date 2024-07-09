@@ -56,6 +56,8 @@
 
                 button {
                     width: 80%;
+                    background-color: $color3;
+                    color: $color1;
                 }
 
                 button:hover {
@@ -78,7 +80,8 @@
             border-radius: 5px;
             border: 1px solid black;
             margin-bottom: 5px;
-            background: none;
+            background-color: $color3;
+            color: $color1;
         }
 
         .deleteAccountBtn:hover {
@@ -117,7 +120,8 @@
                 font-weight: 700;
                 border-radius: 5px;
                 border: 1px solid black;
-                background: none;
+                background-color: $color3;
+                color: $color1;
             }
 
             button:hover {

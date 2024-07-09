@@ -13,8 +13,10 @@ interface Product {
     totalCost: number,
 }
 
+
+
 export default function CartPage() {
-    const [cart, setCart] = useState<Product>({ name: '', price: 0, stock: 0, description: '', imageurl: '', totalItems: 0, totalCost: 0 })
+    const [cart, setCart] = useState<Product>({ name: '', price: 0, stock: 0, description: '', imageurl: '', totalItems: 5, totalCost: 78 })
     const [userAddress, setUserAddress] = useState({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
 
     useEffect(() => {
@@ -172,7 +174,7 @@ export default function CartPage() {
                         <input type="tel" placeholder='Phone Number' id='phone_number' name='phone_number' value={userAddress.phone_number} autoComplete='tel' />
                         <p className='totalAmountText'>{cart.totalItems} items in your cart, total cost of ${cart.totalCost}</p>
                         <div className="cartBtns">
-                            <Link to={'/'}>Go Back</Link>
+                            <Link to={'/'}>Go Home</Link>
                             <button>Checkout</button>
                         </div>
                     </form>

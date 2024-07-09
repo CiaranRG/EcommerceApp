@@ -44,63 +44,41 @@
             font-size: 1.5rem;
 
             a {
-                color: $color1;
+                color: black;
                 font-weight: 700;
                 border-radius: 10px;
                 transition: 0.2s;
                 text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 text-decoration: none;
+                padding: 10px 20px 10px 20px;
+                background-color: $color1;
+                border: 3px solid $color1;
             }
 
             a:hover {
-                color: $color3;
-                background-color: $color1;
+                color: $color1;
+                background: transparent;
                 cursor: pointer;
             }
 
             @media (min-width: 576px) {
                 font-size: 2rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 768px) {
                 font-size: 3rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 992px) {
                 font-size: 4rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 1200px) {
                 font-size: 4rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 1400px) {
                 font-size: 4rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
         }
     }
@@ -128,63 +106,41 @@
             text-decoration: none;
 
             a {
-                color: $color1;
+                color: black;
                 font-weight: 700;
                 border-radius: 10px;
                 transition: 0.2s;
                 text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 text-decoration: none;
+                padding: 10px 20px 10px 20px;
+                background-color: $color1;
+                border: 3px solid $color1;
             }
 
             a:hover {
-                color: $color3;
-                background-color: $color1;
+                color: $color1;
+                background: transparent;
                 cursor: pointer;
             }
 
             @media (min-width: 576px) {
                 font-size: 1.5rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 768px) {
                 font-size: 2rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 992px) {
                 font-size: 3rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 1200px) {
                 font-size: 3rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 1400px) {
                 font-size: 3rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
         }
 
@@ -203,63 +159,41 @@
             font-size: 1rem;
 
             a {
-                color: $color1;
+                color: black;
                 font-weight: 700;
                 border-radius: 10px;
                 transition: 0.2s;
                 text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.6);
                 text-decoration: none;
+                padding: 10px 20px 10px 20px;
+                background-color: $color1;
+                border: 3px solid $color1;
             }
 
             a:hover {
-                color: $color3;
-                background-color: $color1;
+                color: $color1;
+                background: transparent;
                 cursor: pointer;
             }
 
             @media (min-width: 576px) {
                 font-size: 1.5rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 768px) {
                 font-size: 2rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 992px) {
                 font-size: 3rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 1200px) {
                 font-size: 3rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
 
             @media (min-width: 1400px) {
                 font-size: 3rem;
-
-                a:hover {
-                    color: $color3;
-                    background-color: $color1;
-                }
             }
         }
     }
