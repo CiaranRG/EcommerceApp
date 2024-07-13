@@ -3,6 +3,8 @@ import axios from 'axios'
 import './CartPage.scss'
 import { Link } from 'react-router-dom'
 
+import Product from '../Product/Product';
+
 interface Product {
     name: string,
     price: number,
@@ -15,9 +17,14 @@ interface Product {
 
 
 
-export default function CartPage() {
+export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const [cart, setCart] = useState<Product>({ name: '', price: 0, stock: 0, description: '', imageurl: '', totalItems: 5, totalCost: 78 })
     const [userAddress, setUserAddress] = useState({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
+
+    const handleAddressChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        const { name, value } = evt.target;
+        setUserAddress((prevData) => ({ ...prevData, [name]: value }))
+    }
 
     useEffect(() => {
         const gatherUserData = async () => {
@@ -44,107 +51,17 @@ export default function CartPage() {
     }, [])
 
     return (
-        <>
+        <>{isLoggedIn ?
             <div className="checkoutMainContent">
                 <div className="cartShowcase">
                     <div className="carousel">
                         <div className="cartItem">
                             <div className="cartItemDetails">
                                 <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
-                            </div>
-                        </div>
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Black Shoes</p>
-                                <p>$45.99</p>
-                                <p>Cart: 3</p>
-                                <p>Remove Item</p>
+                                <p>Name</p>
+                                <p>$Price</p>
+                                <p>Cart: Amount</p>
+                                {/* <button onClick={() => { removeFromCart(product.id) }}>Remove Item</button> */}
                             </div>
                         </div>
                     </div>
@@ -153,17 +70,17 @@ export default function CartPage() {
                     <form action="">
                         {/* Using a grid setup for the form instead of flex */}
                         <label htmlFor="addressLineOne" className='shippingLineOneLabel'>Address Line 1</label>
-                        <input type="text" placeholder='Address Line 1' id='addressLine1' name='addressLine1' value={userAddress.addressLine1} autoComplete='address-line1' />
+                        <input type="text" placeholder='Address Line 1' id='addressLine1' name='addressLine1' value={userAddress.addressLine1} onChange={handleAddressChange} autoComplete='address-line1' />
                         <label htmlFor="" className='shippingLineTwoLabel'>Address Line 2</label>
-                        <input type="text" placeholder='Address Line 2' id='addressLine2' name='addressLine2' value={userAddress.addressLine2} autoComplete='address-line2' />
+                        <input type="text" placeholder='Address Line 2' id='addressLine2' name='addressLine2' value={userAddress.addressLine2} onChange={handleAddressChange} autoComplete='address-line2' />
                         <label htmlFor="" className='shippingCityLabel'>City</label>
-                        <input type="text" placeholder='City' id='city' name='city' value={userAddress.city} autoComplete='address-level2' />
+                        <input type="text" placeholder='City' id='city' name='city' value={userAddress.city} onChange={handleAddressChange} autoComplete='address-level2' />
                         <label htmlFor="">State</label>
-                        <input type="text" placeholder='State ' id='state' name='state' value={userAddress.state} className='shippingStateLabel' autoComplete='state' />
+                        <input type="text" placeholder='State ' id='state' name='state' value={userAddress.state} onChange={handleAddressChange} className='shippingStateLabel' autoComplete='state' />
                         <label htmlFor="">Post Code</label>
-                        <input type="text" placeholder='Post Code' id='postal_code' name='postal_code' value={userAddress.postal_code} className='shippingPostCodeLabel' autoComplete='postal-code' />
+                        <input type="text" placeholder='Post Code' id='postal_code' name='postal_code' value={userAddress.postal_code} onChange={handleAddressChange} className='shippingPostCodeLabel' autoComplete='postal-code' />
                         <label htmlFor="" className='shippingCountryLabel'>Country</label>
-                        <select name="country" id="country" value={userAddress.country} autoComplete="country">
+                        <select name="country" id="country" onChange={handleAddressChange} value={userAddress.country} autoComplete="country">
                             <option value="">Choose a country!</option>
                             <option value="United Kingdom">United Kingdom</option>
                             <option value="United States">United States</option>
@@ -171,8 +88,7 @@ export default function CartPage() {
                             <option value="Germany">Germany</option>
                         </select>
                         <label htmlFor="" className='shippingPhoneNumberLabel'>Phone Number</label>
-                        <input type="tel" placeholder='Phone Number' id='phone_number' name='phone_number' value={userAddress.phone_number} autoComplete='tel' />
-                        <p className='totalAmountText'>{cart.totalItems} items in your cart, total cost of ${cart.totalCost}</p>
+                        <input type="tel" placeholder='Phone Number' id='phone_number' name='phone_number' value={userAddress.phone_number} onChange={handleAddressChange} autoComplete='tel' />
                         <div className="cartBtns">
                             <Link to={'/'}>Go Home</Link>
                             <button>Checkout</button>
@@ -180,6 +96,8 @@ export default function CartPage() {
                     </form>
                 </div>
             </div>
+            :
+            <h1>Login to access cart</h1>}
         </>
     )
 }
