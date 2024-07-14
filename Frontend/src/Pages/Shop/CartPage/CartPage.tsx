@@ -6,19 +6,19 @@ import { Link } from 'react-router-dom'
 import Product from '../Product/Product';
 
 interface Product {
-    name: string,
-    price: number,
-    stock: number,
-    description: string,
-    imageurl: string,
-    totalItems: number,
-    totalCost: number,
+    id: number;
+    name: string;
+    price: string;
+    stock: number;
+    description: string;
+    imageurl: string;
+    quantity: number;
 }
 
 
 
 export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
-    const [cart, setCart] = useState<Product>({ name: '', price: 0, stock: 0, description: '', imageurl: '', totalItems: 5, totalCost: 78 })
+    const [cart, setCart] = useState<Product[]>([])
     const [userAddress, setUserAddress] = useState({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
 
     const handleAddressChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -50,20 +50,37 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         gatherUserData()
     }, [])
 
+    useEffect(() => {
+        const gatherCartItems = async () => {
+            try {
+                const result = await axios.get('http://localhost:5000/cart', { withCredentials: true })
+                setCart(result.data.data)
+                console.log(result.data.data)
+            } catch (err) {
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log(err)
+                }
+            }
+        }
+        gatherCartItems()
+    }, [])
+
     return (
         <>{isLoggedIn ?
             <div className="checkoutMainContent">
                 <div className="cartShowcase">
                     <div className="carousel">
-                        <div className="cartItem">
-                            <div className="cartItemDetails">
-                                <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                <p>Name</p>
-                                <p>$Price</p>
-                                <p>Cart: Amount</p>
-                                {/* <button onClick={() => { removeFromCart(product.id) }}>Remove Item</button> */}
+                        {cart.map((product, index) => (
+                            <div className="cartItem" key={index}>
+                                <div className="cartItemDetails">
+                                    <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+                                    <p>{product.name}</p>
+                                    <p>${product.price}</p>
+                                    <p>Cart: {product.quantity}</p>
+                                    <button>Remove Item</button>
+                                </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
                 <div className="cartShippingAddress">

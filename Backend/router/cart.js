@@ -35,4 +35,43 @@ router.post('/add', async (req, res) => {
     }
 });
 
+// router.get('/', async (req, res) => {
+//     const { cartId } = req.session
+//     try {
+//         // Grabbing the product ids
+//         const result = await db.query('SELECT * FROM cart_item WHERE cartid = $1', [cartId])
+//         for (let i = 0; i < result.rows.length; i++){
+
+//         }
+//         console.log(result)
+//         res.status(200).json({ data: result.rows[0] })
+//     } catch (err) {
+//         if (process.env.NODE_ENV !== 'production') {
+//             console.log(err);
+//         }
+//     }
+// })
+
+router.get('/', async (req, res) => {
+    const { cartId } = req.session;
+    console.log(cartId)
+    try {
+        // Fetching the cart items including the quantity
+        const cartItemsResult = await db.query(`
+            SELECT ci.productid, ci.quantity, p.name, p.price, p.stock, p.description, p.imageurl 
+            FROM cart_item ci
+            JOIN product p ON ci.productid = p.id
+            WHERE ci.cartid = $1
+        `, [cartId]);
+
+        console.log(cartItemsResult.rows);
+
+        res.status(200).json({ data: cartItemsResult.rows });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 export { router as cartRoutes }  
