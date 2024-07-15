@@ -3,6 +3,45 @@ import db from '../utils/databaseConnection.js';
 
 const router = express.Router();
 
+router.post('/remove', async (req, res) => {
+    const { cartId, accountId } = req.session;
+    const { productId } = req.body;
+
+    if (!accountId) {
+        return res.status(401).json({ message: 'User not authenticated' });
+    }
+
+    try {
+        // Check if the item is in the cart
+        const result = await db.query('SELECT * FROM cart_item WHERE cartid = $1 AND productid = $2', [cartId, productId]);
+
+        if (result.rows.length > 0) {
+            if (result.rows[0].quantity > 1) {
+                // Reduce the quantity by 1
+                await db.query(
+                    'UPDATE cart_item SET quantity = quantity - 1 WHERE cartid = $1 AND productid = $2',
+                    [cartId, productId]
+                );
+            } else {
+                // Remove the item from the cart
+                await db.query(
+                    'DELETE FROM cart_item WHERE cartid = $1 AND productid = $2',
+                    [cartId, productId]
+                );
+            }
+            return res.status(200).json({ message: 'Item removed from cart' });
+        } else {
+            return res.status(404).json({ message: 'Item not found in cart' });
+        }
+    } catch (err) {
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(err);
+        }
+        return res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
 router.post('/add', async (req, res) => {
     const { cartId, accountId } = req.session
     const { productId } = req.body;
@@ -34,23 +73,6 @@ router.post('/add', async (req, res) => {
         }
     }
 });
-
-// router.get('/', async (req, res) => {
-//     const { cartId } = req.session
-//     try {
-//         // Grabbing the product ids
-//         const result = await db.query('SELECT * FROM cart_item WHERE cartid = $1', [cartId])
-//         for (let i = 0; i < result.rows.length; i++){
-
-//         }
-//         console.log(result)
-//         res.status(200).json({ data: result.rows[0] })
-//     } catch (err) {
-//         if (process.env.NODE_ENV !== 'production') {
-//             console.log(err);
-//         }
-//     }
-// })
 
 router.get('/', async (req, res) => {
     const { cartId } = req.session;

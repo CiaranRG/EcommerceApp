@@ -13,6 +13,7 @@ interface Product {
     description: string;
     imageurl: string;
     quantity: number;
+    productid: number;
 }
 
 
@@ -65,6 +66,17 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         gatherCartItems()
     }, [])
 
+    const handleItemRemove = async (productId: number) => {
+        try {
+            const result = await axios.post('http://localhost:5000/cart/remove', { productId: productId }, { withCredentials: true })
+            console.log(result.data)
+            alert(`${result.data.message}`)
+            window.location.reload();
+        } catch (err) {
+
+        }
+    }
+
     return (
         <>{isLoggedIn ?
             <div className="checkoutMainContent">
@@ -77,7 +89,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                                     <p>{product.name}</p>
                                     <p>${product.price}</p>
                                     <p>Cart: {product.quantity}</p>
-                                    <button>Remove Item</button>
+                                    <button onClick={() => handleItemRemove(product.productid)}>Remove Item</button>
                                 </div>
                             </div>
                         ))}
@@ -114,7 +126,11 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 </div>
             </div>
             :
-            <h1>Login to access cart</h1>}
+            <>
+                <div className="CheckoutMainContent">
+                    <h1>Login to checkout</h1>
+                </div>
+            </>}
         </>
     )
 }
