@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './CartPage.scss'
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Link } from 'react-router-dom'
 
 import Product from '../Product/Product';
+
+const stripePromise = loadStripe('your_stripe_public_key');
 
 interface Product {
     id: number;
@@ -21,6 +25,23 @@ interface Product {
 export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const [cart, setCart] = useState<Product[]>([])
     const [userAddress, setUserAddress] = useState({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
+
+    const totalCost = (cart: Product[]) => {
+        let total = 0
+        for (let i = 0; i < cart.length; i++) {
+            let currNum = parseInt(cart[i].price)
+            total = total + currNum
+        }
+        return total;
+    }
+    // Function for checking the amount of items in the cart
+    const totalItems = (cart: Product[]) => {
+        let total = 0;
+        for (let i = 0; i < cart.length; i++) {
+            total = total + cart[i].quantity;
+        }
+        return total;
+    }
 
     const handleAddressChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = evt.target;
@@ -89,7 +110,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                                     <p>{product.name}</p>
                                     <p>${product.price}</p>
                                     <p>Cart: {product.quantity}</p>
-                                    <button onClick={() => handleItemRemove(product.productid)}>Remove Item</button>
+                                    <button className='removeItemBtn' onClick={() => handleItemRemove(product.productid)}>Remove Item</button>
                                 </div>
                             </div>
                         ))}
@@ -99,17 +120,17 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                     <form action="">
                         {/* Using a grid setup for the form instead of flex */}
                         <label htmlFor="addressLineOne" className='shippingLineOneLabel'>Address Line 1</label>
-                        <input type="text" placeholder='Address Line 1' id='addressLine1' name='addressLine1' value={userAddress.addressLine1} onChange={handleAddressChange} autoComplete='address-line1' />
+                        <input type="text" placeholder='Address Line 1' id='addressLine1' name='addressLine1' value={userAddress.addressLine1} onChange={handleAddressChange} autoComplete='address-line1' required />
                         <label htmlFor="" className='shippingLineTwoLabel'>Address Line 2</label>
-                        <input type="text" placeholder='Address Line 2' id='addressLine2' name='addressLine2' value={userAddress.addressLine2} onChange={handleAddressChange} autoComplete='address-line2' />
+                        <input type="text" placeholder='Address Line 2' id='addressLine2' name='addressLine2' value={userAddress.addressLine2} onChange={handleAddressChange} autoComplete='address-line2' required />
                         <label htmlFor="" className='shippingCityLabel'>City</label>
-                        <input type="text" placeholder='City' id='city' name='city' value={userAddress.city} onChange={handleAddressChange} autoComplete='address-level2' />
+                        <input type="text" placeholder='City' id='city' name='city' value={userAddress.city} onChange={handleAddressChange} autoComplete='address-level2' required />
                         <label htmlFor="">State</label>
-                        <input type="text" placeholder='State ' id='state' name='state' value={userAddress.state} onChange={handleAddressChange} className='shippingStateLabel' autoComplete='state' />
+                        <input type="text" placeholder='State ' id='state' name='state' value={userAddress.state} onChange={handleAddressChange} className='shippingStateLabel' autoComplete='state' required />
                         <label htmlFor="">Post Code</label>
-                        <input type="text" placeholder='Post Code' id='postal_code' name='postal_code' value={userAddress.postal_code} onChange={handleAddressChange} className='shippingPostCodeLabel' autoComplete='postal-code' />
+                        <input type="text" placeholder='Post Code' id='postal_code' name='postal_code' value={userAddress.postal_code} onChange={handleAddressChange} className='shippingPostCodeLabel' autoComplete='postal-code' required />
                         <label htmlFor="" className='shippingCountryLabel'>Country</label>
-                        <select name="country" id="country" onChange={handleAddressChange} value={userAddress.country} autoComplete="country">
+                        <select name="country" id="country" onChange={handleAddressChange} value={userAddress.country} autoComplete="country" required >
                             <option value="">Choose a country!</option>
                             <option value="United Kingdom">United Kingdom</option>
                             <option value="United States">United States</option>
@@ -117,7 +138,9 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                             <option value="Germany">Germany</option>
                         </select>
                         <label htmlFor="" className='shippingPhoneNumberLabel'>Phone Number</label>
-                        <input type="tel" placeholder='Phone Number' id='phone_number' name='phone_number' value={userAddress.phone_number} onChange={handleAddressChange} autoComplete='tel' />
+                        <input type="tel" placeholder='Phone Number' id='phone_number' name='phone_number' value={userAddress.phone_number} onChange={handleAddressChange} autoComplete='tel' required />
+                        <p className='totalItems'> {totalItems(cart)} Items in your cart</p>
+                        <p className='totalCost'> Total amount is ${totalCost(cart)}</p>
                         <div className="cartBtns">
                             <Link to={'/'}>Go Home</Link>
                             <button>Checkout</button>

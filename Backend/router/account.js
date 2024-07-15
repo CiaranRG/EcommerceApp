@@ -215,7 +215,7 @@ router.post('/', async (req, res) => {
         // Using the returned accountId from the database to add it to the session
         req.session.accountId = result.rows[0].accountid
         // Creating a cart for the user
-        const cartQuery = await db.query('INSERT INTO cart (accountid) VALUES ($1) RETURNING id', [result.rows[0].accountid] )
+        const cartQuery = await db.query('INSERT INTO cart (accountid) VALUES ($1) RETURNING id', [result.rows[0].accountid])
         req.session.cartId = cartQuery.rows[0].id
         await db.query('COMMIT')
         return res.status(201).json({ message: 'Data Submitted!' })
@@ -308,6 +308,8 @@ router.post('/login', async (req, res) => {
         if (process.env.NODE_ENV !== 'production') {
             console.log('Creating user session and assigning id')
         }
+        const cartQuery = await db.query('SELECT id FROM cart WHERE accountid = $1', [user.rows[0].accountid])
+        req.session.cartId = cartQuery.rows[0].id
         req.session.accountId = user.rows[0].accountid
         // Send message to front end and create a session for them
         return res.status(201).json({ message: 'User logged in and a session has been created' })
