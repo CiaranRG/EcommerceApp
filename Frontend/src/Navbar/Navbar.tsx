@@ -21,19 +21,9 @@ export default function Navbar({ isLoggedIn, onLogout }: NavbarProps) {
                         </Link>
                     </div>
                     <div className="topRightNav">
-                        <Link to={'/'} className="cartBtn">
+                        <Link to={'/cart'} className="cartBtn">
                             <FontAwesomeIcon icon={faCartShopping} className="cartIcon" />
                         </Link>
-
-                        {/* <form action="" className="searchForm">
-                            <Link to={'/'} className="cartBtn">
-                                <FontAwesomeIcon icon={faCartShopping} className="cartIcon"/>
-                            </Link>
-                            <input type="text" className="navSearch" name="searchTerm" placeholder="Search" value={searchTerm} onChange={handleChange} />
-                            <button type="button" className="searchButton">
-                                <FontAwesomeIcon icon={faSearch} />
-                            </button>
-                        </form> */}
                     </div>
                 </div>
                 <div className="bottomNav">

@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 // Importing our routes
 import { accountRoutes } from "./router/account.js";
 import { productRoutes } from "./router/products.js";
+import { cartRoutes } from "./router/cart.js";
 
 // Loading the .env file
 config()
@@ -57,6 +58,7 @@ app.options('/api/accounts/login', cors());
 // Telling my app to use these files for requests
 app.use('/accounts', accountRoutes);
 app.use('/products', productRoutes);
+app.use('/cart', cartRoutes);
 
 app.get('/', (req, res) => {
     try {

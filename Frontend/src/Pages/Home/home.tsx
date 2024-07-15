@@ -12,20 +12,20 @@ export default function Home() {
                     <div className='sectionOneContent'>
                         <div className='shopNowBannerDiv'>
                             <div className='shopNowBanner'>
-                                <Link to={'/newCollection'}>
-                                    <a>Newest Collection!</a>
+                                <Link to={'/shop'}>
+                                    Shop Now
                                 </Link>
                             </div>
                         </div>
                         <div className='sectionOneCards'>
                             <div className='sectionOneItemOne'>
                                 <Link to={'/bestSellers'}>
-                                    <a>Best Seller</a>
+                                    Best Seller
                                 </Link>
                             </div>
                             <div className='sectionOneContactUs'>
                                 <Link to={'/contactUs'}>
-                                    <a>Contact Us</a>
+                                    Contact Us
                                 </Link>
                             </div>
                         </div>

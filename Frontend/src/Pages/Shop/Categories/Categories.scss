@@ -32,6 +32,7 @@
             background-color: $color3;
             text-align: center;
             border: 2px solid $color3;
+            font-weight: 700;
             border-radius: 10px;
             @include flex-center;
         }

@@ -62,4 +62,19 @@ router.get('/', async (req, res) => {
     }
 });
 
+
+router.get('/getProductsCart', async (req, res) => {
+    const ids = req.query.ids.split(',').map(Number);
+    try {
+        const result = await db.query('SELECT * FROM product WHERE id = ANY($1::int[])', [ids]);
+        console.log(result.rows);
+        res.status(200).json(result.rows);
+    } catch (err){
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(err)
+        }
+        res.status(500).json({ message: 'There was an error getting products from the cart', error: err.message });
+    }
+})
+
 export { router as productRoutes };

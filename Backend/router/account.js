@@ -207,12 +207,17 @@ router.post('/', async (req, res) => {
         // hashing the password on its own and saving it
         const hash = await bcrypt.hash(newAccount.password, saltRounds)
         // Query to the database to insert these values into these columns
+        await db.query('BEGIN')
         const result = await db.query(
             'INSERT INTO account (email, username, password) VALUES ($1, $2, $3) RETURNING accountid',
             [newAccount.email, newAccount.username, hash]
         )
         // Using the returned accountId from the database to add it to the session
         req.session.accountId = result.rows[0].accountid
+        // Creating a cart for the user
+        const cartQuery = await db.query('INSERT INTO cart (accountid) VALUES ($1) RETURNING id', [result.rows[0].accountid] )
+        req.session.cartId = cartQuery.rows[0].id
+        await db.query('COMMIT')
         return res.status(201).json({ message: 'Data Submitted!' })
     } catch (err) {
         if (err.message === 'Validation error') {
@@ -223,6 +228,7 @@ router.post('/', async (req, res) => {
             console.log('Hit error on account creation')
             console.log(err)
         }
+        await db.query('ROLLBACK')
         return res.status(400).json({ message: 'Registration error' })
     }
 })

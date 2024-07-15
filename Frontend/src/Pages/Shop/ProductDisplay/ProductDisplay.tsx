@@ -9,10 +9,20 @@ type ProductParams = {
     category: string,
 };
 
+interface Product {
+    id: number;
+    name: string;
+    price: number | null;
+    stock: string;
+    description: string;
+    imageurl: string;
+    quantity?: number;
+}
+
 
 export default function ProductDisplay() {
     const { id, category, demographic } = useParams<ProductParams>();
-    const [product, setProduct] = useState({ name: '', price: null, stock: '', description: '', imageurl: '' })
+    const [product, setProduct] = useState<Product>({ id: 0, name: '', price: null, stock: '', description: '', imageurl: '' })
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
@@ -21,7 +31,7 @@ export default function ProductDisplay() {
                 setIsLoading(true)
                 // Adding in a params object so I can grab them on the backend with req.query
                 const result = await axios.get('http://localhost:5000/products/getProduct', { params: { id } });
-                if (process.env.NODE_ENV === 'development') {
+                if (process.env.NODE_ENV !== 'production') {
                     console.log('Entering gather product')
                     console.log(result.data)
                 }
@@ -37,7 +47,19 @@ export default function ProductDisplay() {
         } else {
             console.error('No product ID provided in URL');
         }
-    }, [id]); // Include 'id' as a dependency
+    }, [id]);
+
+
+    const handleAddToCart = async () => {
+        try {
+            await axios.post('http://localhost:5000/cart/add', { productId: product.id }, { withCredentials: true });
+            alert('Product added to cart');
+        } catch (err) {
+            if (process.env.NODE_ENV !== 'production') {
+                console.log('Error adding to cart', err);
+            }
+        }
+    };
 
     return (
         <main className='productDisplayMainContent'>
@@ -58,7 +80,7 @@ export default function ProductDisplay() {
                     </div>
                     <div className="productDisplayButtonsDiv">
                         <Link to={`/shop/${demographic}/${category}`} className="productBackBtn">Go Back</Link>
-                        <button className="productAddToCart">Add to Cart</button>
+                        <button className="productAddToCart" onClick={handleAddToCart}>Add to Cart</button>
                     </div>
                 </div>
             </>}
