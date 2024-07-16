@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import './CartPage.scss'
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Link } from 'react-router-dom'
 
 import Product from '../Product/Product';
 
-const stripePromise = loadStripe('your_stripe_public_key');
+// Convert this to being a .env import instead of plain text
 
 interface Product {
     id: number;
@@ -25,6 +24,10 @@ interface Product {
 export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const [cart, setCart] = useState<Product[]>([])
     const [userAddress, setUserAddress] = useState({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
+    const [isProcessing, setIsProcessing] = useState(false);
+
+    const stripe = useStripe();
+    const elements = useElements();
 
     const totalCost = (cart: Product[]) => {
         let total = 0
@@ -77,7 +80,6 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             try {
                 const result = await axios.get('http://localhost:5000/cart', { withCredentials: true })
                 setCart(result.data.data)
-                console.log(result.data.data)
             } catch (err) {
                 if (process.env.NODE_ENV !== 'production') {
                     console.log(err)
@@ -90,12 +92,63 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const handleItemRemove = async (productId: number) => {
         try {
             const result = await axios.post('http://localhost:5000/cart/remove', { productId: productId }, { withCredentials: true })
-            console.log(result.data)
             alert(`${result.data.message}`)
             window.location.reload();
         } catch (err) {
 
         }
+    }
+
+    // function to clear the cart if the transaction is succesful 
+    const handleSuccessfulCheckout = () => {
+        // Update to also clear the cart in the database
+        setCart([]);
+    };
+
+    const handlePaymentSubmit = async (evt: React.FormEvent) => {
+        console.log('Inside handle payment')
+        evt.preventDefault()
+        setIsProcessing(true)
+        // If nothing was returned by stripe to fill these variables then instantly return
+        if (!stripe || !elements) {
+            console.log('No stripe or elements')
+            setIsProcessing(false)
+            return;
+        }
+        try {
+            console.log('Entering try catch')
+            // sending a request to the backend see we know how much the user has to pay, the data we get back contains a clientSecret that stripe creates specifically for each payment
+            const { data } = await axios.post('http://localhost:5000/cart/payment', { totalAmount: totalCost(cart) }, { withCredentials: true });
+            // We then check if the user has paid using that clientSecret we got from stripe on the backend
+            const result = await stripe.confirmCardPayment(data.clientSecret, {
+                payment_method: {
+                    card: elements.getElement(CardElement)!,
+                },
+            });
+            console.log('passed result')
+            console.log(result)
+            // If an error was returned by our payment check then alert the user
+            if (result.error) {
+                console.error('Payment failed', result.error.message);
+                alert('Payment failed: ' + result.error.message);
+            } else {
+                console.log('Inside payment success')
+                // If it was a success then proceed to make the order in the database by querying the backend endpoint
+                if (result.paymentIntent?.status === 'succeeded') {
+                    alert('Payment successful!');
+                    await axios.post('http://localhost:5000/orders/create', { totalAmount: totalCost(cart) }, { withCredentials: true });
+                    alert('Order created successfully!');
+                    handleSuccessfulCheckout();
+                }
+            }
+        } catch (err) {
+            if (process.env.NODE_ENV !== 'production') {
+                console.log('Error processing payment');
+                console.log(err);
+            }
+            alert('Error processing payment');
+        }
+        setIsProcessing(false);
     }
 
     return (
@@ -117,7 +170,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                     </div>
                 </div>
                 <div className="cartShippingAddress">
-                    <form action="">
+                    <form action="" onSubmit={handlePaymentSubmit}>
                         {/* Using a grid setup for the form instead of flex */}
                         <label htmlFor="addressLineOne" className='shippingLineOneLabel'>Address Line 1</label>
                         <input type="text" placeholder='Address Line 1' id='addressLine1' name='addressLine1' value={userAddress.addressLine1} onChange={handleAddressChange} autoComplete='address-line1' required />
@@ -139,11 +192,15 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                         </select>
                         <label htmlFor="" className='shippingPhoneNumberLabel'>Phone Number</label>
                         <input type="tel" placeholder='Phone Number' id='phone_number' name='phone_number' value={userAddress.phone_number} onChange={handleAddressChange} autoComplete='tel' required />
+                        <div className="paymentSection">
+                            <label htmlFor="cardElement">Payment Information</label>
+                            <CardElement id="cardElement" />
+                        </div>
                         <p className='totalItems'> {totalItems(cart)} Items in your cart</p>
                         <p className='totalCost'> Total amount is ${totalCost(cart)}</p>
                         <div className="cartBtns">
                             <Link to={'/'}>Go Home</Link>
-                            <button>Checkout</button>
+                            <button type="submit" disabled={isProcessing}>{isProcessing ? 'Processing…' : 'Checkout'}</button>
                         </div>
                     </form>
                 </div>

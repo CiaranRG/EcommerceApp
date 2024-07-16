@@ -17,7 +17,7 @@ export default function Navbar({ isLoggedIn, onLogout }: NavbarProps) {
                 <div className="topNav">
                     <div className="topLeftNav">
                         <Link to={'/'}>
-                            <a className="brandName">ZENITH</a>
+                            ZENITH
                         </Link>
                     </div>
                     <div className="topRightNav">
@@ -28,12 +28,12 @@ export default function Navbar({ isLoggedIn, onLogout }: NavbarProps) {
                 </div>
                 <div className="bottomNav">
                     <div className="bottomNavContent">
-                        <Link to={'/'}><a href="/">HOME</a></Link>
+                        <Link to={'/'}>HOME</Link>
                         <Link to={'shop'}>
-                            <a href="shop">SHOP</a>
+                            SHOP
                         </Link>
-                        {isLoggedIn ? <Link to={'account'}><a href="account">ACCOUNT</a></Link> : <Link to={'login'}><a href="login">LOGIN</a></Link>}
-                        {isLoggedIn ? <button onClick={onLogout} className="logoutBtn">LOGOUT</button> : <Link to={'register'}><a href="register">REGISTER</a></Link>}
+                        {isLoggedIn ? <Link to={'account'}>ACCOUNT</Link> : <Link to={'login'}>LOGIN</Link>}
+                        {isLoggedIn ? <button onClick={onLogout} className="logoutBtn">LOGOUT</button> : <Link to={'register'}>REGISTER</Link>}
                     </div>
                 </div>
                 <div className='saleNowBanner'>
