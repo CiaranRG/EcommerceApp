@@ -95,14 +95,19 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             alert(`${result.data.message}`)
             window.location.reload();
         } catch (err) {
-
+            console.log(err)
         }
     }
 
     // function to clear the cart if the transaction is succesful 
-    const handleSuccessfulCheckout = () => {
+    const handleSuccessfulCheckout = async () => {
         // Update to also clear the cart in the database
-        setCart([]);
+        try {
+            const result = await axios.post('http://localhost:5000/cart/clear', {}, { withCredentials: true });
+            console.log(result.data);
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const handlePaymentSubmit = async (evt: React.FormEvent) => {
@@ -136,7 +141,8 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 // If it was a success then proceed to make the order in the database by querying the backend endpoint
                 if (result.paymentIntent?.status === 'succeeded') {
                     alert('Payment successful!');
-                    await axios.post('http://localhost:5000/orders/create', { totalAmount: totalCost(cart) }, { withCredentials: true });
+                    const result = await axios.post('http://localhost:5000/order/create', { totalAmount: totalCost(cart), cart }, { withCredentials: true });
+                    console.log(result.data)
                     alert('Order created successfully!');
                     handleSuccessfulCheckout();
                 }

@@ -61,6 +61,7 @@ router.post('/remove', async (req, res) => {
 router.post('/add', async (req, res) => {
     const { cartId, accountId } = req.session
     const { productId } = req.body;
+    console.log(cartId, accountId)
     if (!accountId) {
         return res.status(401).json({ message: 'User not authenticated' });
     }
@@ -87,23 +88,20 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.get('/', async (req, res) => {
-    const { cartId } = req.session;
+router.post('/clear', async (req, res) => {
+    const { cartId, accountId } = req.session
+    console.log(cartId, accountId)
     try {
-        // Fetching the cart items including the quantity
-        const cartItemsResult = await db.query(`
-            SELECT ci.productid, ci.quantity, p.name, p.price, p.stock, p.description, p.imageurl 
-            FROM cart_item ci
-            JOIN product p ON ci.productid = p.id
-            WHERE ci.cartid = $1
-        `, [cartId]);
-
-        res.status(200).json({ data: cartItemsResult.rows });
+        console.log('Trying to clear cart')
+        await db.query('DELETE FROM cart_item WHERE cartid = $1', [cartId])
+        console.log('Cart Cleared')
+        res.status(200).json({ message: 'Cart cleared' })
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ message: 'Internal server error' });
+        console.log('Error on cart clear')
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error' })
     }
-});
+})
 
 router.post('/payment', async (req, res) => {
     const { totalAmount } = req.body;
@@ -123,6 +121,25 @@ router.post('/payment', async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 })
+
+router.get('/', async (req, res) => {
+    const { cartId } = req.session;
+    try {
+        // Fetching the cart items including the quantity
+        const cartItemsResult = await db.query(`
+            SELECT ci.productid, ci.quantity, p.name, p.price, p.stock, p.description, p.imageurl 
+            FROM cart_item ci
+            JOIN product p ON ci.productid = p.id
+            WHERE ci.cartid = $1
+        `, [cartId]);
+
+        res.status(200).json({ data: cartItemsResult.rows });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 
 
 export { router as cartRoutes }  
