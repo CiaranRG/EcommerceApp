@@ -42,24 +42,6 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   const loginCheck = async () => {
-  //     try {
-  //       const response = await axios('http://localhost:5000/accounts/isLoggedIn', { method: 'GET', withCredentials: true });
-  //       if (response.data.isLoggedIn) {
-  //         setIsLoggedIn(true);
-  //       } else {
-  //         setIsLoggedIn(false);
-  //       }
-  //     } catch (err) {
-  //       if (process.env.NODE_ENV === 'development') {
-  //         console.log(err);
-  //       }
-  //       setIsLoggedIn(false);
-  //     }
-  //   };
-  //   loginCheck();
-  // }, []);
   useEffect(() => {
     const loginCheck = async () => {
       try {
@@ -82,7 +64,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   return (

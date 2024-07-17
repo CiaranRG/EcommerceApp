@@ -25,6 +25,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const [cart, setCart] = useState<Product[]>([])
     const [userAddress, setUserAddress] = useState({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
     const [isProcessing, setIsProcessing] = useState(false);
+    const [cartLoading, setCartLoading] = useState(false);
 
     const stripe = useStripe();
     const elements = useElements();
@@ -70,12 +71,12 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                     console.log(err)
                 }
             }
-
         }
         gatherUserData()
     }, [])
 
     useEffect(() => {
+        setCartLoading(true)
         const gatherCartItems = async () => {
             try {
                 const result = await axios.get('http://localhost:5000/cart', { withCredentials: true })
@@ -85,6 +86,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                     console.log(err)
                 }
             }
+            setCartLoading(false)
         }
         gatherCartItems()
     }, [])
@@ -162,11 +164,17 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 <div className="cartShowcase">
                     <div className="carousel">
                         {cart.length === 0 ? (
-                            <div className="cartItem">
-                                <div className="cartItemDetails" style={{ border: 'none' }}>
-                                    <p>Cart is empty</p>
+                            cartLoading ?
+                                <div className="cartItem">
+                                    <div className="cartItemDetails" style={{ border: 'none' }}>
+                                        <p>Loading...</p>
+                                    </div>
+                                </div> :
+                                <div className="cartItem">
+                                    <div className="cartItemDetails" style={{ border: 'none' }}>
+                                        <p>Cart is empty</p>
+                                    </div>
                                 </div>
-                            </div>
                         ) :
                             cart.map((product, index) => (
                                 <div className="cartItem" key={index}>
