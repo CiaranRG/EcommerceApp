@@ -7,7 +7,7 @@ export default function Footer() {
         <>
             <div className="footer">
                 <Link to={'/contactUs'}>
-                    <a>Feel free to contact us by clicking here!</a>
+                    Feel free to contact us by clicking here!
                 </Link>
             </div>
         </>

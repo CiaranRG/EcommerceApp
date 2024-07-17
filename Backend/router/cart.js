@@ -1,7 +1,23 @@
 import express from 'express';
+import Stripe from 'stripe';
 import db from '../utils/databaseConnection.js';
 
+import { config } from 'dotenv';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Path to the .env file
+const envPath = join(__dirname, '..', '.env');
+config({ path: envPath });
+
+// Calling this to have its side effects happen (reading the .env and parsing the data)
+config()
+
 const router = express.Router();
+const stripe = new Stripe(process.env.STRIPE_KEY, { apiVersion: '2024-06-20' });
 
 router.post('/remove', async (req, res) => {
     const { cartId, accountId } = req.session;
@@ -45,14 +61,12 @@ router.post('/remove', async (req, res) => {
 router.post('/add', async (req, res) => {
     const { cartId, accountId } = req.session
     const { productId } = req.body;
-    console.log('Grabbing cartDetails')
+    console.log(cartId, accountId)
     if (!accountId) {
         return res.status(401).json({ message: 'User not authenticated' });
     }
     try {
-        console.log('Checking if item is in cart already')
         const result = await db.query('SELECT * FROM cart_item WHERE cartid = $1 AND productid = $2', [cartId, productId])
-
         if (result.rows.length > 0) {
             // If the product is already in the cart, increment the quantity
             await db.query(
@@ -74,9 +88,42 @@ router.post('/add', async (req, res) => {
     }
 });
 
+router.post('/clear', async (req, res) => {
+    const { cartId, accountId } = req.session
+    console.log(cartId, accountId)
+    try {
+        console.log('Trying to clear cart')
+        await db.query('DELETE FROM cart_item WHERE cartid = $1', [cartId])
+        console.log('Cart Cleared')
+        res.status(200).json({ message: 'Cart cleared' })
+    } catch (err) {
+        console.log('Error on cart clear')
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
+
+router.post('/payment', async (req, res) => {
+    const { totalAmount } = req.body;
+    try {
+        // Creating a payment intent with the correct currency/method and amount
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: totalAmount * 100,
+            currency: 'usd',
+            payment_method_types: ['card']
+        })
+        res.status(200).json({ clientSecret: paymentIntent.client_secret });
+    } catch (err) {
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('Error creating payment intent')
+            console.log(err)
+        }
+        res.status(500).json({ message: 'Internal server error' });
+    }
+})
+
 router.get('/', async (req, res) => {
     const { cartId } = req.session;
-    console.log(cartId)
     try {
         // Fetching the cart items including the quantity
         const cartItemsResult = await db.query(`
@@ -86,14 +133,13 @@ router.get('/', async (req, res) => {
             WHERE ci.cartid = $1
         `, [cartId]);
 
-        console.log(cartItemsResult.rows);
-
         res.status(200).json({ data: cartItemsResult.rows });
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: 'Internal server error' });
     }
 });
+
 
 
 export { router as cartRoutes }  

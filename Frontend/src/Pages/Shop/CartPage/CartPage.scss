@@ -1,7 +1,7 @@
 @import '../../../App.scss';
 
 .checkoutMainContent {
-    height: $page-height-xs;
+    min-height: $page-height-xs;
     display: flex;
     flex-direction: column;
     // justify-content: space-evenly;
@@ -36,6 +36,7 @@
                 align-items: center;
                 scroll-snap-align: start;
                 overflow-y: hidden;
+                padding: 2% 2% 5% 2%;
 
                 .cartItemDetails {
                     display: flex;
@@ -75,6 +76,10 @@
                         border: 1px solid white;
                         border-radius: 10px;
                     }
+
+                    button:hover {
+                        cursor: pointer;
+                    }
                 }
 
                 @media (min-width: 576px) {
@@ -90,8 +95,10 @@
 
                 @media (min-width: 768px) {
                     flex: 0 0 33%;
+                    padding: 2% 1% 4% 1%;
 
                     .cartItemDetails {
+
                         img {
                             max-width: 70%;
                             max-height: 70%;
@@ -112,17 +119,7 @@
 
                 @media (min-width: 1200px) {
                     flex: 0 0 20%;
-
-                    .cartItemDetails {
-                        img {
-                            max-width: 70%;
-                            max-height: 70%;
-                        }
-                    }
-                }
-
-                @media (min-width: 1200px) {
-                    flex: 0 0 20%;
+                    padding: 1% 1% 2% 1%;
 
                     .cartItemDetails {
                         img {
@@ -167,9 +164,14 @@
                 width: 40%;
             }
 
-            .totalAmountText {
+            .totalItems {
                 grid-column: 1 / -1;
                 margin-top: 10px;
+            }
+
+            .totalCost {
+                grid-column: 1 / -1;
+                margin-bottom: 10px;
             }
 
             .cartBtns {
@@ -199,6 +201,15 @@
                 }
             }
 
+            .paymentSection {
+                grid-column: 1 / -1;
+                margin-top: 4%;
+
+                #cardElement {
+                    padding: 4% 4% 0% 4%; // Add padding if you need space inside the element itself
+                }
+            }
+
             button:hover {
                 cursor: pointer;
             }
@@ -220,4 +231,16 @@
         }
     }
 
+}
+
+.checkoutLoggedOutContent{
+    height: $page-height-xs;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    padding: 2%;
+    h1{
+        font-size: 1.5rem;
+    }
 }
