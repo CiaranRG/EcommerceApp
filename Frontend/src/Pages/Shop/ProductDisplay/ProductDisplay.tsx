@@ -19,7 +19,7 @@ interface Product {
     quantity?: number;
 }
 
-export default function ProductDisplay() {
+export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) {
     const { id, category, demographic } = useParams<ProductParams>();
     const [product, setProduct] = useState<Product>({ id: 0, name: '', price: null, stock: '', description: '', imageurl: '' });
     const [isLoading, setIsLoading] = useState(false);
@@ -51,18 +51,22 @@ export default function ProductDisplay() {
 
     const handleAddToCart = async () => {
         setIsAdding(true);
-        try {
-            await axios.post('http://localhost:5000/cart/add', { productId: product.id }, { withCredentials: true });
-            alert('Product added to cart');
-        } catch (err) {
-            if (process.env.NODE_ENV !== 'production') {
-                console.log('Error adding to cart', err);
-            }
+        if (!isLoggedIn){
+            setIsAdding(false);
+            return alert('Please log in to add things to your cart')
         }
+            try {
+                await axios.post('http://localhost:5000/cart/add', { productId: product.id }, { withCredentials: true });
+                alert('Product added to cart');
+            } catch (err) {
+                if (process.env.NODE_ENV !== 'production') {
+                    console.log('Error adding to cart', err);
+                }
+            }
         setIsAdding(false);
     };
 
-    
+
 
     return (
         <main className='productDisplayMainContent'>

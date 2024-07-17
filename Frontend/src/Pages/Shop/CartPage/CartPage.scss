@@ -204,6 +204,7 @@
             .paymentSection {
                 grid-column: 1 / -1;
                 margin-top: 4%;
+
                 #cardElement {
                     padding: 4% 4% 0% 4%; // Add padding if you need space inside the element itself
                 }
@@ -230,4 +231,16 @@
         }
     }
 
+}
+
+.checkoutLoggedOutContent{
+    height: $page-height-xs;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    padding: 2%;
+    h1{
+        font-size: 1.5rem;
+    }
 }

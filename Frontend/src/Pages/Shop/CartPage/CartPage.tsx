@@ -103,10 +103,9 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const handleSuccessfulCheckout = async () => {
         // Update to also clear the cart in the database
         try {
-            const result = await axios.post('http://localhost:5000/cart/clear', {}, { withCredentials: true });
-            console.log(result.data);
+            await axios.post('http://localhost:5000/cart/clear', {}, { withCredentials: true })
         } catch (err) {
-            console.log(err);
+            console.log(err)
         }
     };
 
@@ -162,17 +161,24 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             <div className="checkoutMainContent">
                 <div className="cartShowcase">
                     <div className="carousel">
-                        {cart.map((product, index) => (
-                            <div className="cartItem" key={index}>
-                                <div className="cartItemDetails">
-                                    <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
-                                    <p>{product.name}</p>
-                                    <p>${product.price}</p>
-                                    <p>Cart: {product.quantity}</p>
-                                    <button className='removeItemBtn' onClick={() => handleItemRemove(product.productid)}>Remove Item</button>
+                        {cart.length === 0 ? (
+                            <div className="cartItem">
+                                <div className="cartItemDetails" style={{ border: 'none' }}>
+                                    <p>Cart is empty</p>
                                 </div>
                             </div>
-                        ))}
+                        ) :
+                            cart.map((product, index) => (
+                                <div className="cartItem" key={index}>
+                                    <div className="cartItemDetails">
+                                        <img src="https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" />
+                                        <p>{product.name}</p>
+                                        <p>${product.price}</p>
+                                        <p>Cart: {product.quantity}</p>
+                                        <button className='removeItemBtn' onClick={() => handleItemRemove(product.productid)}>Remove Item</button>
+                                    </div>
+                                </div>
+                            ))}
                     </div>
                 </div>
                 <div className="cartShippingAddress">
@@ -213,7 +219,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             </div>
             :
             <>
-                <div className="CheckoutMainContent">
+                <div className="checkoutLoggedOutContent">
                     <h1>Login to checkout</h1>
                 </div>
             </>}
