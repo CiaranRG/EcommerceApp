@@ -36,22 +36,22 @@ $main-font: 'Inter', sans-serif;
 // Defining nav and page heights
 // Extra Small
 $nav-height-xs: 8rem;
-$page-height-xs: calc(100vh - #{$nav-height-xs});
+$page-height-xs: calc(100vh - $nav-height-xs);
 // Small
 $nav-height-sm: 6rem;
-$page-height-sm: calc(100vh - #{$nav-height-sm});
+$page-height-sm: calc(100vh - $nav-height-sm);
 // Medium
 $nav-height-md: 8rem;
-$page-height-md: calc(100vh - #{$nav-height-md});
+$page-height-md: calc(100vh - $nav-height-md);
 // Large
 $nav-height-lg: 8rem;
-$page-height-lg: calc(100vh - #{$nav-height-lg});
+$page-height-lg: calc(100vh - $nav-height-lg);
 // Extra Large
 $nav-height-xl: 9rem;
-$page-height-xl: calc(100vh - #{$nav-height-xl});
+$page-height-xl: calc(100vh - $nav-height-xl);
 // Extra Extra Large
 $nav-height-xxl: 10rem;
-$page-height-xxl: calc(100vh - #{$nav-height-xxl});
+$page-height-xxl: calc(100vh - $nav-height-xxl);
 
 // Setting Up Global Colors
 $color1: white;

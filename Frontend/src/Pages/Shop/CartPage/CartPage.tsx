@@ -158,6 +158,25 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         setIsProcessing(false);
     }
 
+    // Defining styles to pass into our card element from stripe
+    const cardElementOptions = {
+        style: {
+            base: {
+                color: 'white',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4',
+                },
+            },
+            invalid: {
+                color: 'red',
+                iconColor: 'white',
+            },
+        },
+    };
+
     return (
         <>{isLoggedIn ?
             <div className="checkoutMainContent">
@@ -214,7 +233,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                         <input type="tel" placeholder='Phone Number' id='phone_number' name='phone_number' value={userAddress.phone_number} onChange={handleAddressChange} autoComplete='tel' required />
                         <div className="paymentSection">
                             <label htmlFor="cardElement">Payment Information</label>
-                            <CardElement id="cardElement" />
+                            <CardElement id="cardElement" options={cardElementOptions} />
                         </div>
                         <p className='totalItems'> {totalItems(cart)} Items in your cart</p>
                         <p className='totalCost'> Total amount is ${totalCost(cart)}</p>
