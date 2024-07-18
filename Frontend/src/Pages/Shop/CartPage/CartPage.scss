@@ -204,9 +204,15 @@
             .paymentSection {
                 grid-column: 1 / -1;
                 margin-top: 4%;
-
+                background-color: $color3;
+                padding: 10px 10px 20px 10px;
+                border-radius: 10px;
+                border: 2px solid black;
+                label{
+                    color: $color1;
+                }
                 #cardElement {
-                    padding: 4% 4% 0% 4%; // Add padding if you need space inside the element itself
+                    padding: 2% 4% 0% 4%; 
                 }
             }
 
