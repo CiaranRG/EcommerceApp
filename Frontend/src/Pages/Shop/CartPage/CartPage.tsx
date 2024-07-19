@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, } from 'react'
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import './CartPage.scss'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
@@ -29,6 +30,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
 
     const stripe = useStripe();
     const elements = useElements();
+    const navigate = useNavigate()
 
     const totalCost = (cart: Product[]) => {
         let total = 0
@@ -108,6 +110,8 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         // Update to also clear the cart in the database
         try {
             await axios.post('http://localhost:5000/cart/clear', {}, { withCredentials: true })
+            // Navigate to the account page
+            navigate('/account')
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {
                 console.log(err)
@@ -138,9 +142,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             } else {
                 // If it was a success then proceed to make the order in the database by querying the backend endpoint
                 if (result.paymentIntent?.status === 'succeeded') {
-                    alert('Payment successful!');
-                    const result = await axios.post('http://localhost:5000/order/create', { totalAmount: totalCost(cart), cart }, { withCredentials: true });
-                    alert('Order created successfully!');
+                    await axios.post('http://localhost:5000/order/create', { totalAmount: totalCost(cart), cart }, { withCredentials: true });
                     handleSuccessfulCheckout();
                 }
             }
