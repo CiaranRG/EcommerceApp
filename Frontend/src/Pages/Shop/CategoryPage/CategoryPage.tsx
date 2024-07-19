@@ -30,7 +30,7 @@ export default function CategoryPage() {
         const gatherProducts = async () => {
             try {
                 setIsLoading(true)
-                if (process.env.NODE_ENV === 'development') {
+                if (process.env.NODE_ENV !== 'production') {
                     console.log('Entering gather products')
                 }
                 // Adding in a params object so I can grab them on the backend with req.query
@@ -38,7 +38,7 @@ export default function CategoryPage() {
                 setProducts(result.data)
                 setIsLoading(false)
             } catch (err) {
-                if (process.env.NODE_ENV === 'development') {
+                if (process.env.NODE_ENV !== 'production') {
                     console.log('Error on gatherProducts()')
                     console.log(err)
                 }
@@ -52,8 +52,8 @@ export default function CategoryPage() {
             <main className='categoryPageMainContent'>
                 <div className='categoryPageHeaderDiv'>
                     <h1 className='categoryPageHeader'>{demographic} {category}</h1>
-                    <Link to={`/shop/${demographic}/categories`}>
-                        <a className='categoryPageGoBackBtn'>Click here to go back!</a>
+                    <Link className='categoryPageGoBackBtn' to={`/shop/${demographic}/categories`}>
+                        Click here to go back!
                     </Link>
                 </div>
                 <div className='productsList'>

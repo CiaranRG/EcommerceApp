@@ -2,9 +2,46 @@ import axios from 'axios'
 import './MyAccount.scss'
 import { useEffect, useState } from 'react'
 
+interface Product {
+    id: number;
+    name: string;
+    price: number;
+    imageurl: string;
+}
+
+interface OrderItem {
+    product: Product;
+    quantity: number;
+}
+
+interface Order {
+    id: number;
+    items: OrderItem[];
+}
+
+interface UserData {
+    accountId: number | null;
+    username: string;
+    password: string;
+    oldPassword: string;
+    email: string;
+}
+
+interface UserAddress {
+    addressLine1: string;
+    addressLine2: string;
+    city: string;
+    state: string;
+    postal_code: string;
+    country: string;
+    phone_number: string;
+}
+
+
 export default function MyAccount() {
-    const [userData, setUserData] = useState({ accountId: null, username: '', password: 'default', oldPassword: 'default', email: '' })
-    const [userAddress, setUserAddress] = useState({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
+    const [userData, setUserData] = useState<UserData>({ accountId: null, username: '', password: 'default', oldPassword: 'default', email: '' })
+    const [userAddress, setUserAddress] = useState<UserAddress>({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
+    const [userOrders, setUserOrders] = useState<Order[]>([])
 
     // Create a function to handle updating the inputs
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,16 +58,14 @@ export default function MyAccount() {
     useEffect(() => {
         const gatherUserData = async () => {
             try {
-                const result = await axios.get('http://localhost:5000/accounts', { withCredentials: true })
-                // Setting the persons account details
+                const result = await axios.get('http://localhost:5000/accounts', { withCredentials: true });
                 setUserData({
                     accountId: result.data.data.accountid || null,
                     username: result.data.data.username || '',
                     email: result.data.data.email || '',
                     password: 'default' || 'default',
                     oldPassword: 'default' || 'default'
-                })
-                // Setting the persons shipping details
+                });
                 setUserAddress({
                     addressLine1: result.data.data.address_line1 || '',
                     addressLine2: result.data.data.address_line2 || '',
@@ -40,6 +75,20 @@ export default function MyAccount() {
                     country: result.data.data.country || '',
                     phone_number: result.data.data.phone_number || '',
                 });
+
+                const orderResult = await axios.get('http://localhost:5000/order', { withCredentials: true });
+
+                if (orderResult.data.data) {
+                    setUserOrders(orderResult.data.data);
+                    if (process.env.NODE_ENV !== 'production') {
+                        console.log('User orders set:', orderResult.data.data);
+                    }
+                } else {
+                    if (process.env.NODE_ENV !== 'production') {
+                        console.log('No orders');
+                    }
+                }
+                // Map over the data then inside map over the items, with each items map pull the product details needed and the quantity
             } catch (err) {
                 if (process.env.NODE_ENV !== 'production') {
                     console.log(err)
@@ -288,6 +337,25 @@ export default function MyAccount() {
                     </form>
                 </div>
                 <h3>Order Tracking</h3>
+                <div className='orderTrackingDiv'>
+                    <div className='orderTrackingDiv'>
+                        {userOrders.length > 0 ? userOrders.map((order, index) => (
+                            <div className="orderDiv" key={index}>
+                                <p className='orderNumText'>Order Number: #{order.id}</p>
+                                {order.items && order.items.map((item, itemIndex) => (
+                                    <div className="orderItem" key={itemIndex}>
+                                        <img src={item.product.imageurl} alt={item.product.name} />
+                                        <div className="orderDetails">
+                                            <p>{item.product.name}</p>
+                                            <p>${item.product.price}</p>
+                                            <p>Purchased: {item.quantity}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )) : <p>No orders found</p>}
+                    </div>
+                </div>
             </main>
         </>
     )

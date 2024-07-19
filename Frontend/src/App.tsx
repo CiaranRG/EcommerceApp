@@ -36,7 +36,7 @@ function App() {
       await axios.get('http://localhost:5000/accounts/logout', { withCredentials: true });
       setIsLoggedIn(false);
     } catch (err) {
-      if (process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV !== 'production') {
         console.log(err);
       }
     }
@@ -52,7 +52,7 @@ function App() {
           setIsLoggedIn(false);
         }
       } catch (err) {
-        if (process.env.NODE_ENV === 'development') {
+        if (process.env.NODE_ENV !== 'production') {
           console.log(err);
         }
         setIsLoggedIn(false);
@@ -64,7 +64,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <div></div>;
+    return <div>=</div>;
   }
 
   return (

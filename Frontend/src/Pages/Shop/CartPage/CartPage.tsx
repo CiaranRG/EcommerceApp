@@ -97,7 +97,9 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             alert(`${result.data.message}`)
             window.location.reload();
         } catch (err) {
-            console.log(err)
+            if (process.env.NODE_ENV !== 'production') {
+                console.log(err)
+            }
         }
     }
 
@@ -107,22 +109,21 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         try {
             await axios.post('http://localhost:5000/cart/clear', {}, { withCredentials: true })
         } catch (err) {
-            console.log(err)
+            if (process.env.NODE_ENV !== 'production') {
+                console.log(err)
+            }
         }
     };
 
     const handlePaymentSubmit = async (evt: React.FormEvent) => {
-        console.log('Inside handle payment')
         evt.preventDefault()
         setIsProcessing(true)
         // If nothing was returned by stripe to fill these variables then instantly return
         if (!stripe || !elements) {
-            console.log('No stripe or elements')
             setIsProcessing(false)
             return;
         }
         try {
-            console.log('Entering try catch')
             // sending a request to the backend see we know how much the user has to pay, the data we get back contains a clientSecret that stripe creates specifically for each payment
             const { data } = await axios.post('http://localhost:5000/cart/payment', { totalAmount: totalCost(cart) }, { withCredentials: true });
             // We then check if the user has paid using that clientSecret we got from stripe on the backend
@@ -131,19 +132,14 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                     card: elements.getElement(CardElement)!,
                 },
             });
-            console.log('passed result')
-            console.log(result)
             // If an error was returned by our payment check then alert the user
             if (result.error) {
-                console.error('Payment failed', result.error.message);
                 alert('Payment failed: ' + result.error.message);
             } else {
-                console.log('Inside payment success')
                 // If it was a success then proceed to make the order in the database by querying the backend endpoint
                 if (result.paymentIntent?.status === 'succeeded') {
                     alert('Payment successful!');
                     const result = await axios.post('http://localhost:5000/order/create', { totalAmount: totalCost(cart), cart }, { withCredentials: true });
-                    console.log(result.data)
                     alert('Order created successfully!');
                     handleSuccessfulCheckout();
                 }
