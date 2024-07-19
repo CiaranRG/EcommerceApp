@@ -11,26 +11,26 @@ export default function Categories() {
                 </div> */}
                 <div className='categoriesList'>
                     <h1>{demographic}</h1>
-                    <Link to={`/shop`}>
-                        <a className='categoriesGoBackBtn'>Click here to go back!</a>
+                    <Link className='categoriesGoBackBtn' to={`/shop`}>
+                        Click here to go back!
                     </Link>
                     <Link to={`/shop/${demographic}/sweatshirts`}>
-                        <a>Sweatshirts</a>
+                        Sweatshirts
                     </Link>
                     <Link to={`/shop/${demographic}/shoes`}>
-                        <a>Shoes</a>
+                        Shoes
                     </Link>
                     <Link to={`/shop/${demographic}/joggers`}>
-                        <a>Joggers</a>
+                        Joggers
                     </Link>
                     <Link to={`/shop/${demographic}/tops`}>
-                        <a>Tops</a>
+                        Tops
                     </Link>
                     <Link to={`/shop/${demographic}/shorts`}>
-                        <a>Shorts</a>
+                        Shorts
                     </Link>
                     <Link to={`/shop/${demographic}/hats`}>
-                        <a>Hats</a>
+                        Hats
                     </Link>
                 </div>
             </main>
