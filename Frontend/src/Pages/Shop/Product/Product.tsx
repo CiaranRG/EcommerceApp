@@ -22,6 +22,7 @@ export default function Product({ product }: productProps) {
     const handleViewMore = () => {
         navigate(`/shop/${product.demographic}/${category}/product/${product.id}`);
     };
+
     return (
         <main className='productMainContent'>
             <div className='productTop'></div>

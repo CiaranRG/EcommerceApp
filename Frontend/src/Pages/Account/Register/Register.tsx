@@ -10,6 +10,7 @@ type FormData = {
 
 export default function Register() {
     const [formData, setFormData] = useState<FormData>({ email: '', username: '', password: '' })
+    const [isRegistering, setIsRegistering] = useState(false)
 
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         // Destructure the name and value from the inputs
@@ -20,6 +21,7 @@ export default function Register() {
 
     const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
+        setIsRegistering(true)
         try {
             const response = await axios.post('http://localhost:5000/accounts', formData, { withCredentials: true })
             setFormData({ email: '', username: '', password: '' })
@@ -29,6 +31,7 @@ export default function Register() {
             if (response.status === 201) {
                 // Registration successful, reload the page
                 window.location.reload();
+                setIsRegistering(false)
             }
         } catch (err) {
             if (axios.isAxiosError(err)) {
@@ -46,6 +49,7 @@ export default function Register() {
                     console.log(err)
                 }
             }
+            setIsRegistering(true)
         }
     }
 
@@ -66,7 +70,7 @@ export default function Register() {
                         <label htmlFor="password">Please enter your password:</label>
                         <input type="password" required name='password' placeholder='Password' onChange={handleChange} value={formData.password} />
                     </div>
-                    <button className='registerFormButton'>Register Now!</button>
+                    <button disabled={isRegistering} className='registerFormButton'>{isRegistering ? 'Registering...' : 'Register Now'}</button>
                 </form>
             </main>
         </>

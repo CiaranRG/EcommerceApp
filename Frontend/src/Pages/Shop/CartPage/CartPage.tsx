@@ -25,8 +25,10 @@ interface Product {
 export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const [cart, setCart] = useState<Product[]>([])
     const [userAddress, setUserAddress] = useState({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
+    // State to change text etc based on the current value
     const [isProcessing, setIsProcessing] = useState(false);
     const [cartLoading, setCartLoading] = useState(false);
+    const [isRemoving, setIsRemoving] = useState(false)
 
     const stripe = useStripe();
     const elements = useElements();
@@ -95,13 +97,16 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
 
     const handleItemRemove = async (productId: number) => {
         try {
+            setIsRemoving(true)
             const result = await axios.post('http://localhost:5000/cart/remove', { productId: productId }, { withCredentials: true })
             alert(`${result.data.message}`)
             window.location.reload();
+            setIsRemoving(false)
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {
                 console.log(err)
             }
+            setIsRemoving(false)
         }
     }
 
@@ -200,7 +205,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                                         <p>{product.name}</p>
                                         <p>${product.price}</p>
                                         <p>Cart: {product.quantity}</p>
-                                        <button className='removeItemBtn' onClick={() => handleItemRemove(product.productid)}>Remove Item</button>
+                                        <button className='removeItemBtn' disabled={isRemoving} onClick={() => handleItemRemove(product.productid)}>{isRemoving ? 'Removing...' : 'Remove Item'}</button>
                                     </div>
                                 </div>
                             ))}

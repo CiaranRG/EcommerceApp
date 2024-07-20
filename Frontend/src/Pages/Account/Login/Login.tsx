@@ -13,6 +13,7 @@ type Props = {
 
 export default function Login({ onLogin }: Props) {
     const [formData, setFormData] = useState<FormData>({ username: '', password: '' })
+    const [isLoggingIn, setIsLoggingIn] = useState(false)
 
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
         // Destructure the name and value from the inputs
@@ -22,10 +23,12 @@ export default function Login({ onLogin }: Props) {
     }
 
     const handleSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
+        setIsLoggingIn(true)
         evt.preventDefault()
         try {
             await axios.post('http://localhost:5000/accounts/login', formData, { withCredentials: true })
             setFormData({ username: '', password: '' })
+            setIsLoggingIn(false)
             onLogin()
         } catch (err) {
             // Checking if the error is an axios error
@@ -36,7 +39,7 @@ export default function Login({ onLogin }: Props) {
                 // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains User not found this code runs
                 if (serverResponse && serverResponse.data.message === 'User not found') {
                     return alert("This user doesn't exist or the credentials are wrong, try again!")
-                } else if (serverResponse && serverResponse.data.message === 'Incorrect details' ){
+                } else if (serverResponse && serverResponse.data.message === 'Incorrect details') {
                     return alert("This user doesn't exist or the credentials are wrong, try again!")
                 }
                 // If its not an axios error we do something else
@@ -44,7 +47,7 @@ export default function Login({ onLogin }: Props) {
                 if (process.env.NODE_ENV !== 'production') {
                     console.log('Handle Submit Error')
                     console.log(err)
-                  }
+                }
             }
         }
     }
@@ -62,7 +65,7 @@ export default function Login({ onLogin }: Props) {
                         <label htmlFor="password">Please enter your password:</label>
                         <input type="password" required name='password' placeholder='Password' onChange={handleChange} value={formData.password} autoComplete='off' />
                     </div>
-                    <button className='loginFormButton'>Login!</button>
+                    <button className='loginFormButton' disabled={isLoggingIn}>{isLoggingIn ? 'Logging in' : 'Login!'}</button>
                 </form>
             </main>
         </>

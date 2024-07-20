@@ -42,6 +42,9 @@ export default function MyAccount() {
     const [userData, setUserData] = useState<UserData>({ accountId: null, username: '', password: 'default', oldPassword: 'default', email: '' })
     const [userAddress, setUserAddress] = useState<UserAddress>({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
     const [userOrders, setUserOrders] = useState<Order[]>([])
+    // State for changing button text and disabling the button
+    const [isConfirming, setIsConfirming] = useState(false)
+    const [isDeleting, setIsDeleting] = useState(false)
 
     // Create a function to handle updating the inputs
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,6 +104,7 @@ export default function MyAccount() {
 
     const handleUsernameSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
+        setIsConfirming(true)
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
             accountId: userData.accountId,
@@ -111,6 +115,7 @@ export default function MyAccount() {
             if (response.status === 200) {
                 alert('Username updated successfully!')
                 window.location.reload();
+                setIsConfirming(false)
             }
         } catch (err) {
             // Checking if the error is an axios error, which would mean an error occured at any point during the axios request
@@ -133,11 +138,13 @@ export default function MyAccount() {
                     console.log(err)
                 }
             }
+            setIsConfirming(false)
         }
     }
 
     const handleEmailSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
+        setIsConfirming(true)
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
             accountId: userData.accountId,
@@ -148,6 +155,7 @@ export default function MyAccount() {
             if (response.status === 200) {
                 alert('Email updated successfully!')
                 window.location.reload();
+                setIsConfirming(false)
             }
         } catch (err) {
             // Checking if the error is an axios error, which would mean an error occured at any point during the axios request
@@ -169,11 +177,13 @@ export default function MyAccount() {
                     console.log(err)
                 }
             }
+            setIsConfirming(false)
         }
     }
 
     const handlePasswordSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
+        setIsConfirming(true)
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
             accountId: userData.accountId,
@@ -184,6 +194,7 @@ export default function MyAccount() {
             if (response.status === 200) {
                 alert('Password updated successfully!')
                 window.location.reload();
+                setIsConfirming(false)
             }
         } catch (err) {
             // Checking if the error is an axios error, which would mean an error occurred at any point during the axios request
@@ -207,11 +218,13 @@ export default function MyAccount() {
                     }
                 }
             }
+            setIsConfirming(false)
         }
     }
 
     const handleAddressSubmit = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
+        setIsConfirming(true)
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
             accountId: userData.accountId,
@@ -226,8 +239,8 @@ export default function MyAccount() {
         try {
             const response = await axios.post('http://localhost:5000/accounts/changeAddress', dataToSend, { withCredentials: true })
             if (response.status === 200) {
-                alert('Address updated successfully!')
                 window.location.reload();
+                setIsConfirming(false)
             }
         } catch (err) {
             // Checking if the error is an axios error, which would mean an error occurred at any point during the axios request
@@ -247,11 +260,13 @@ export default function MyAccount() {
                     console.log(err)
                 }
             }
+            setIsConfirming(false)
         }
     }
 
     const handleAccountDeletion = async (evt: React.FormEvent<HTMLFormElement>) => {
         evt.preventDefault()
+        setIsDeleting(true)
         const dataToSend = {
             accountId: userData.accountId,
         }
@@ -260,6 +275,7 @@ export default function MyAccount() {
             if (response.status === 200) {
                 alert('Account deleted successfully!')
                 window.location.reload();
+                setIsDeleting(false)
             }
         } catch (err) {
             if (axios.isAxiosError(err)) {
@@ -276,18 +292,22 @@ export default function MyAccount() {
                     console.log(err)
                 }
             }
+            setIsDeleting(false)
         }
     }
 
     const handleOrderCancel = async (orderId: number) => {
         try {
-            const result  = await axios.post('http://localhost:5000/order/cancel', { orderId: orderId }, { withCredentials: true })
+            setIsConfirming(true)
+            const result = await axios.post('http://localhost:5000/order/cancel', { orderId: orderId }, { withCredentials: true })
             console.log(result)
+            setIsConfirming(false)
             window.location.reload()
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {
                 console.log(err)
             }
+            setIsConfirming(false)
         }
     }
 
@@ -301,24 +321,22 @@ export default function MyAccount() {
                         <form action="" className='emailChangeForm' onSubmit={handleEmailSubmit}>
                             <label htmlFor="email" className='userLabel'>Email</label>
                             <input type="email" placeholder='Email' id='email' name='email' className='userInput' min={3} max={30} value={userData.email} onChange={handleChange} autoComplete='email' required />
-                            <button>Confirm</button>
+                            <button disabled={isConfirming || isDeleting} >{isConfirming ? 'Hold...' : 'Confirm'}</button>
                         </form>
                         <form action="" className='usernameChangeForm' onSubmit={handleUsernameSubmit}>
                             <label htmlFor="username" className='userLabel'>Username</label>
                             <input type="text" placeholder='Username' id='username' name='username' className='userInput' min={3} max={20} value={userData.username} onChange={handleChange} autoComplete='username' required />
-                            <button>Confirm</button>
+                            <button disabled={isConfirming || isDeleting} >{isConfirming ? 'Hold...' : 'Confirm'}</button>
                         </form>
                         <form action="" className='passwordChangeForm' onSubmit={handlePasswordSubmit}>
                             <label htmlFor="password" className='passLabel'>Password</label>
                             <input type="password" placeholder='Password' id='password' name='password' className='passInput' value={userData.password} onChange={handleChange} autoComplete='off' required />
-                            <button>Confirm</button>
+                            <button disabled={isConfirming || isDeleting} >{isConfirming ? 'Hold...' : 'Confirm'}</button>
                         </form>
-                        {/* <label htmlFor="oldPassword" className='oldPassLabel'>Old Password </label>
-                        <input type="password" placeholder='Password' id='oldPassword' name='oldPassword' className='oldPassInput' value={userData.oldPassword} onChange={handleChange} required/> */}
                     </div>
                     <p className='deleteAccountText'>Click below to delete your account</p>
                     <form action="" onSubmit={handleAccountDeletion}>
-                        <button type='submit' className='deleteAccountBtn'>Delete Account</button>
+                        <button type='submit' className='deleteAccountBtn' disabled={isDeleting || isConfirming}>{isDeleting ? 'Deleting...' : 'Delete Account'}</button>
                     </form>
                 </div>
                 <div className='shippingAddressDiv'>
@@ -345,7 +363,7 @@ export default function MyAccount() {
                         </select>
                         <label htmlFor="" className='shippingPhoneNumberLabel'>Phone Number</label>
                         <input type="tel" placeholder='Phone Number' id='phone_number' name='phone_number' value={userAddress.phone_number} onChange={handleAddressChange} autoComplete='tel' />
-                        <button>Submit</button>
+                        <button disabled={isConfirming || isDeleting}>{isConfirming ? 'Submitting...' : 'Submit'}</button>
                     </form>
                 </div>
                 <h3>Order Tracking</h3>
@@ -364,7 +382,7 @@ export default function MyAccount() {
                                         </div>
                                     </div>
                                 ))}
-                                <button onClick={() => handleOrderCancel(order.id)}>Cancel Order</button>
+                                <button disabled={isConfirming || isDeleting} onClick={() => handleOrderCancel(order.id)}>{isConfirming ? 'Cancelling' : 'Cancel Order'}</button>
                             </div>
                         )) : <p>No orders found</p>}
                     </div>

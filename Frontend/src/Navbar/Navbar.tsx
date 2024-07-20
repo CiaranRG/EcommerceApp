@@ -10,7 +10,6 @@ type NavbarProps = {
 
 export default function Navbar({ isLoggedIn, onLogout }: NavbarProps) {
 
-
     return (
         <>
             <nav className="navbar">
