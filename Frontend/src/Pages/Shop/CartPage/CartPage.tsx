@@ -41,9 +41,9 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             total = total + currNum
         }
         if (total === 0) {
-            return ''
+            return { string: '', total: total }
         } else {
-            return `total amount is $${total}`;
+            return { string: `total amount is $${total}`, total: total };
         }
     }
     // Function for checking the amount of items in the cart
@@ -53,9 +53,9 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             total = total + cart[i].quantity;
         }
         if (total === 0) {
-            return 'Your cart is empty'
+            return { string: 'Your cart is empty', total: total }
         } else {
-            return `${total} items in your cart`;
+            return { string: `${total} items in your cart`, total: total };
         }
     }
 
@@ -107,7 +107,6 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         try {
             setIsRemoving(true)
             const result = await axios.post('http://localhost:5000/cart/remove', { productId: productId }, { withCredentials: true })
-            alert(`${result.data.message}`)
             window.location.reload();
             setIsRemoving(false)
         } catch (err) {
@@ -141,8 +140,38 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             return;
         }
         try {
+            const dataToSend = {
+                addressLine1: userAddress.addressLine1,
+                addressLine2: userAddress.addressLine2,
+                city: userAddress.city,
+                state: userAddress.state,
+                postal_code: userAddress.postal_code,
+                country: userAddress.country,
+                phone_number: userAddress.phone_number
+            }
+            try {
+                await axios.post('http://localhost:5000/accounts/changeAddress', dataToSend, { withCredentials: true })
+            } catch (err) {
+                // Checking if the error is an axios error, which would mean an error occurred at any point during the axios request
+                if (axios.isAxiosError(err)) {
+                    if (process.env.NODE_ENV !== 'production') {
+                        console.log('Handle address change error')
+                    }
+                    const serverResponse = err.response;
+                    if (serverResponse?.status === 500) {
+                        return alert("Internal server error, try again later!");
+                    } else if (serverResponse?.status === 400) {
+                        return alert("Please enter a valid address!");
+                    }
+                } else {
+                    if (process.env.NODE_ENV !== 'production') {
+                        console.log('Handle address change error')
+                        console.log(err)
+                    }
+                }
+            }
             // sending a request to the backend see we know how much the user has to pay, the data we get back contains a clientSecret that stripe creates specifically for each payment
-            const { data } = await axios.post('http://localhost:5000/cart/payment', { totalAmount: totalCost(cart) }, { withCredentials: true });
+            const { data } = await axios.post('http://localhost:5000/cart/payment', { totalAmount: totalCost(cart).total }, { withCredentials: true });
             // We then check if the user has paid using that clientSecret we got from stripe on the backend
             const result = await stripe.confirmCardPayment(data.clientSecret, {
                 payment_method: {
@@ -155,7 +184,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             } else {
                 // If it was a success then proceed to make the order in the database by querying the backend endpoint
                 if (result.paymentIntent?.status === 'succeeded') {
-                    await axios.post('http://localhost:5000/order/create', { totalAmount: totalCost(cart), cart }, { withCredentials: true });
+                    await axios.post('http://localhost:5000/order/create', { totalAmount: totalCost(cart).total, cart }, { withCredentials: true });
                     handleSuccessfulCheckout();
                 }
             }
@@ -246,8 +275,8 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                             <label htmlFor="cardElement">Payment Information</label>
                             <CardElement id="cardElement" options={cardElementOptions} />
                         </div>
-                        <p className='totalItems'> {totalItems(cart)}</p>
-                        <p className='totalCost'>{totalCost(cart)}</p>
+                        <p className='totalItems'> {totalItems(cart).string}</p>
+                        <p className='totalCost'>{totalCost(cart).string}</p>
                         <div className="cartBtns">
                             <Link to={'/'}>Go Home</Link>
                             <button type="submit" disabled={isProcessing}>{isProcessing ? 'Processing…' : 'Checkout'}</button>

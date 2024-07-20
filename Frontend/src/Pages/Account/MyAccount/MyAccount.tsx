@@ -113,7 +113,6 @@ export default function MyAccount() {
         try {
             const response = await axios.post('http://localhost:5000/accounts/changeUsername', dataToSend, { withCredentials: true })
             if (response.status === 200) {
-                alert('Username updated successfully!')
                 window.location.reload();
                 setIsConfirming(false)
             }
@@ -153,7 +152,6 @@ export default function MyAccount() {
         try {
             const response = await axios.post('http://localhost:5000/accounts/changeEmail', dataToSend, { withCredentials: true })
             if (response.status === 200) {
-                alert('Email updated successfully!')
                 window.location.reload();
                 setIsConfirming(false)
             }
@@ -192,7 +190,6 @@ export default function MyAccount() {
         try {
             const response = await axios.post('http://localhost:5000/accounts/changePassword', dataToSend, { withCredentials: true })
             if (response.status === 200) {
-                alert('Password updated successfully!')
                 window.location.reload();
                 setIsConfirming(false)
             }
@@ -227,7 +224,6 @@ export default function MyAccount() {
         setIsConfirming(true)
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
-            accountId: userData.accountId,
             addressLine1: userAddress.addressLine1,
             addressLine2: userAddress.addressLine2,
             city: userAddress.city,
@@ -250,8 +246,10 @@ export default function MyAccount() {
                 }
                 const serverResponse = err.response;
                 if (serverResponse?.status === 500) {
+                    setIsConfirming(false)
                     return alert("Internal server error, try again later!");
                 } else if (serverResponse?.status === 400) {
+                    setIsConfirming(false)
                     return alert("Please enter a valid address!");
                 }
             } else {
@@ -273,7 +271,6 @@ export default function MyAccount() {
         try {
             const response = await axios.post('http://localhost:5000/accounts/deleteAccount', dataToSend, { withCredentials: true })
             if (response.status === 200) {
-                alert('Account deleted successfully!')
                 window.location.reload();
                 setIsDeleting(false)
             }

@@ -105,7 +105,8 @@ router.post('/changeAddress', async (req, res) => {
         console.log('Starting the process of changing an address');
     }
     const addressDetails = req.body;
-    console.log(addressDetails)
+    const { accountId } = req.session
+    console.log(accountId)
     try {
         const { error } = addressSchema.validate(addressDetails);
         if (error) {
@@ -128,7 +129,7 @@ router.post('/changeAddress', async (req, res) => {
         `;
 
         await db.query(query, [
-            addressDetails.accountId,
+            accountId,
             addressDetails.addressLine1,
             addressDetails.addressLine2,
             addressDetails.city,

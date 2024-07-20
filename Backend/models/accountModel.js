@@ -14,7 +14,6 @@ const loginSchema = Joi.object({
 });
 
 const addressSchema = Joi.object({
-    accountId: Joi.number().required().label('AccountId'),
     addressLine1: Joi.string().required().label('Address Line 1'),
     addressLine2: Joi.string().allow('').optional().label('Address Line 2'),
     city: Joi.string().required().label('City'),

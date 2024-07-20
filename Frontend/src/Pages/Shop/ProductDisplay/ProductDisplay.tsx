@@ -51,18 +51,18 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
 
     const handleAddToCart = async () => {
         setIsAdding(true);
-        if (!isLoggedIn){
+        if (!isLoggedIn) {
             setIsAdding(false);
             return alert('Please log in to add things to your cart')
         }
-            try {
-                await axios.post('http://localhost:5000/cart/add', { productId: product.id }, { withCredentials: true });
-                alert('Product added to cart');
-            } catch (err) {
-                if (process.env.NODE_ENV !== 'production') {
-                    console.log('Error adding to cart', err);
-                }
+        try {
+            await axios.post('http://localhost:5000/cart/add', { productId: product.id }, { withCredentials: true });
+            alert('Product added to cart');
+        } catch (err) {
+            if (process.env.NODE_ENV !== 'production') {
+                console.log('Error adding to cart', err);
             }
+        }
         setIsAdding(false);
     };
 
