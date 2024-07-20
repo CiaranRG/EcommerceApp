@@ -279,6 +279,18 @@ export default function MyAccount() {
         }
     }
 
+    const handleOrderCancel = async (orderId: number) => {
+        try {
+            const result  = await axios.post('http://localhost:5000/order/cancel', { orderId: orderId }, { withCredentials: true })
+            console.log(result)
+            window.location.reload()
+        } catch (err) {
+            if (process.env.NODE_ENV !== 'production') {
+                console.log(err)
+            }
+        }
+    }
+
     return (
         <>
             <main className='myAccountMainContent'>
@@ -352,6 +364,7 @@ export default function MyAccount() {
                                         </div>
                                     </div>
                                 ))}
+                                <button onClick={() => handleOrderCancel(order.id)}>Cancel Order</button>
                             </div>
                         )) : <p>No orders found</p>}
                     </div>
