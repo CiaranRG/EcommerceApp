@@ -151,7 +151,7 @@
         width: 100%;
         gap: 10px;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
 
         .orderDiv {
             display: flex;
@@ -164,7 +164,17 @@
             border-radius: 10px;
             justify-content: center;
             gap: 20px;
-
+            button{
+                background-color: $color1;
+                border: 2px solid black;
+                border-radius: 5px;
+                padding: 5px 0px 5px 0px;
+                font-weight: 700;
+                color: $color3;
+            };
+            button:hover{
+                cursor: pointer;
+            }
             .orderItem {
                 display: flex;
                 justify-content: flex-start;

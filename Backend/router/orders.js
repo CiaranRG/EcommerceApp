@@ -30,28 +30,16 @@ router.post('/create', async (req, res) => {
     }
 })
 
-
-// router.get('/', async (req, res) => {
-//     const { accountId } = req.session
-//     try {
-//         const result = await db.query('SELECT * FROM orders WHERE accountid = $1', [accountId])
-//         // Creating function to map ids into an array
-//         const productIds = result.rows.map(product => product.id)
-//         console.log(productIds)
-//         if (productIds.length > 0) {
-//             // Grabbing any order item that is linked to our specific order
-//             let orderItemResult = await db.query('SELECT * FROM order_item WHERE orderid = ', [productIds])
-//             console.log(orderItemResult.rows)
-//         } else {
-//             console.log('Products not found')
-//             res.status(404).json({ data: orderItemResult.rows })
-//         }
-
-//     } catch (err) {
-//         console.log(err)
-//         res.status(500).json({ message: 'Internal server error' })
-//     }
-// })
+router.post('/cancel', async (req, res) => {
+    const { orderId } = req.body
+    try {
+        await db.query('DELETE FROM orders WHERE id = $1', [orderId])
+        res.status(200).json({ message: 'Order canceled' })
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ message: 'Internal server error' })
+    }
+})
 
 router.get('/', async (req, res) => {
     const { accountId } = req.session;
@@ -59,7 +47,6 @@ router.get('/', async (req, res) => {
         // Grabbing all the orders that correspond to the user currently
         const orderResult = await db.query('SELECT * FROM orders WHERE accountid = $1', [accountId]);
         const orders = orderResult.rows;
-        console.log('The orders', orders)
 
         if (orders.length === 0) {
             return res.status(200).json({ data: [] });
