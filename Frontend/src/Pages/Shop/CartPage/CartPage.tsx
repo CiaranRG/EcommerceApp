@@ -40,7 +40,11 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             let currNum = parseInt(cart[i].price)
             total = total + currNum
         }
-        return total;
+        if (total === 0) {
+            return ''
+        } else {
+            return `total amount is $${total}`;
+        }
     }
     // Function for checking the amount of items in the cart
     const totalItems = (cart: Product[]) => {
@@ -48,7 +52,11 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         for (let i = 0; i < cart.length; i++) {
             total = total + cart[i].quantity;
         }
-        return total;
+        if (total === 0) {
+            return 'Your cart is empty'
+        } else {
+            return `${total} items in your cart`;
+        }
     }
 
     const handleAddressChange = (evt: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -184,7 +192,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         <>{isLoggedIn ?
             <div className="checkoutMainContent">
                 <div className="cartShowcase">
-                    <div className="carousel">
+                    <div className={`carousel ${cartLoading || cart.length === 0 ? 'loading' : ''}`}>
                         {cart.length === 0 ? (
                             cartLoading ?
                                 <div className="cartItem">
@@ -194,7 +202,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                                 </div> :
                                 <div className="cartItem">
                                     <div className="cartItemDetails" style={{ border: 'none' }}>
-                                        <p>Cart is empty</p>
+                                        <p>Cart Is Empty</p>
                                     </div>
                                 </div>
                         ) :
@@ -238,8 +246,8 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                             <label htmlFor="cardElement">Payment Information</label>
                             <CardElement id="cardElement" options={cardElementOptions} />
                         </div>
-                        <p className='totalItems'> {totalItems(cart)} Items in your cart</p>
-                        <p className='totalCost'> Total amount is ${totalCost(cart)}</p>
+                        <p className='totalItems'> {totalItems(cart)}</p>
+                        <p className='totalCost'>{totalCost(cart)}</p>
                         <div className="cartBtns">
                             <Link to={'/'}>Go Home</Link>
                             <button type="submit" disabled={isProcessing}>{isProcessing ? 'Processing…' : 'Checkout'}</button>
