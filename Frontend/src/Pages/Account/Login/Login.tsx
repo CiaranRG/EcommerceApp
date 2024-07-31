@@ -1,6 +1,8 @@
 import './Login.scss'
 import { useState } from 'react'
 import axios from 'axios'
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type FormData = {
     username: string,
@@ -38,9 +40,11 @@ export default function Login({ onLogin }: Props) {
                 const serverResponse = err.response
                 // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains User not found this code runs
                 if (serverResponse && serverResponse.data.message === 'User not found') {
-                    return alert("This user doesn't exist or the credentials are wrong, try again!")
+                    setIsLoggingIn(false)
+                    return toast.error("Incorrect details, try again!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 } else if (serverResponse && serverResponse.data.message === 'Incorrect details') {
-                    return alert("This user doesn't exist or the credentials are wrong, try again!")
+                    setIsLoggingIn(false)
+                    return toast.error("Incorrect details, try again!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 }
                 // If its not an axios error we do something else
             } else {
@@ -49,12 +53,14 @@ export default function Login({ onLogin }: Props) {
                     console.log(err)
                 }
             }
+            setIsLoggingIn(false)
         }
     }
 
     return (
         <>
             <main className='loginMainContent'>
+                <ToastContainer />
                 <h1 className='loginHeader'>Login Now!</h1>
                 <form action="" onSubmit={handleSubmit} className='loginForm'>
                     <div className='loginFormDiv'>

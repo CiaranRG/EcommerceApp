@@ -1,6 +1,8 @@
 import './Register.scss'
 import { useState } from 'react'
 import axios from 'axios'
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type FormData = {
     email: string,
@@ -39,9 +41,11 @@ export default function Register() {
                 const serverResponse = err.response
                 // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains the specific error
                 if (serverResponse && serverResponse.data.message === 'Registration error') {
-                    return alert("Registration Error")
+                    setIsRegistering(false)
+                    return toast.error('Registration error', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
                 } else if (serverResponse && serverResponse.data.message === 'Validation error') {
-                    return alert("Password and Username must be between 3-30 characters long!")
+                    setIsRegistering(false)
+                    return toast.error("Password and Username must be between 3-30 characters long!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
                 }
             } else {
                 if (process.env.NODE_ENV !== 'production') {
@@ -49,13 +53,14 @@ export default function Register() {
                     console.log(err)
                 }
             }
-            setIsRegistering(true)
+            setIsRegistering(false)
         }
     }
 
     return (
         <>
             <main className='registerMainContent'>
+                <ToastContainer />
                 <h1 className='registerHeader'>Register Now!</h1>
                 <form action="" onSubmit={handleSubmit} className='registerForm'>
                     <div className='registerFormDiv'>
