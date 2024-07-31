@@ -1,6 +1,8 @@
 import axios from 'axios'
 import './MyAccount.scss'
 import { useEffect, useState } from 'react'
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Product {
     id: number;
@@ -126,9 +128,9 @@ export default function MyAccount() {
                 const serverResponse = err.response
                 // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains User not found this code runs
                 if (serverResponse?.status === 500) {
-                    return alert("Internal server error, try again later!");
+                    return toast.error("Internal server error, try again later!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 } else if (serverResponse?.status === 400) {
-                    return alert("Please enter a valid username between 3-30 characters!");
+                    return toast.error("Please enter a valid username between 3-30 characters!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 }
                 // If its not an axios error we do something else
             } else {
@@ -165,9 +167,9 @@ export default function MyAccount() {
                 const serverResponse = err.response
                 // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains User not found this code runs
                 if (serverResponse?.status === 500) {
-                    return alert("Internal server error, try again later!");
+                    return toast.error("Internal server error, try again later!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 } else if (serverResponse?.status === 400) {
-                    return alert("Please enter a valid email!");
+                    return toast.error("Please enter a valid email!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 }
             } else {
                 if (process.env.NODE_ENV !== 'production') {
@@ -203,9 +205,9 @@ export default function MyAccount() {
                 }
                 const serverResponse = err.response;
                 if (serverResponse?.status === 500) {
-                    return alert("Internal server error, try again later!");
+                    return toast.error("Internal server error, try again later!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 } else if (serverResponse?.status === 400) {
-                    return alert("Please enter a valid password between 3-30 characters!");
+                    return toast.error("Please enter a valid password between 3-30 characters!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 }
             } else {
                 if (process.env.NODE_ENV !== 'production') {
@@ -247,10 +249,10 @@ export default function MyAccount() {
                 const serverResponse = err.response;
                 if (serverResponse?.status === 500) {
                     setIsConfirming(false)
-                    return alert("Internal server error, try again later!");
+                    return toast.error("Internal server error, try again later!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 } else if (serverResponse?.status === 400) {
                     setIsConfirming(false)
-                    return alert("Please enter a valid address!");
+                    return toast.error("Please enter a valid address!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 }
             } else {
                 if (process.env.NODE_ENV !== 'production') {
@@ -271,6 +273,7 @@ export default function MyAccount() {
         try {
             const response = await axios.post('http://localhost:5000/accounts/deleteAccount', dataToSend, { withCredentials: true })
             if (response.status === 200) {
+                toast.success('Account deleted', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
                 window.location.reload();
                 setIsDeleting(false)
             }
@@ -281,7 +284,7 @@ export default function MyAccount() {
                 }
                 const serverResponse = err.response;
                 if (serverResponse?.status === 500) {
-                    return alert("Internal server error, try again later!");
+                    return toast.error("Internal server error, try again later!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                 }
             } else {
                 if (process.env.NODE_ENV !== 'production') {
@@ -298,6 +301,7 @@ export default function MyAccount() {
             setIsConfirming(true)
             const result = await axios.post('http://localhost:5000/order/cancel', { orderId: orderId }, { withCredentials: true })
             console.log(result)
+            toast.success('Order cancelled', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
             setIsConfirming(false)
             window.location.reload()
         } catch (err) {
@@ -311,6 +315,7 @@ export default function MyAccount() {
     return (
         <>
             <main className='myAccountMainContent'>
+                <ToastContainer />
                 <h1 className='myAccountHeader'>Account Settings</h1>
                 <div className='myAccountUserAndPassDiv'>
                     <p className='editAccountText'>Edit account details:</p>

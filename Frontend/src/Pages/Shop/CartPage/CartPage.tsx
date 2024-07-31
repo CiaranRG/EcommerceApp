@@ -4,6 +4,8 @@ import axios from 'axios'
 import './CartPage.scss'
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { Link } from 'react-router-dom'
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Product from '../Product/Product';
 
@@ -106,7 +108,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const handleItemRemove = async (productId: number) => {
         try {
             setIsRemoving(true)
-            const result = await axios.post('http://localhost:5000/cart/remove', { productId: productId }, { withCredentials: true })
+            await axios.post('http://localhost:5000/cart/remove', { productId: productId }, { withCredentials: true })
             window.location.reload();
             setIsRemoving(false)
         } catch (err) {
@@ -124,6 +126,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             await axios.post('http://localhost:5000/cart/clear', {}, { withCredentials: true })
             // Navigate to the account page
             navigate('/account')
+            toast.success('Order created', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {
                 console.log(err)
@@ -159,9 +162,9 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                     }
                     const serverResponse = err.response;
                     if (serverResponse?.status === 500) {
-                        return alert("Internal server error, try again later!");
+                        return toast.error("Internal server error, try again later!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                     } else if (serverResponse?.status === 400) {
-                        return alert("Please enter a valid address!");
+                        return toast.error("Please enter a valid address!", { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
                     }
                 } else {
                     if (process.env.NODE_ENV !== 'production') {
@@ -180,7 +183,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             });
             // If an error was returned by our payment check then alert the user
             if (result.error) {
-                alert('Payment failed: ' + result.error.message);
+                toast.error(result.error.message, { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
             } else {
                 // If it was a success then proceed to make the order in the database by querying the backend endpoint
                 if (result.paymentIntent?.status === 'succeeded') {
@@ -193,7 +196,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 console.log('Error processing payment');
                 console.log(err);
             }
-            alert('Error processing payment');
+            toast.error('Error processing payment', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
         }
         setIsProcessing(false);
     }
@@ -220,6 +223,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     return (
         <>{isLoggedIn ?
             <div className="checkoutMainContent">
+                <ToastContainer />
                 <div className="cartShowcase">
                     <div className={`carousel ${cartLoading || cart.length === 0 ? 'loading' : ''}`}>
                         {cart.length === 0 ? (

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from 'react-router-dom';
 import axios from "axios";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './ProductDisplay.scss'
 
 type ProductParams = {
@@ -37,15 +39,16 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
                 setProduct(result.data);
                 setIsLoading(false);
             } catch (err) {
-                console.error('Error on gatherProduct()', err);
+                console.log('Error on gatherProduct()', err);
                 setIsLoading(false);
+                toast.error('Failed to load product details.', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
             }
         };
 
         if (id) {
             gatherProduct();
         } else {
-            console.error('No product ID provided in URL');
+            console.log('No product ID provided in URL');
         }
     }, [id]);
 
@@ -53,23 +56,23 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
         setIsAdding(true);
         if (!isLoggedIn) {
             setIsAdding(false);
-            return alert('Please log in to add things to your cart')
+            return toast.info('Login to add items to your cart', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
         }
         try {
             await axios.post('http://localhost:5000/cart/add', { productId: product.id }, { withCredentials: true });
-            alert('Product added to cart');
+            toast.success('Added to cart', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {
                 console.log('Error adding to cart', err);
             }
+            toast.error('Failed to add product to cart', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
         }
         setIsAdding(false);
     };
 
-
-
     return (
         <main className='productDisplayMainContent'>
+            <ToastContainer />
             {isLoading ? (
                 <div className="isLoadingDiv">
                     <h1>Loading...</h1>
@@ -98,3 +101,4 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
         </main>
     );
 }
+
