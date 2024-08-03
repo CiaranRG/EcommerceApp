@@ -1,5 +1,6 @@
 import express from 'express';
 import db from '../utils/databaseConnection.js';
+import { authUser } from '../utils/authUser.js';
 
 const router = express.Router();
 
@@ -63,13 +64,13 @@ router.get('/', async (req, res) => {
 });
 
 
-router.get('/getProductsCart', async (req, res) => {
+router.get('/getProductsCart', authUser, async (req, res) => {
     const ids = req.query.ids.split(',').map(Number);
     try {
         const result = await db.query('SELECT * FROM product WHERE id = ANY($1::int[])', [ids]);
         console.log(result.rows);
         res.status(200).json(result.rows);
-    } catch (err){
+    } catch (err) {
         if (process.env.NODE_ENV !== 'production') {
             console.log(err)
         }

@@ -1,6 +1,7 @@
 import express from 'express';
 import db from '../utils/databaseConnection.js';
 import { loginSchema, registerSchema, addressSchema } from '../models/accountModel.js'
+import { authUser } from '../utils/authUser.js';
 
 // Importing bcrypt to hash password and setting up our salt rounds
 import bcrypt from 'bcryptjs'
@@ -10,7 +11,7 @@ const router = express.Router();
 
 // Routes for managing accounts like editing things
 
-router.post('/changeUsername', async (req, res) => {
+router.post('/changeUsername', authUser, async (req, res) => {
     const usernameDetails = req.body
     const usernameValidationSchema = registerSchema.extract('username');
     try {
@@ -31,7 +32,7 @@ router.post('/changeUsername', async (req, res) => {
     }
 })
 
-router.post('/changeEmail', async (req, res) => {
+router.post('/changeEmail', authUser, async (req, res) => {
     if (process.env.NODE_ENV !== 'production') {
         console.log('Starting the proccess of changing an email')
     }
@@ -55,7 +56,7 @@ router.post('/changeEmail', async (req, res) => {
     }
 })
 
-router.post('/changePassword', async (req, res) => {
+router.post('/changePassword', authUser, async (req, res) => {
     if (process.env.NODE_ENV !== 'production') {
         console.log('Starting the process of changing a password');
     }
@@ -100,7 +101,7 @@ router.post('/changePassword', async (req, res) => {
 })
 
 
-router.post('/changeAddress', async (req, res) => {
+router.post('/changeAddress', authUser, async (req, res) => {
     if (process.env.NODE_ENV !== 'production') {
         console.log('Starting the process of changing an address');
     }
@@ -150,7 +151,7 @@ router.post('/changeAddress', async (req, res) => {
     }
 });
 
-router.post('/deleteAccount', async (req, res) => {
+router.post('/deleteAccount', authUser, async (req, res) => {
     const accountId = req.body.accountId;
     if (process.env.NODE_ENV !== 'production') {
         console.log('Starting the process of deleting an account');
@@ -330,7 +331,7 @@ router.post('/login', async (req, res) => {
 
 // Routes for logging out and deletions
 
-router.get('/logout', (req, res) => {
+router.get('/logout', authUser, (req, res) => {
     // Using the destroy function to delete the session from the database
     req.session.destroy((err) => {
         if (process.env.NODE_ENV !== 'production') {

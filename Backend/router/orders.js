@@ -1,10 +1,10 @@
 import express from 'express';
 import db from '../utils/databaseConnection.js';
-import { rmSync } from 'fs';
+import { authUser } from '../utils/authUser.js';
 
 const router = express.Router();
 
-router.post('/create', async (req, res) => {
+router.post('/create', authUser, async (req, res) => {
     const { accountId } = req.session
     const { cart } = req.body
     // Mapping over the cart and grabbing just the ids and quantites
@@ -30,7 +30,7 @@ router.post('/create', async (req, res) => {
     }
 })
 
-router.post('/cancel', async (req, res) => {
+router.post('/cancel', authUser, async (req, res) => {
     const { orderId } = req.body
     try {
         await db.query('DELETE FROM orders WHERE id = $1', [orderId])
@@ -41,7 +41,7 @@ router.post('/cancel', async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
+router.get('/', authUser, async (req, res) => {
     const { accountId } = req.session;
     try {
         // Grabbing all the orders that correspond to the user currently

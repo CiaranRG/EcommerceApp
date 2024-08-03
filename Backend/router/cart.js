@@ -1,6 +1,7 @@
 import express from 'express';
 import Stripe from 'stripe';
 import db from '../utils/databaseConnection.js';
+import { authUser } from '../utils/authUser.js';
 
 import { config } from 'dotenv';
 import { join, dirname } from 'path';
@@ -19,7 +20,7 @@ config()
 const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_KEY, { apiVersion: '2024-06-20' });
 
-router.post('/remove', async (req, res) => {
+router.post('/remove', authUser, async (req, res) => {
     const { cartId, accountId } = req.session;
     const { productId } = req.body;
 
@@ -58,7 +59,7 @@ router.post('/remove', async (req, res) => {
 });
 
 
-router.post('/add', async (req, res) => {
+router.post('/add', authUser, async (req, res) => {
     const { cartId, accountId } = req.session
     const { productId } = req.body;
     console.log(cartId, accountId)
@@ -88,7 +89,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.post('/clear', async (req, res) => {
+router.post('/clear', authUser, async (req, res) => {
     const { cartId, accountId } = req.session
     console.log(cartId, accountId)
     try {
@@ -103,7 +104,7 @@ router.post('/clear', async (req, res) => {
     }
 })
 
-router.post('/payment', async (req, res) => {
+router.post('/payment', authUser, async (req, res) => {
     const { totalAmount } = req.body;
     try {
         // Creating a payment intent with the correct currency/method and amount
@@ -122,7 +123,7 @@ router.post('/payment', async (req, res) => {
     }
 })
 
-router.get('/', async (req, res) => {
+router.get('/', authUser, async (req, res) => {
     const { cartId } = req.session;
     try {
         // Fetching the cart items including the quantity
