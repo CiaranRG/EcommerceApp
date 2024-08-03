@@ -10,6 +10,8 @@ type FormData = {
     password: string,
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function Register() {
     const [formData, setFormData] = useState<FormData>({ email: '', username: '', password: '' })
     const [isRegistering, setIsRegistering] = useState(false)
@@ -25,7 +27,7 @@ export default function Register() {
         evt.preventDefault()
         setIsRegistering(true)
         try {
-            const response = await axios.post('http://localhost:5000/accounts', formData, { withCredentials: true })
+            const response = await axios.post(`${apiUrl}/accounts`, formData, { withCredentials: true })
             setFormData({ email: '', username: '', password: '' })
             if (process.env.NODE_ENV !== 'production') {
                 console.log(response.data)

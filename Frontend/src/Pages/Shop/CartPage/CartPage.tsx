@@ -22,7 +22,7 @@ interface Product {
     productid: number;
 }
 
-
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const [cart, setCart] = useState<Product[]>([])
@@ -69,7 +69,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     useEffect(() => {
         const gatherUserData = async () => {
             try {
-                const result = await axios.get('http://localhost:5000/accounts', { withCredentials: true })
+                const result = await axios.get(`${apiUrl}/accounts`, { withCredentials: true })
                 // Setting the persons shipping details
                 setUserAddress({
                     addressLine1: result.data.data.address_line1 || '',
@@ -93,7 +93,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         setCartLoading(true)
         const gatherCartItems = async () => {
             try {
-                const result = await axios.get('http://localhost:5000/cart', { withCredentials: true })
+                const result = await axios.get(`${apiUrl}/cart`, { withCredentials: true })
                 setCart(result.data.data)
             } catch (err) {
                 if (process.env.NODE_ENV !== 'production') {
@@ -108,7 +108,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const handleItemRemove = async (productId: number) => {
         try {
             setIsRemoving(true)
-            await axios.post('http://localhost:5000/cart/remove', { productId: productId }, { withCredentials: true })
+            await axios.post(`${apiUrl}/cart/remove`, { productId: productId }, { withCredentials: true })
             window.location.reload();
             setIsRemoving(false)
         } catch (err) {
@@ -123,7 +123,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const handleSuccessfulCheckout = async () => {
         // Update to also clear the cart in the database
         try {
-            await axios.post('http://localhost:5000/cart/clear', {}, { withCredentials: true })
+            await axios.post(`${apiUrl}/cart/clear`, {}, { withCredentials: true })
             // Navigate to the account page
             navigate('/account')
             toast.success('Order created', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
@@ -153,7 +153,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 phone_number: userAddress.phone_number
             }
             try {
-                await axios.post('http://localhost:5000/accounts/changeAddress', dataToSend, { withCredentials: true })
+                await axios.post(`${apiUrl}/accounts/changeAddress`, dataToSend, { withCredentials: true })
             } catch (err) {
                 // Checking if the error is an axios error, which would mean an error occurred at any point during the axios request
                 if (axios.isAxiosError(err)) {
@@ -174,7 +174,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 }
             }
             // sending a request to the backend see we know how much the user has to pay, the data we get back contains a clientSecret that stripe creates specifically for each payment
-            const { data } = await axios.post('http://localhost:5000/cart/payment', { totalAmount: totalCost(cart).total }, { withCredentials: true });
+            const { data } = await axios.post(`${apiUrl}/cart/payment`, { totalAmount: totalCost(cart).total }, { withCredentials: true });
             // We then check if the user has paid using that clientSecret we got from stripe on the backend
             const result = await stripe.confirmCardPayment(data.clientSecret, {
                 payment_method: {
@@ -187,7 +187,7 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             } else {
                 // If it was a success then proceed to make the order in the database by querying the backend endpoint
                 if (result.paymentIntent?.status === 'succeeded') {
-                    await axios.post('http://localhost:5000/order/create', { totalAmount: totalCost(cart).total, cart }, { withCredentials: true });
+                    await axios.post(`${apiUrl}/order/create`, { totalAmount: totalCost(cart).total, cart }, { withCredentials: true });
                     handleSuccessfulCheckout();
                 }
             }

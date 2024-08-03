@@ -1,10 +1,20 @@
 import express from "express";
 import session from "express-session";
 import cors from 'cors';
-import { config } from 'dotenv'
 import connectPgSimple from 'connect-pg-simple';
 import db from "./utils/databaseConnection.js";
 import cookieParser from "cookie-parser";
+
+// Setting up dotenv
+import { config } from 'dotenv';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Path to the .env file
+const envPath = join(__dirname, '..', '.env');
+config({ path: envPath });
 
 // Importing our routes
 import { accountRoutes } from "./router/account.js";
@@ -24,7 +34,7 @@ const pgSessions = connectPgSimple(session)
 // Adding in origin to allow requests from the frontend and also setting credentials to true for user authentication through cookies
 app.use(
     cors(
-        { origin: 'http://localhost:5173', credentials: true }
+        { origin: process.env.FRONTEND_ORIGIN, credentials: true }
     )
 );
 

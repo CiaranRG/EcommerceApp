@@ -40,6 +40,8 @@ interface UserAddress {
 }
 
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function MyAccount() {
     const [userData, setUserData] = useState<UserData>({ accountId: null, username: '', password: 'default', oldPassword: 'default', email: '' })
     const [userAddress, setUserAddress] = useState<UserAddress>({ addressLine1: '', addressLine2: '', city: '', state: '', postal_code: '', country: '', phone_number: '' })
@@ -63,7 +65,7 @@ export default function MyAccount() {
     useEffect(() => {
         const gatherUserData = async () => {
             try {
-                const result = await axios.get('http://localhost:5000/accounts', { withCredentials: true });
+                const result = await axios.get(`${apiUrl}/accounts`, { withCredentials: true });
                 setUserData({
                     accountId: result.data.data.accountid || null,
                     username: result.data.data.username || '',
@@ -81,7 +83,7 @@ export default function MyAccount() {
                     phone_number: result.data.data.phone_number || '',
                 });
 
-                const orderResult = await axios.get('http://localhost:5000/order', { withCredentials: true });
+                const orderResult = await axios.get(`${apiUrl}/order`, { withCredentials: true });
 
                 if (orderResult.data.data) {
                     setUserOrders(orderResult.data.data);
@@ -113,7 +115,7 @@ export default function MyAccount() {
             username: userData.username
         }
         try {
-            const response = await axios.post('http://localhost:5000/accounts/changeUsername', dataToSend, { withCredentials: true })
+            const response = await axios.post(`${apiUrl}/accounts/changeUsername`, dataToSend, { withCredentials: true })
             if (response.status === 200) {
                 window.location.reload();
                 setIsConfirming(false)
@@ -152,7 +154,7 @@ export default function MyAccount() {
             email: userData.email
         }
         try {
-            const response = await axios.post('http://localhost:5000/accounts/changeEmail', dataToSend, { withCredentials: true })
+            const response = await axios.post(`${apiUrl}/accounts/changeEmail`, dataToSend, { withCredentials: true })
             if (response.status === 200) {
                 window.location.reload();
                 setIsConfirming(false)
@@ -190,7 +192,7 @@ export default function MyAccount() {
             password: userData.password
         }
         try {
-            const response = await axios.post('http://localhost:5000/accounts/changePassword', dataToSend, { withCredentials: true })
+            const response = await axios.post(`${apiUrl}/accounts/changePassword`, dataToSend, { withCredentials: true })
             if (response.status === 200) {
                 window.location.reload();
                 setIsConfirming(false)
@@ -235,7 +237,7 @@ export default function MyAccount() {
             phone_number: userAddress.phone_number
         }
         try {
-            const response = await axios.post('http://localhost:5000/accounts/changeAddress', dataToSend, { withCredentials: true })
+            const response = await axios.post(`${apiUrl}/accounts/changeAddress`, dataToSend, { withCredentials: true })
             if (response.status === 200) {
                 window.location.reload();
                 setIsConfirming(false)
@@ -271,7 +273,7 @@ export default function MyAccount() {
             accountId: userData.accountId,
         }
         try {
-            const response = await axios.post('http://localhost:5000/accounts/deleteAccount', dataToSend, { withCredentials: true })
+            const response = await axios.post(`${apiUrl}accounts/deleteAccount`, dataToSend, { withCredentials: true })
             if (response.status === 200) {
                 toast.success('Account deleted', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
                 window.location.reload();
@@ -299,7 +301,7 @@ export default function MyAccount() {
     const handleOrderCancel = async (orderId: number) => {
         try {
             setIsConfirming(true)
-            const result = await axios.post('http://localhost:5000/order/cancel', { orderId: orderId }, { withCredentials: true })
+            const result = await axios.post(`${apiUrl}/order/cancel`, { orderId: orderId }, { withCredentials: true })
             console.log(result)
             toast.success('Order cancelled', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
             setIsConfirming(false)

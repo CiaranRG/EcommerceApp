@@ -13,6 +13,8 @@ type Props = {
     onLogin: () => void,
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function Login({ onLogin }: Props) {
     const [formData, setFormData] = useState<FormData>({ username: '', password: '' })
     const [isLoggingIn, setIsLoggingIn] = useState(false)
@@ -28,7 +30,7 @@ export default function Login({ onLogin }: Props) {
         setIsLoggingIn(true)
         evt.preventDefault()
         try {
-            await axios.post('http://localhost:5000/accounts/login', formData, { withCredentials: true })
+            await axios.post(`${apiUrl}/accounts/login`, formData, { withCredentials: true })
             setFormData({ username: '', password: '' })
             setIsLoggingIn(false)
             onLogin()

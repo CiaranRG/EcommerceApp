@@ -12,6 +12,8 @@ type categoryParam = {
     category: string,
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function CategoryPage() {
     // Setting some defaults to solve typescript error, if there is nothing inside these then the defaults take over and since we redirect if they aren't in our allotted words then we just redirect to our 404
     const { demographic = 'redirect', category = 'redirect' } = useParams<categoryParam>()
@@ -34,7 +36,7 @@ export default function CategoryPage() {
                     console.log('Entering gather products')
                 }
                 // Adding in a params object so I can grab them on the backend with req.query
-                const result = await axios.get('http://localhost:5000/products', { params: { demographic, category } })
+                const result = await axios.get(`${apiUrl}/products`, { params: { demographic, category } })
                 setProducts(result.data)
                 setIsLoading(false)
             } catch (err) {

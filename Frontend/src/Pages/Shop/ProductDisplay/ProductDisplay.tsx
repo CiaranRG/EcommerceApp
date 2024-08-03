@@ -21,6 +21,8 @@ interface Product {
     quantity?: number;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) {
     const { id, category, demographic } = useParams<ProductParams>();
     const [product, setProduct] = useState<Product>({ id: 0, name: '', price: null, stock: '', description: '', imageurl: '' });
@@ -31,7 +33,7 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
         const gatherProduct = async () => {
             try {
                 setIsLoading(true);
-                const result = await axios.get('http://localhost:5000/products/getProduct', { params: { id } });
+                const result = await axios.get(`${apiUrl}/products/getProduct`, { params: { id } });
                 if (process.env.NODE_ENV !== 'production') {
                     console.log('Entering gather product');
                     console.log(result.data);
@@ -59,7 +61,7 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
             return toast.info('Login to add items to your cart', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
         }
         try {
-            await axios.post('http://localhost:5000/cart/add', { productId: product.id }, { withCredentials: true });
+            await axios.post(`${apiUrl}/cart/add`, { productId: product.id }, { withCredentials: true });
             toast.success('Added to cart', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {

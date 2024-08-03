@@ -22,6 +22,7 @@ import Navbar from './Navbar/Navbar';
 // Load your Stripe public key
 const stripePromise = loadStripe('pk_test_51PctN92NZYpAKSJyW05YhMQodsjOuWVqhteXFlITHFXaaFhzIsPsZNd0evn3aMM4boe43CH2qrlbb78ezYOHt30c00gz9JgojE');
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -33,7 +34,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.get('http://localhost:5000/accounts/logout', { withCredentials: true });
+      await axios.get(`${apiUrl}/accounts/logout`, { withCredentials: true });
       setIsLoggedIn(false);
     } catch (err) {
       if (process.env.NODE_ENV !== 'production') {
@@ -45,7 +46,7 @@ function App() {
   useEffect(() => {
     const loginCheck = async () => {
       try {
-        const response = await axios('http://localhost:5000/accounts/isLoggedIn', { method: 'GET', withCredentials: true });
+        const response = await axios(`${apiUrl}/accounts/isLoggedIn`, { method: 'GET', withCredentials: true });
         if (response.data.isLoggedIn) {
           setIsLoggedIn(true);
         } else {
