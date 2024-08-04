@@ -38,6 +38,12 @@ app.use(
     )
 );
 
+// Manually set Content Security Policy headers
+app.use((req, res, next) => {
+    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' bella-cucina-frontend.vercel.app; connect-src 'self' bella-cucina-frontend.vercel.app;");
+    next();
+});
+
 app.use(express.json());
 app.use(session({
     name: 'session',
