@@ -31,20 +31,19 @@ const PORT = 5000
 // We use this to allow connect-pg access to session so it can extend its use with our database
 const pgSessions = connectPgSimple(session)
 
-// Adding in origin to allow requests from the frontend and also setting credentials to true for user authentication through cookies
-app.use(
-    cors(
-        { origin: process.env.FRONTEND_ORIGIN, credentials: true }
-    )
-);
 
-// Manually set Content Security Policy headers
-app.use((req, res, next) => {
-    res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self' bella-cucina-frontend.vercel.app; connect-src 'self' bella-cucina-frontend.vercel.app;");
-    next();
-});
+const allowedOrigin = process.env.FRONTEND_ORIGIN;
 
+const corsOptions = {
+    origin: allowedOrigin,
+    credentials: true
+};
+
+app.use(cors(corsOptions))
 app.use(express.json());
+// Add this in so we can use the cookies on the backend
+app.use(cookieParser())
+app.set("trust proxy", true);
 app.use(session({
     name: 'session',
     // Setting up a new pgSession to handle session storage
@@ -60,17 +59,27 @@ app.use(session({
     resave: false,
     cookie: {
         httpOnly: true,
-        // This will be true in production meaning we only send cookies over https and not http
         secure: process.env.NODE_ENV === 'production',
         sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
         maxAge: 14 * 24 * 60 * 60 * 1000,
     }
 }))
-// Add this in so we can use the cookies on the backend
-app.use(cookieParser())
 
-// Telling the app to use the cors middleware for all the preflight requests
-app.options('/api/accounts/login', cors());
+
+// Set custom headers for CORS and Content Security Policy
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', allowedOrigin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Content-Security-Policy', `default-src 'self'; script-src 'self' ${allowedOrigin}; connect-src 'self' ${allowedOrigin};`);
+    next();
+});
+
+
+// Handle preflight requests globally
+app.options('*', cors(corsOptions));
+
+// // Telling the app to use the cors middleware for all the preflight requests
+// app.options('/api/accounts/login', cors());
 
 // Telling my app to use these files for requests
 app.use('/accounts', accountRoutes);

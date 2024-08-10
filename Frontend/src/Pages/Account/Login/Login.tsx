@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 type FormData = {
     username: string,
     password: string,
@@ -30,6 +31,7 @@ export default function Login({ onLogin }: Props) {
         setIsLoggingIn(true)
         evt.preventDefault()
         try {
+            console.log(apiUrl)
             await axios.post(`${apiUrl}/accounts/login`, formData, { withCredentials: true })
             setFormData({ username: '', password: '' })
             setIsLoggingIn(false)
