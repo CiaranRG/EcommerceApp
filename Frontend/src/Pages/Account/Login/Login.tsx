@@ -3,11 +3,13 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import isIOS from '../../../utils/isIOS';
 
 
 type FormData = {
     username: string,
     password: string,
+    isIOS: boolean,
 }
 
 type Props = {
@@ -17,7 +19,7 @@ type Props = {
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Login({ onLogin }: Props) {
-    const [formData, setFormData] = useState<FormData>({ username: '', password: '' })
+    const [formData, setFormData] = useState<FormData>({ username: '', password: '', isIOS: isIOS()})
     const [isLoggingIn, setIsLoggingIn] = useState(false)
 
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -31,9 +33,11 @@ export default function Login({ onLogin }: Props) {
         setIsLoggingIn(true)
         evt.preventDefault()
         try {
-            console.log(apiUrl)
-            await axios.post(`${apiUrl}/accounts/login`, formData, { withCredentials: true })
-            setFormData({ username: '', password: '' })
+            const response = await axios.post(`${apiUrl}/accounts/login`, formData, { withCredentials: true })
+            if (response.data.sessionId){
+                localStorage.setItem('session', response.data.sessionId)
+            }
+            setFormData({ username: '', password: '', isIOS: isIOS()})
             setIsLoggingIn(false)
             onLogin()
         } catch (err) {

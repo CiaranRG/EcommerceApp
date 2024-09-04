@@ -18,6 +18,7 @@ import ProductDisplay from './Pages/Shop/ProductDisplay/ProductDisplay';
 import CartPage from './Pages/Shop/CartPage/CartPage';
 import Footer from './Footer/Footer';
 import Navbar from './Navbar/Navbar';
+import isIOS from './utils/isIOS';
 
 // Load your Stripe public key
 const stripePromise = loadStripe('pk_test_51PctN92NZYpAKSJyW05YhMQodsjOuWVqhteXFlITHFXaaFhzIsPsZNd0evn3aMM4boe43CH2qrlbb78ezYOHt30c00gz9JgojE');
@@ -26,7 +27,6 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -34,8 +34,15 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await axios.get(`${apiUrl}/accounts/logout`, { withCredentials: true });
-      setIsLoggedIn(false);
+      if (isIOS()) {
+        const sid = localStorage.getItem('session')
+        await axios.post(`${apiUrl}/accounts/logoutIOS`, { sid }, { withCredentials: true });
+        localStorage.removeItem('session')
+        setIsLoggedIn(false);
+      } else {
+        await axios.get(`${apiUrl}/accounts/logout`, { withCredentials: true });
+        setIsLoggedIn(false);
+      }
     } catch (err) {
       if (process.env.NODE_ENV !== 'production') {
         console.log(err);
@@ -46,27 +53,24 @@ function App() {
   useEffect(() => {
     const loginCheck = async () => {
       try {
-        const response = await axios(`${apiUrl}/accounts/isLoggedIn`, { method: 'GET', withCredentials: true });
-        if (response.data.isLoggedIn) {
-          setIsLoggedIn(true);
+        let response;
+        if (isIOS()) {
+          const sessionKey = localStorage.getItem('session')
+          response = await axios.post(`${apiUrl}/accounts/isIOSLoggedIn`, { sessionKey }, { withCredentials: true });
         } else {
-          setIsLoggedIn(false);
+          response = await axios(`${apiUrl}/accounts/isLoggedIn`, { method: 'GET', withCredentials: true });
         }
+        setIsLoggedIn(response.data.isLoggedIn)
       } catch (err) {
         if (process.env.NODE_ENV !== 'production') {
           console.log(err);
         }
         setIsLoggedIn(false);
-      } finally {
-        setLoading(false);
       }
     };
     loginCheck();
   }, []);
 
-  if (loading) {
-    return <div>=</div>;
-  }
 
   return (
     <Elements stripe={stripePromise}>

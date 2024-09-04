@@ -3,17 +3,19 @@ import { useState } from 'react'
 import axios from 'axios'
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import isIOS from '../../../utils/isIOS';
 
 type FormData = {
     email: string,
     username: string,
     password: string,
+    isIOS: boolean,
 }
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function Register() {
-    const [formData, setFormData] = useState<FormData>({ email: '', username: '', password: '' })
+    const [formData, setFormData] = useState<FormData>({ email: '', username: '', password: '', isIOS: isIOS() })
     const [isRegistering, setIsRegistering] = useState(false)
 
     const handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +30,13 @@ export default function Register() {
         setIsRegistering(true)
         try {
             const response = await axios.post(`${apiUrl}/accounts`, formData, { withCredentials: true })
-            setFormData({ email: '', username: '', password: '' })
+            if (isIOS()) {
+                const sessionId = response.data.sessionId
+                if (sessionId) {
+                    localStorage.setItem('session', sessionId)
+                }
+            }
+            setFormData({ email: '', username: '', password: '', isIOS: isIOS() })
             if (process.env.NODE_ENV !== 'production') {
                 console.log(response.data)
             }

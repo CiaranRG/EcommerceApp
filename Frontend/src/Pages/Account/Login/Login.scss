@@ -55,6 +55,9 @@
             }
         }
         .loginFormButton{
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 15%;
             border-radius: 5px;
             padding: 10px 0px 10px 0px;

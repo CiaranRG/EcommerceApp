@@ -5,12 +5,14 @@ const registerSchema = Joi.object({
     username: Joi.string().alphanum().min(3).max(30).required().label('Username'),
     password: Joi.string().min(3).max(30).required().label('Password'),
     email: Joi.string().email().required().label('Email'),
+    isIOS: Joi.boolean().optional(),
 })
 
 // Creating a Joi schema for logging in
 const loginSchema = Joi.object({
     username: Joi.string().alphanum().min(3).max(30).required().label('Username'),
     password: Joi.string().required().label('Password'),
+    isIOS: Joi.boolean().optional(),
 });
 
 const addressSchema = Joi.object({

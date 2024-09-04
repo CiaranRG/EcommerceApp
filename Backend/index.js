@@ -82,10 +82,10 @@ app.options('*', cors(corsOptions));
 // app.options('/api/accounts/login', cors());
 
 // Telling my app to use these files for requests
-app.use('/accounts', accountRoutes);
-app.use('/products', productRoutes);
-app.use('/cart', cartRoutes);
-app.use('/order', orderRoutes);
+app.use('/api/accounts', accountRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/order', orderRoutes);
 
 app.get('/', (req, res) => {
     try {

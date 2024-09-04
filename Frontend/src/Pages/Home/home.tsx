@@ -32,9 +32,9 @@ export default function Home() {
                     <div className='sectionTwoContent'>
                         <h1>Shoes</h1>
                         <div className='shoesButtons'>
-                            <a href='/shop/mens/shoes' className='getShoesButton'>Mens</a>
-                            <a href='/shop/womens/shoes' className='getShoesButton'>Womens</a>
-                            <a href='/shop/kids/shoes' className='getShoesButton'>Kids</a>
+                            <Link to={'/shop/mens/shoes'} className='getShoesButton'>Mens</Link>
+                            <Link to={'/shop/womens/shoes'} className='getShoesButton'>Womens</Link>
+                            <Link to={'/shop/kids/shoes'} className='getShoesButton'>Kids</Link>
                         </div>
                     </div>
                 </section>
