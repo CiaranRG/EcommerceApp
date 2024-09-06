@@ -3,6 +3,7 @@ import './MyAccount.scss'
 import { useEffect, useState } from 'react'
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import isIOS from '../../../utils/isIOS';
 
 interface Product {
     id: number;
@@ -65,7 +66,13 @@ export default function MyAccount() {
     useEffect(() => {
         const gatherUserData = async () => {
             try {
-                const result = await axios.get(`${apiUrl}/accounts`, { withCredentials: true });
+                let result;
+                if (isIOS()) {
+                    const session = localStorage.getItem('session')
+                    result = await axios.post(`${apiUrl}/accounts/getDataIOS`, { session: session }, { withCredentials: true });
+                } else {
+                    result = await axios.get(`${apiUrl}/accounts`, { withCredentials: true });
+                }
                 setUserData({
                     accountId: result.data.data.accountid || null,
                     username: result.data.data.username || '',
