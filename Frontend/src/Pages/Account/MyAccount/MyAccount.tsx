@@ -28,6 +28,7 @@ interface UserData {
     password: string;
     oldPassword: string;
     email: string;
+    session?: string;
 }
 
 interface UserAddress {
@@ -119,9 +120,11 @@ export default function MyAccount() {
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
             accountId: userData.accountId,
-            username: userData.username
+            username: userData.username,
+            ...(isIOS() && { session: localStorage.getItem('session') })
         }
         try {
+            console.log("Data being sent: ", dataToSend)
             const response = await axios.post(`${apiUrl}/accounts/changeUsername`, dataToSend, { withCredentials: true })
             if (response.status === 200) {
                 window.location.reload();
@@ -158,7 +161,8 @@ export default function MyAccount() {
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
             accountId: userData.accountId,
-            email: userData.email
+            email: userData.email,
+            ...(isIOS() && { session: localStorage.getItem('session') })
         }
         try {
             const response = await axios.post(`${apiUrl}/accounts/changeEmail`, dataToSend, { withCredentials: true })
@@ -196,7 +200,8 @@ export default function MyAccount() {
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
             accountId: userData.accountId,
-            password: userData.password
+            password: userData.password,
+            ...(isIOS() && { session: localStorage.getItem('session') })
         }
         try {
             const response = await axios.post(`${apiUrl}/accounts/changePassword`, dataToSend, { withCredentials: true })
@@ -241,7 +246,8 @@ export default function MyAccount() {
             state: userAddress.state,
             postal_code: userAddress.postal_code,
             country: userAddress.country,
-            phone_number: userAddress.phone_number
+            phone_number: userAddress.phone_number,
+            ...(isIOS() && { session: localStorage.getItem('session') })
         }
         try {
             const response = await axios.post(`${apiUrl}/accounts/changeAddress`, dataToSend, { withCredentials: true })

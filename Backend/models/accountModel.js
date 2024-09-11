@@ -22,7 +22,8 @@ const addressSchema = Joi.object({
     state: Joi.string().required().label('State'),
     postal_code: Joi.string().required().label('Postal Code'),
     country: Joi.string().required().label('Country'),
-    phone_number: Joi.string().pattern(new RegExp('^[0-9]{10}$')).required().label('Phone Number')
+    phone_number: Joi.string().pattern(new RegExp('^[0-9]{10}$')).required().label('Phone Number'),
+    isIOS: Joi.boolean().optional(),
 })
 
 export { loginSchema, registerSchema, addressSchema }
