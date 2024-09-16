@@ -323,12 +323,12 @@ export default function MyAccount() {
     const handleOrderCancel = async (orderId: number) => {
         try {
             setIsConfirming(true)
-            let result
+
             if (isIOS()) {
                 const sid = localStorage.getItem('session')
-                result = await axios.post(`${apiUrl}/order/cancel`, { orderId: orderId, session: sid })
+                await axios.post(`${apiUrl}/order/cancel`, { orderId: orderId, session: sid })
             } else {
-                result = await axios.post(`${apiUrl}/order/cancel`, { orderId: orderId }, { withCredentials: true })
+                await axios.post(`${apiUrl}/order/cancel`, { orderId: orderId }, { withCredentials: true })
             }
             toast.success('Order cancelled', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
             setIsConfirming(false)
