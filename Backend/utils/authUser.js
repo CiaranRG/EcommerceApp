@@ -16,10 +16,8 @@ export const authUser = async (req, res, next) => {
     // Check for client-managed session (iOS) using sessionKey from the request body
     if (sessionKey) {
         try {
-            console.log("Entering try catch for authUser")
             // Validate the session ID against the database
             const sessionCheck = await db.query('SELECT * FROM session WHERE sid = $1', [sessionKey]);
-            console.log("session Check: ", sessionCheck)
             if (sessionCheck.rowCount > 0) {
                 // If the session exists, allow the request to proceed
                 return next();
@@ -28,7 +26,6 @@ export const authUser = async (req, res, next) => {
                 return res.status(401).json({ message: 'Unauthorized: Session not found' });
             }
         } catch (err) {
-            console.log(err)
             if (process.env.NODE_ENV !== 'production') {
                 console.log('Error validating session:', err);
             }

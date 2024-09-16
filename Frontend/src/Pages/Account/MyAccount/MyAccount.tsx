@@ -39,6 +39,7 @@ interface UserAddress {
     postal_code: string;
     country: string;
     phone_number: string;
+    session?: string;
 }
 
 
@@ -91,7 +92,13 @@ export default function MyAccount() {
                     phone_number: result.data.data.phone_number || '',
                 });
 
-                const orderResult = await axios.get(`${apiUrl}/order`, { withCredentials: true });
+                let orderResult;
+                if (isIOS()) {
+                    const sid = localStorage.getItem('session')
+                    orderResult = await axios.post(`${apiUrl}/order/getIOS`, { session: sid });
+                } else {
+                    orderResult = await axios.get(`${apiUrl}/order`, { withCredentials: true });
+                }
 
                 if (orderResult.data.data) {
                     setUserOrders(orderResult.data.data);
@@ -124,7 +131,6 @@ export default function MyAccount() {
             ...(isIOS() && { session: localStorage.getItem('session') })
         }
         try {
-            console.log("Data being sent: ", dataToSend)
             const response = await axios.post(`${apiUrl}/accounts/changeUsername`, dataToSend, { withCredentials: true })
             if (response.status === 200) {
                 window.location.reload();
@@ -240,6 +246,7 @@ export default function MyAccount() {
         setIsConfirming(true)
         // Creating an object to send specific data instead of the whole thing
         const dataToSend = {
+            accountId: userData.accountId,
             addressLine1: userAddress.addressLine1,
             addressLine2: userAddress.addressLine2,
             city: userAddress.city,
@@ -284,11 +291,13 @@ export default function MyAccount() {
         setIsDeleting(true)
         const dataToSend = {
             accountId: userData.accountId,
+            ...(isIOS() && { session: localStorage.getItem('session') })
         }
         try {
-            const response = await axios.post(`${apiUrl}accounts/deleteAccount`, dataToSend, { withCredentials: true })
+            const response = await axios.post(`${apiUrl}/accounts/deleteAccount`, dataToSend, { withCredentials: true })
             if (response.status === 200) {
                 toast.success('Account deleted', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
+                localStorage.removeItem('session')
                 window.location.reload();
                 setIsDeleting(false)
             }
@@ -314,8 +323,13 @@ export default function MyAccount() {
     const handleOrderCancel = async (orderId: number) => {
         try {
             setIsConfirming(true)
-            const result = await axios.post(`${apiUrl}/order/cancel`, { orderId: orderId }, { withCredentials: true })
-            console.log(result)
+            let result
+            if (isIOS()) {
+                const sid = localStorage.getItem('session')
+                result = await axios.post(`${apiUrl}/order/cancel`, { orderId: orderId, session: sid })
+            } else {
+                result = await axios.post(`${apiUrl}/order/cancel`, { orderId: orderId }, { withCredentials: true })
+            }
             toast.success('Order cancelled', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
             setIsConfirming(false)
             window.location.reload()

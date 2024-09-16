@@ -4,6 +4,7 @@ import axios from "axios";
 import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ProductDisplay.scss'
+import isIOS from "../../../utils/isIOS";
 
 type ProductParams = {
     id: string,
@@ -41,7 +42,7 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
                 setProduct(result.data);
                 setIsLoading(false);
             } catch (err) {
-                console.log('Error on gatherProduct()', err);
+
                 setIsLoading(false);
                 toast.error('Failed to load product details.', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
             }
@@ -50,7 +51,9 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
         if (id) {
             gatherProduct();
         } else {
-            console.log('No product ID provided in URL');
+            if (process.env.NODE_ENV !== 'production') {
+                console.log('No product ID provided in URL');
+            }
         }
     }, [id]);
 
@@ -61,7 +64,13 @@ export default function ProductDisplay({ isLoggedIn }: { isLoggedIn: boolean }) 
             return toast.info('Login to add items to your cart', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
         }
         try {
-            await axios.post(`${apiUrl}/cart/add`, { productId: product.id }, { withCredentials: true });
+            if (isIOS()) {
+                const sid = localStorage.getItem('session')
+
+                await axios.post(`${apiUrl}/cart/add`, { productId: product.id, session: sid });
+            } else {
+                await axios.post(`${apiUrl}/cart/add`, { productId: product.id }, { withCredentials: true });
+            }
             toast.success('Added to cart', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce });
         } catch (err) {
             if (process.env.NODE_ENV !== 'production') {

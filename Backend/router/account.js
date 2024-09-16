@@ -103,10 +103,10 @@ router.post('/changePassword', authUser, async (req, res) => {
 
 router.post('/changeAddress', authUser, async (req, res) => {
     if (process.env.NODE_ENV !== 'production') {
-        console.log('Starting the process of changing an address');
+        console.log('Starting the process of changing an address on backend');
     }
-    const addressDetails = req.body;
-    const { accountId } = req.session
+    const { session, accountId: bodyAccountId, ...addressDetails } = req.body;
+    const accountId = bodyAccountId || req.session.accountId
     try {
         const { error } = addressSchema.validate(addressDetails);
         if (error) {
@@ -140,7 +140,6 @@ router.post('/changeAddress', authUser, async (req, res) => {
 
         res.status(200).json({ message: 'Address has been updated in the database' });
     } catch (err) {
-        console.log('Error updating address:', err);
         if (err.type && err.type === 'validation') {
             res.status(400).json({ message: err.message, details: err.details });
         } else {
@@ -226,7 +225,7 @@ router.post('/', async (req, res) => {
         // }
     } catch (err) {
         if (err.message === 'Validation error') {
-            console.error(err);
+            console.log(err);
             return res.status(400).json({ message: 'Validation error' });
         }
         if (process.env.NODE_ENV !== 'production') {
@@ -310,6 +309,7 @@ router.post('/getDataIOS', async (req, res) => {
         'SELECT sess->>\'accountId\' AS accountId FROM session WHERE sid = $1',
         [session]
     );
+
     if (result.rows.length === 0) {
         console.log('did not find user')
         return res.status(401).json({ message: "Couldn't find any user's in the session" })
@@ -388,7 +388,7 @@ router.post('/login', async (req, res) => {
         }
         // This would be considered an axios error on the frontend
         if (err.message === 'Login error') {
-            console.error(err);
+            console.log(err);
             return res.status(400).json({ message: 'Validation error' });
         }
     }

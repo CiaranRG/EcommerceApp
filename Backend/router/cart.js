@@ -2,6 +2,7 @@ import express from 'express';
 import Stripe from 'stripe';
 import db from '../utils/databaseConnection.js';
 import { authUser } from '../utils/authUser.js';
+import grabAccountIds from '../utils/grabAccountIds.js';
 
 import { config } from 'dotenv';
 import { join, dirname } from 'path';
@@ -21,8 +22,11 @@ const router = express.Router();
 const stripe = new Stripe(process.env.STRIPE_KEY, { apiVersion: '2024-06-20' });
 
 router.post('/remove', authUser, async (req, res) => {
-    const { cartId, accountId } = req.session;
+    let cartId, accountId
     const { productId } = req.body;
+    const ids = await grabAccountIds(req, db)
+    cartId = ids.cartId
+    accountId = ids.accountId
 
     if (!accountId) {
         return res.status(401).json({ message: 'User not authenticated' });
@@ -60,9 +64,12 @@ router.post('/remove', authUser, async (req, res) => {
 
 
 router.post('/add', authUser, async (req, res) => {
-    const { cartId, accountId } = req.session
-    const { productId } = req.body;
-    console.log(cartId, accountId)
+    // Defining variables to be used outwith the scope below
+    let cartId, accountId
+    const { productId } = req.body
+    const ids = await grabAccountIds(req, db)
+    cartId = ids.cartId
+    accountId = ids.accountId
     if (!accountId) {
         return res.status(401).json({ message: 'User not authenticated' });
     }
@@ -91,15 +98,15 @@ router.post('/add', authUser, async (req, res) => {
 
 router.post('/clear', authUser, async (req, res) => {
     const { cartId, accountId } = req.session
-    console.log(cartId, accountId)
+
     try {
-        console.log('Trying to clear cart')
         await db.query('DELETE FROM cart_item WHERE cartid = $1', [cartId])
-        console.log('Cart Cleared')
         res.status(200).json({ message: 'Cart cleared' })
     } catch (err) {
-        console.log('Error on cart clear')
-        console.log(err)
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('Error on cart clear')
+            console.log(err)
+        }
         res.status(500).json({ message: 'Internal server error' })
     }
 })
@@ -136,7 +143,34 @@ router.get('/', authUser, async (req, res) => {
 
         res.status(200).json({ data: cartItemsResult.rows });
     } catch (err) {
-        console.log(err);
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(err);
+        }
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+router.post('/getDataIOS', authUser, async (req, res) => {
+    const { session } = req.body
+    const result = await db.query(
+        'SELECT sess->>\'cartId\' AS cartId FROM session WHERE sid = $1',
+        [session]
+    );
+    const cartId = result.rows[0].cartid
+    try {
+        // Fetching the cart items including the quantity
+        const cartItemsResult = await db.query(`
+            SELECT ci.productid, ci.quantity, p.name, p.price, p.stock, p.description, p.imageurl 
+            FROM cart_item ci
+            JOIN product p ON ci.productid = p.id
+            WHERE ci.cartid = $1
+        `, [cartId]);
+
+        res.status(200).json({ data: cartItemsResult.rows });
+    } catch (err) {
+        if (process.env.NODE_ENV !== 'production') {
+            console.log(err);
+        }
         res.status(500).json({ message: 'Internal server error' });
     }
 });

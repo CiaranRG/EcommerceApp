@@ -68,7 +68,6 @@ router.get('/getProductsCart', authUser, async (req, res) => {
     const ids = req.query.ids.split(',').map(Number);
     try {
         const result = await db.query('SELECT * FROM product WHERE id = ANY($1::int[])', [ids]);
-        console.log(result.rows);
         res.status(200).json(result.rows);
     } catch (err) {
         if (process.env.NODE_ENV !== 'production') {

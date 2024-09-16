@@ -43,7 +43,6 @@ export default function Login({ onLogin }: Props) {
         } catch (err) {
             // Checking if the error is an axios error
             if (axios.isAxiosError(err)) {
-                console.log('Handle Submit Error')
                 // Assigning this to a variable as it can either be a httpResponse or undefined
                 const serverResponse = err.response
                 // We then check if it was a httpResponse or undefined, if it was httpResponse and the message contains User not found this code runs

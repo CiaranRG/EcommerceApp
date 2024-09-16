@@ -8,6 +8,7 @@ import { Bounce, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Product from '../Product/Product';
+import isIOS from '../../../utils/isIOS';
 
 // Convert this to being a .env import instead of plain text
 
@@ -69,7 +70,13 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     useEffect(() => {
         const gatherUserData = async () => {
             try {
-                const result = await axios.get(`${apiUrl}/accounts`, { withCredentials: true })
+                let result
+                if (isIOS()) {
+                    const sid = localStorage.getItem('session')
+                    result = await axios.post(`${apiUrl}/accounts/getDataIOS`, { session: sid });
+                } else {
+                    result = await axios.get(`${apiUrl}/accounts`, { withCredentials: true });
+                }
                 // Setting the persons shipping details
                 setUserAddress({
                     addressLine1: result.data.data.address_line1 || '',
@@ -93,7 +100,13 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
         setCartLoading(true)
         const gatherCartItems = async () => {
             try {
-                const result = await axios.get(`${apiUrl}/cart`, { withCredentials: true })
+                let result
+                if (isIOS()) {
+                    const sid = localStorage.getItem('session')
+                    result = await axios.post(`${apiUrl}/cart/getDataIOS`, { session: sid })
+                } else {
+                    result = await axios.get(`${apiUrl}/cart`, { withCredentials: true })
+                }
                 setCart(result.data.data)
             } catch (err) {
                 if (process.env.NODE_ENV !== 'production') {
@@ -108,7 +121,12 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const handleItemRemove = async (productId: number) => {
         try {
             setIsRemoving(true)
-            await axios.post(`${apiUrl}/cart/remove`, { productId: productId }, { withCredentials: true })
+            if (isIOS()) {
+                const sid = localStorage.getItem('session')
+                await axios.post(`${apiUrl}/cart/remove`, { productId: productId, session: sid }, { withCredentials: true })
+            } else {
+                await axios.post(`${apiUrl}/cart/remove`, { productId: productId }, { withCredentials: true })
+            }
             window.location.reload();
             setIsRemoving(false)
         } catch (err) {
@@ -123,7 +141,12 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
     const handleSuccessfulCheckout = async () => {
         // Update to also clear the cart in the database
         try {
-            await axios.post(`${apiUrl}/cart/clear`, {}, { withCredentials: true })
+            if (isIOS()) {
+                const sid = localStorage.getItem('session')
+                await axios.post(`${apiUrl}/cart/clear`, { session: sid },)
+            } else {
+                await axios.post(`${apiUrl}/cart/clear`, {}, { withCredentials: true })
+            }
             // Navigate to the account page
             navigate('/account')
             toast.success('Order created', { position: 'top-center', hideProgressBar: true, pauseOnHover: false, draggable: true, theme: 'colored', transition: Bounce })
@@ -150,7 +173,8 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 state: userAddress.state,
                 postal_code: userAddress.postal_code,
                 country: userAddress.country,
-                phone_number: userAddress.phone_number
+                phone_number: userAddress.phone_number,
+                ...(isIOS() && { session: localStorage.getItem('session') })
             }
             try {
                 await axios.post(`${apiUrl}/accounts/changeAddress`, dataToSend, { withCredentials: true })
@@ -174,7 +198,8 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
                 }
             }
             // sending a request to the backend see we know how much the user has to pay, the data we get back contains a clientSecret that stripe creates specifically for each payment
-            const { data } = await axios.post(`${apiUrl}/cart/payment`, { totalAmount: totalCost(cart).total }, { withCredentials: true });
+            const sid = localStorage.getItem('session')
+            const { data } = await axios.post(`${apiUrl}/cart/payment`, { totalAmount: totalCost(cart).total, session: sid }, { withCredentials: true });
             // We then check if the user has paid using that clientSecret we got from stripe on the backend
             const result = await stripe.confirmCardPayment(data.clientSecret, {
                 payment_method: {
@@ -187,7 +212,12 @@ export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
             } else {
                 // If it was a success then proceed to make the order in the database by querying the backend endpoint
                 if (result.paymentIntent?.status === 'succeeded') {
-                    await axios.post(`${apiUrl}/order/create`, { totalAmount: totalCost(cart).total, cart }, { withCredentials: true });
+                    if (isIOS()) {
+                        const sid = localStorage.getItem('session')
+                        await axios.post(`${apiUrl}/order/create`, { totalAmount: totalCost(cart).total, cart, session: sid }, { withCredentials: true });
+                    } else {
+                        await axios.post(`${apiUrl}/order/create`, { totalAmount: totalCost(cart).total, cart }, { withCredentials: true });
+                    }
                     handleSuccessfulCheckout();
                 }
             }
